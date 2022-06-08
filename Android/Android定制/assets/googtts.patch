@@ -1,0 +1,188 @@
+commit ab11de708b8c1526f8f56343401829455ec3d14f
+Author: JZ Loh <null>
+Date:   2022-10-12
+
+    feat(zhong-ke-hai-xin-rp-rk3568): add preinstall app of Googlespeech and custom launcher
+
+diff --git a/device/rockchip/rk356x/rk3568_r/preinstall_del/Android.mk b/device/rockchip/rk356x/rk3568_r/preinstall_del/Android.mk
+new file mode 100644
+index 0000000000..8338432200
+--- /dev/null
++++ b/device/rockchip/rk356x/rk3568_r/preinstall_del/Android.mk
+@@ -0,0 +1,2 @@
++include $(call all-subdir-makefiles)
++
+diff --git a/device/rockchip/rk356x/rk3568_r/preinstall_del/Googlespeech/Android.mk b/device/rockchip/rk356x/rk3568_r/preinstall_del/Googlespeech/Android.mk
+new file mode 100644
+index 0000000000..1d278ea6fe
+--- /dev/null
++++ b/device/rockchip/rk356x/rk3568_r/preinstall_del/Googlespeech/Android.mk
+@@ -0,0 +1,23 @@
++LOCAL_PATH := $(my-dir)
++
++include $(CLEAR_VARS)
++LOCAL_MODULE := Googlespeech
++LOCAL_MODULE_CLASS := APPS
++LOCAL_MODULE_PATH := $(TARGET_OUT_ODM)/bundled_uninstall_back-app
++LOCAL_SRC_FILES := $(LOCAL_MODULE)$(COMMON_ANDROID_PACKAGE_SUFFIX)
++LOCAL_CERTIFICATE := PRESIGNED
++#LOCAL_DEX_PREOPT := false
++LOCAL_MODULE_TAGS := optional
++LOCAL_MODULE_SUFFIX := $(COMMON_ANDROID_PACKAGE_SUFFIX)
++LOCAL_JNI_SHARED_LIBRARIES_ABI := arm
++MY_LOCAL_PREBUILT_JNI_LIBS := \
++	lib/arm/libopusV2JNI.so\
++	lib/arm/libtts_android.so\
++
++MY_APP_LIB_PATH := $(TARGET_OUT_ODM)/bundled_uninstall_back-app/$(LOCAL_MODULE)/lib/$(LOCAL_JNI_SHARED_LIBRARIES_ABI)
++ifneq ($(LOCAL_JNI_SHARED_LIBRARIES_ABI), None)
++$(warning MY_APP_LIB_PATH=$(MY_APP_LIB_PATH))
++LOCAL_POST_INSTALL_CMD :=     mkdir -p $(MY_APP_LIB_PATH)     $(foreach lib, $(MY_LOCAL_PREBUILT_JNI_LIBS), ; cp -f $(LOCAL_PATH)/$(lib) $(MY_APP_LIB_PATH)/$(notdir $(lib)))
++endif
++include $(BUILD_PREBUILT)
++
+diff --git a/vendor/rockchip/common/apps/Googlespeech/Googlespeech.apkbak b/device/rockchip/rk356x/rk3568_r/preinstall_del/Googlespeech/Googlespeech.apk
+similarity index 58%
+rename from vendor/rockchip/common/apps/Googlespeech/Googlespeech.apkbak
+rename to device/rockchip/rk356x/rk3568_r/preinstall_del/Googlespeech/Googlespeech.apk
+index 6abd498232..12ff850976 100644
+Binary files a/vendor/rockchip/common/apps/Googlespeech/Googlespeech.apkbak and b/device/rockchip/rk356x/rk3568_r/preinstall_del/Googlespeech/Googlespeech.apk differ
+diff --git a/device/rockchip/rk356x/rk3568_r/preinstall_del/Googlespeech/lib/arm/libopusV2JNI.so b/device/rockchip/rk356x/rk3568_r/preinstall_del/Googlespeech/lib/arm/libopusV2JNI.so
+new file mode 100644
+index 0000000000..4d8e81b895
+Binary files /dev/null and b/device/rockchip/rk356x/rk3568_r/preinstall_del/Googlespeech/lib/arm/libopusV2JNI.so differ
+diff --git a/device/rockchip/rk356x/rk3568_r/preinstall_del/Googlespeech/lib/arm/libtts_android.so b/device/rockchip/rk356x/rk3568_r/preinstall_del/Googlespeech/lib/arm/libtts_android.so
+new file mode 100644
+index 0000000000..79ff1f5d36
+Binary files /dev/null and b/device/rockchip/rk356x/rk3568_r/preinstall_del/Googlespeech/lib/arm/libtts_android.so differ
+diff --git a/device/rockchip/rk356x/rk3568_r/preinstall_del/preinstall.mk b/device/rockchip/rk356x/rk3568_r/preinstall_del/preinstall.mk
+new file mode 100644
+index 0000000000..f50d17b953
+--- /dev/null
++++ b/device/rockchip/rk356x/rk3568_r/preinstall_del/preinstall.mk
+@@ -0,0 +1,2 @@
++PRODUCT_PACKAGES += zkhx_md1288_release
++PRODUCT_PACKAGES += Googlespeech
+diff --git a/device/rockchip/rk356x/rk3568_r/preinstall_del/zkhx_md1288_release/Android.mk b/device/rockchip/rk356x/rk3568_r/preinstall_del/zkhx_md1288_release/Android.mk
+new file mode 100644
+index 0000000000..38734d82fa
+--- /dev/null
++++ b/device/rockchip/rk356x/rk3568_r/preinstall_del/zkhx_md1288_release/Android.mk
+@@ -0,0 +1,22 @@
++LOCAL_PATH := $(my-dir)
++
++include $(CLEAR_VARS)
++LOCAL_MODULE := zkhx_md1288_release
++LOCAL_MODULE_CLASS := APPS
++LOCAL_MODULE_PATH := $(TARGET_OUT_ODM)/bundled_uninstall_back-app
++LOCAL_SRC_FILES := $(LOCAL_MODULE)$(COMMON_ANDROID_PACKAGE_SUFFIX)
++LOCAL_CERTIFICATE := PRESIGNED
++#LOCAL_DEX_PREOPT := false
++LOCAL_MODULE_TAGS := optional
++LOCAL_MODULE_SUFFIX := $(COMMON_ANDROID_PACKAGE_SUFFIX)
++LOCAL_JNI_SHARED_LIBRARIES_ABI := arm64
++MY_LOCAL_PREBUILT_JNI_LIBS := \
++	lib/arm64/libserial_port.so\
++
++MY_APP_LIB_PATH := $(TARGET_OUT_ODM)/bundled_uninstall_back-app/$(LOCAL_MODULE)/lib/$(LOCAL_JNI_SHARED_LIBRARIES_ABI)
++ifneq ($(LOCAL_JNI_SHARED_LIBRARIES_ABI), None)
++$(warning MY_APP_LIB_PATH=$(MY_APP_LIB_PATH))
++LOCAL_POST_INSTALL_CMD :=     mkdir -p $(MY_APP_LIB_PATH)     $(foreach lib, $(MY_LOCAL_PREBUILT_JNI_LIBS), ; cp -f $(LOCAL_PATH)/$(lib) $(MY_APP_LIB_PATH)/$(notdir $(lib)))
++endif
++include $(BUILD_PREBUILT)
++
+diff --git a/device/rockchip/rk356x/rk3568_r/preinstall_del/zkhx_md1288_release/lib/arm64/libserial_port.so b/device/rockchip/rk356x/rk3568_r/preinstall_del/zkhx_md1288_release/lib/arm64/libserial_port.so
+new file mode 100644
+index 0000000000..af289cabfc
+Binary files /dev/null and b/device/rockchip/rk356x/rk3568_r/preinstall_del/zkhx_md1288_release/lib/arm64/libserial_port.so differ
+diff --git a/device/rockchip/rk356x/rk3568_r/preinstall_del/zkhx_md1288_release/zkhx_md1288_release.apk b/device/rockchip/rk356x/rk3568_r/preinstall_del/zkhx_md1288_release/zkhx_md1288_release.apk
+new file mode 100644
+index 0000000000..c21f3969c7
+Binary files /dev/null and b/device/rockchip/rk356x/rk3568_r/preinstall_del/zkhx_md1288_release/zkhx_md1288_release.apk differ
+diff --git a/frameworks/base/core/java/android/speech/tts/TextToSpeech.java b/frameworks/base/core/java/android/speech/tts/TextToSpeech.java
+index 2b8649f414..7149cfd481 100644
+--- a/frameworks/base/core/java/android/speech/tts/TextToSpeech.java
++++ b/frameworks/base/core/java/android/speech/tts/TextToSpeech.java
+@@ -309,7 +309,7 @@ public class TextToSpeech {
+          *         alone be the default.
+          */
+         @Deprecated
+-        public static final String DEFAULT_ENGINE = "com.svox.pico";
++        public static final String DEFAULT_ENGINE = "com.google.android.tts";
+ 
+         /**
+          * Default audio stream used when playing synthesized speech.
+diff --git a/frameworks/base/packages/SettingsProvider/res/values/defaults.xml b/frameworks/base/packages/SettingsProvider/res/values/defaults.xml
+index 4f4d396c6e..0f13944ed5 100644
+--- a/frameworks/base/packages/SettingsProvider/res/values/defaults.xml
++++ b/frameworks/base/packages/SettingsProvider/res/values/defaults.xml
+@@ -26,6 +26,7 @@
+     <string name="def_airplane_mode_radios" translatable="false">cell,bluetooth,wifi,nfc,wimax</string>
+     <string name="airplane_mode_toggleable_radios" translatable="false">bluetooth,wifi,nfc</string>
+     <string name="def_bluetooth_disabled_profiles" translatable="false">0</string>
++    <string name="def_speech_tts" translatable="false">com.google.android.tts</string>
+     <bool name="def_auto_time">true</bool>
+     <bool name="def_auto_time_zone">true</bool>
+     <bool name="def_accelerometer_rotation">false</bool>
+diff --git a/frameworks/base/packages/SettingsProvider/src/com/android/providers/settings/DatabaseHelper.java b/frameworks/base/packages/SettingsProvider/src/com/android/providers/settings/DatabaseHelper.java
+index 8c625fb9ea..37211df1dd 100644
+--- a/frameworks/base/packages/SettingsProvider/src/com/android/providers/settings/DatabaseHelper.java
++++ b/frameworks/base/packages/SettingsProvider/src/com/android/providers/settings/DatabaseHelper.java
+@@ -2320,6 +2320,10 @@ class DatabaseHelper extends SQLiteOpenHelper {
+             stmt = db.compileStatement("INSERT OR IGNORE INTO secure(name,value)"
+                     + " VALUES(?,?);");
+ 
++
++                    loadStringSetting(stmt, Settings.Secure.TTS_DEFAULT_SYNTH,
++                              R.string.def_speech_tts);
++
+             // Don't do this.  The SystemServer will initialize ADB_ENABLED from a
+             // persistent system property instead.
+             //loadSetting(stmt, Settings.Secure.ADB_ENABLED, 0);
+@@ -2410,6 +2414,9 @@ class DatabaseHelper extends SQLiteOpenHelper {
+             loadIntegerSetting(stmt, Settings.Secure.SLEEP_TIMEOUT,
+                     R.integer.def_sleep_timeout);
+ 
++
++                    loadStringSetting(stmt, Settings.Secure.TTS_DEFAULT_SYNTH,
++                              R.string.def_speech_tts);
+             /*
+              * IMPORTANT: Do not add any more upgrade steps here as the global,
+              * secure, and system settings are no longer stored in a database
+diff --git a/vendor/rockchip/common/apps/Googlespeech/Android.mk b/vendor/rockchip/common/apps/Googlespeech/Android.mk
+deleted file mode 100644
+index 66d314fd52..0000000000
+--- a/vendor/rockchip/common/apps/Googlespeech/Android.mk
++++ /dev/null
+@@ -1,16 +0,0 @@
+-###############################################################################
+-# ComAssistant
+-LOCAL_PATH := $(call my-dir)
+-include $(CLEAR_VARS)
+-LOCAL_MODULE := Googlespeech
+-LOCAL_MODULE_CLASS := APPS
+-LOCAL_MODULE_TAGS := optional
+-LOCAL_BUILT_MODULE_STEM := package.apk
+-LOCAL_MODULE_SUFFIX := $(COMMON_ANDROID_PACKAGE_SUFFIX)
+-#LOCAL_PRIVILEGED_MODULE :=
+-LOCAL_CERTIFICATE := PRESIGNED
+-#LOCAL_OVERRIDES_PACKAGES := 
+-LOCAL_SRC_FILES := $(LOCAL_MODULE).apk
+-#LOCAL_REQUIRED_MODULES :=
+-#LOCAL_PREBUILT_JNI_LIBS :=
+-include $(BUILD_PREBUILT)
+diff --git a/vendor/rockchip/common/apps/apps.mk b/vendor/rockchip/common/apps/apps.mk
+index 475229835f..a8f5f13c60 100755
+--- a/vendor/rockchip/common/apps/apps.mk
++++ b/vendor/rockchip/common/apps/apps.mk
+@@ -6,8 +6,8 @@ PRODUCT_PACKAGES += \
+         RpGpio \
+         TDGPSTest \
+ 				sogou \
+-				GoogleServicesFramework \
+-				Googlespeech
++				GoogleServicesFramework
++				#Googlespeech
+ 	#PrebuiltGmsCore \
+ 	Phonesky \
+ 	googleinstaller \

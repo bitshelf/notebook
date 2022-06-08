@@ -1,0 +1,30 @@
+---
+tags: LTE 
+---
+
+## 内核添加驱动
+![](assets/lte.zip) ![](assets/lte-ec20.txt)
+
+### dts 配置
+```c
+ido_modem: ido-modem {
+		compatible="ec20-modem-platdata";
+		pinctrl-names = "default";
+		pinctrl-0 = <&lte_vbat &lte_reset>;
+		4G,vbat-gpio = <&gpio3 RK_PA6 GPIO_ACTIVE_HIGH>;
+		// 4G,power-gpio = <&gpio0 RK_PD6 GPIO_ACTIVE_HIGH>;
+		4G,reset-gpio = <&gpio2 RK_PD4 GPIO_ACTIVE_HIGH>;
+		status = "okay";
+	};
+
+
+	ido-modem {
+		lte_vbat: lte-vbat {
+			rockchip,pins = <3 RK_PA6 RK_FUNC_GPIO &pcfg_pull_none>;
+		};
+
+		lte_reset: lte-reset {
+			rockchip,pins = <2 RK_PD4 RK_FUNC_GPIO &pcfg_pull_none>;
+		};
+	};
+```

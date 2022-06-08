@@ -1,0 +1,23 @@
+{
+  "baseFontSize": 16,
+  "theme": "moonstone",
+  "translucency": false,
+  "cssTheme": "Border",
+  "enabledCssSnippets": [
+    "list",
+    "head1center",
+    "header",
+    "titlebar",
+    "canvas",
+    "scrollbar",
+    "table"
+  ],
+  "textFontFamily": "Microsoft YaHei,Cascadia Code,Courier New",
+  "interfaceFontFamily": "微软雅黑",
+  "monospaceFontFamily": "Cascadia Code",
+  "accentColor": "",
+  "nativeMenus": true,
+  "showViewHeader": true,
+  "baseFontSizeAction": true,
+  "showRibbon": true
+}

@@ -1,0 +1,1 @@
+KERNEL=="ttyUSB2",SUBSYSTEM=="tty",ACTION=="add",RUN+="/etc/pcie_modem.sh"

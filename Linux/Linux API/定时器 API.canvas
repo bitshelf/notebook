@@ -1,0 +1,13 @@
+{
+	"nodes":[
+		{"id":"cd3732b16d91b292","x":-332,"y":-335,"width":512,"height":435,"type":"text","text":"- 定时器在内核中表示为一个 `timer_list` 的实例\n```c\n#include <linux/timer.h> \n \nstruct timer_list { \n    struct list_head entry; \n    unsigned long expires; \n    struct tvec_t_base_s *base; \n    void (*function)(unsigned long); \n    unsigned long data; \n);\n```\n-   `expires` 的单位为 jiffies\n-   `entry` 双向链表\n-   `data` 可选"},
+		{"id":"97fcc8e0bdaf7ebd","x":-427,"y":180,"width":702,"height":369,"type":"text","text":"### 设置定时器\n```c\nvoid setup_timer( struct timer_list *timer, \\ \n           void (*function)(unsigned long), \\ \n           unsigned long data);\n\n// 或者使用\nvoid init_timer(struct timer_list *timer);\n```\n-   提供用户自定义的回调函数\n-   用户自定义数据\n-   `setup_timer` 是对 `init_timer` 的包装"},
+		{"id":"e9266bea85b4ec28","x":-426,"y":660,"width":700,"height":160,"type":"text","text":"### 设置到期时间\n```c\nint mod_timer( struct timer_list *timer, unsigned long expires);\n```\n- 初始化定时器之后，需要先设置到期时间"},
+		{"id":"e6f94b838b0de902","x":-351,"y":920,"width":551,"height":260,"type":"text","text":"### 释放定时器\n```c\nvoid del_timer(struct timer_list *timer); \n```\n\n```c\nint del_timer_sync(struct timer_list *timer);\n```"}
+	],
+	"edges":[
+		{"id":"d885b4bb31d019e7","fromNode":"cd3732b16d91b292","fromSide":"bottom","toNode":"97fcc8e0bdaf7ebd","toSide":"top"},
+		{"id":"7776e0237dabd06d","fromNode":"97fcc8e0bdaf7ebd","fromSide":"bottom","toNode":"e9266bea85b4ec28","toSide":"top"},
+		{"id":"feff897fbc2999ae","fromNode":"e9266bea85b4ec28","fromSide":"bottom","toNode":"e6f94b838b0de902","toSide":"top"}
+	]
+}

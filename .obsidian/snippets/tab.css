@@ -1,0 +1,46 @@
+/* ====== tab栏 ====== */
+body .workspace-tab-header-container {
+  --tab-outline-width: 0px !important;
+}
+body .mod-root .workspace-tab-header-container-inner {
+  margin-top: 4px;
+  padding-bottom: 4px;
+}
+body .mod-root .workspace-tab-header {
+  padding-bottom: 0 !important;
+  padding-top: 0 !important;
+}
+body .mod-root .workspace-tab-header.is-active {
+  --tab-radius-active: 6px;
+  box-shadow: var(--shadow-s);
+  border: 1px solid var(--color-base-30);
+}
+body .mod-root .workspace-tab-header .workspace-tab-header-inner-close-button {
+  padding: 2px;
+}
+body.theme-dark .mod-root .workspace-tab-header.is-active {
+  box-shadow: none;
+}
+body .workspace-split.mod-root .workspace-tab-header.is-active::before, body .workspace-split.mod-root .workspace-tab-header.is-active::after {
+  box-shadow: none;
+}
+body .workspace-tab-header-new-tab {
+  padding-top: var(--size-4-1);
+}
+
+body.tab-add-border-in-dark-mode.theme-dark .mod-root .workspace-tab-header.is-active {
+  border: 2px solid var(--text-muted);
+  box-sizing: border-box;
+}
+
+/* @settings
+
+name: tab snippet
+id: maple-tabs
+settings:
+    -
+        id: tab-add-border-in-dark-mode
+        title: add border in dark mode
+        title.zh: 黑暗模式添加边框
+        type: class-toggle
+*/

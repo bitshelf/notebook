@@ -1,0 +1,11 @@
+.vault-stats
+.obsidian/
+.trash/
+Inbox/
+pdf/
+Resource/微信读书笔记/
+/Tools/Obsidian/Excalidraw/
+*.o
+*.bak
+Untitled*
+.DS_Store

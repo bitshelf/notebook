@@ -1,0 +1,8 @@
+ .view-header {
+ height: 32px;
+ display: flex;
+ border-top: 1px solid var(--background-secondary-alt);
+ border-bottom: 2px solid var(--background-secondary-alt);
+ background-color: var(--background-secondary);
+ z-index: 1;
+}

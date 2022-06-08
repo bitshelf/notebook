@@ -1,0 +1,131 @@
+---
+
+excalidraw-plugin: parsed
+tags: [excalidraw]
+
+---
+==⚠  Switch to EXCALIDRAW VIEW in the MORE OPTIONS menu of this document. ⚠==
+
+
+# Text Elements
+LOCAL_PATH:= $(call my-dir)
+
+include $(CLEAR_VARS)
+
+LOCAL_CFLAGS+=-Wno-error\               
+              -Wno-unused-parameter
+
+LOCAL_SRC_FILES := main.c
+
+LOCAL_MODULE := hello_test
+
+include $(BUILD_EXECUTABLE) ^MRYiLLJM
+
+cc_binary {
+
+    cflags: [
+
+        "-Wno-error",
+
+        "-Wno-unused-parameter",
+
+    ],
+
+    srcs: ["main.c"],
+
+    name: "hello_test",
+
+} ^iDYLcc5q
+
+%%
+# Drawing
+```compressed-json
+N4KAkARALgngDgUwgLgAQQQDwMYEMA2AlgCYBOuA7hADTgQBuCpAzoQPYB2KqATL
+
+ZMzYBXUtiRoIACyhQ4zZAHoFWPETKUAdNjYBbGnQT4EOhByjNuAbXBhQYe9Hjj0U
+
+LFH33IjFuy5oAjACs/A7erJwAcpxi3ACcAAz+AOwAHCkALClJIZCEzAAihgiuxNw
+
+AZgTMCDkQJNwQALIASgCahAAy7QBSDR4OZYT4+ADKsEb1krjYkiJINcxQpGwA1gg
+
+A6iRQktz+84srCKMw4xKCan2QS0IA5pIcCMwWATVscFOEsDvx8TW4HNcnVA/GyQT
+
+DcAC0AGZ4ikNMEQRAYBDYrD4Z4IAslqsAMJsfBsUj1ADE31J8QuEAARlNltcrhxi
+
+Lj8YSJIs/sw3qRTO4ahRNts0OkAGyxGqSBCEW7uNA8NLzBAIUpoQKQwI8Hj+eKxN
+
+EOOnCOAASWIT1QlgAunssYdJqQ4PdHvVmDa4BTKcIGQBRIwmMwm801IRwYi4Eo7I
+
+WBQIpIXqnjfIW7BFEDjLbgcIRDGr47CrJWoCr4Ko1MqcKDDQgAL2csaLJYAYrgdI
+
+MkWhITVXJhpeh2gB5bEAQXaAH0AAp9gAqAAlkABeVAAEgAFKp8KgdDBwcRCKQAJQ
+
+AHQ4+8IHGw+CExAQ84X2PaHr7TUHADU78M9weOD3+0PsbX2n2AOLDAA1NO4JrBwb
+
+DgkwSykLuu6oPBCGIUh+5IahCGgeB4JCGmVTEOCnINsUTD7vuH4DoOwxNNig61ga
+
+N7DKgM6rrgR5aCR769uRDTdvkACqN6MbO4pDGwg6uAs7FHieZ4XouABCvF0fkg4e
+
+gAGh62K8WOfZyTe24UuQFBjm49RkUOo6Tkxi7Lqu66bjuknHqe56Xtet73k+TQvu
+
+xZmDt+v4AcBGEQVBBKwWhEUoRFSHBVhOGKvhuDkCYrgwW+vmUdRtH0YJzGsdgPmc
+
+UO3F8QJTHCfiYkPFAjnSS58mKe0ylqRpWk6Xprq4FUSZVikrYIu2UB9kQ1x+OgRh
+
+lDyCLeFAhCqMNkpjdArwUtoZgsfcpBGqm6b4C8pCSkeBDGR2plFSO45TrO1kECua
+
+4blur6Hk5MmuTed6Ps+T0cZ+fk/v+QEgWBIWkNB4XRchHAQ4hsXYUIuGJclRFpaR
+
+52ZTRdEegxTE6BtbHpedJX8R6uUVaJ4k1W+UnObJC4KUpKnqZp2m6R6+k2AAviEd
+
+gOLAiD1INFJhL43CBMC6LC5E0TOP4sQorEkLqjquQFEUoZoPmhYInUEiEPkLTtNg
+
+2CBAAjhSAxDEcgJSFMMxchSmIHBsxBbDsloHFbzgYnidQ1Fctz2iaCboq87yfAE3
+
+y/P8gLiw4YIBEkQpwjUzaoOCKLJwijs4niBLEmS3yddmerYYyucsi45AcBySXchS
+
+fIuwKqCQkkytSBKUrcJCQqxwICq5rGSSxEkSQ8Ak/XoiXhrGlYFpZ/sqzDM6geOs
+
+6rrusQXrGNyfpz+igbBurqD+OGkbRhqsuJJmR4pmgaYZombDZoq5SVNUCLFmYZaV
+
+tw1Yf3WDYmxdzbCZCQRtByUiOqQGAqBgDsUQtgMo+BcDXHkKaeBaFdwQFiqFGCNA
+
+MGoSwbDeKeECIpWIvgt8iELQENQMwUQaDLBYNxvlLBNCqEIQ4IRNAWCyZVQkpQ/c
+
+HMDKUBOp2CA4DIFcOgbA3cKM0oIKQSgxhciSIKMwdg4GkFQZhXwfIqKhDNGYThgj
+
+MhyMsHUFUQedR8EaH6Khgheh2AVEQBYRwNiEA7FqIMagLhJgeHtxEvwmqejvEcGE
+
+TUak3UjzOFVG3QaC1Rr1AmlNCWTBZrzRGktKAK0ahrSgBtJg20767X2odLh+AxH1
+
+EkVAmBcCOHwUQcg1BaAmENOQkYkGYNBEOMMcQ+GCUzGpQsbQ9hPinEuLcR4sZvTf
+
+HcNQLwwwlUKYjLfMIzm3MBpOGSTEoWTBwhjRSHwaa+zfBRGPDLJI8Ru7pEyFqGoe
+
+RChGCPprd+6IdboGuE0XiFAuhNB4O0X5JsADSax0j0PwLxNgbAhTm0GCMMYXtJjT
+
+FmA7Be6x+Ru3nlaT29RgxOhfn7YQAcHhBxeG8bAHxU6al7hAP4AJnC0vjsfHgQoU
+
+4Qn8EEd2OdmT5wLkXWk9Iy68tZFXGuXIzD10xcqMUHdpBdySJCDQrd5Qv0FN3JIt
+
+yUjxGyAiKeRpd7cutElO0pL6hCvXqXLePpzCzwDEGEMarj6nyjOqSEwox7X2TDtB
+
++6Isw5lfgWN5DgFhJSgHJI8m5/g+r2giUwxAI0MiPNcGNmYupQFxDoRsMhFTDjYE
+
+eTs99Y3olDaQIaOiKDilwLmItNR419grVWmtpSERwHzb6KwIIwDWE8PYXufau170
+
+8D23tyt7AtyVa3QdIIzSc3AHvOlcA4CjEddwHm0BxQmB2Z3EIDBCAIAoHJGkJcGR
+
+MjzhIIkZQr3Xr6BIkQEqoAGlcDoUYVoz0VwgCSflu7sD3u5E+4wR7i5CvfQLMVnI
+
+64/r/WYADOhazwtxRIZFds5g2DvaDf9z7X1O2lcfKDGGYNYfRYh9A+LxSlHww+2D
+
+TRiV3DNc8NDv6COPufd2ClVKvix3Q1R59tYAGNnwKnCekAmM8eMHxr+FYqxcdE5h
+
+4wYjElLRSbe2ThHjDYcXsvej6AnQmpU9Blj6mCllobUsStCBq2psYwZ2DHoGSmbY
+
+OZyzEgkpmf08x2D7QYlJQ08a20K8JAWt3XSEg39nC1sY+XYcBBiiuDXRzcAXM6AW
+
+wePFkAHMgA==
+```
+%%

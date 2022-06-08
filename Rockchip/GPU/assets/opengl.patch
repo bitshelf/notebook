@@ -1,0 +1,96 @@
+diff --git a/arch/arm64/boot/dts/rockchip/rk3576j.dtsi b/arch/arm64/boot/dts/rockchip/rk3576j.dtsi
+index 132aa3a7a80d..30e89e642f1f 100644
+--- a/arch/arm64/boot/dts/rockchip/rk3576j.dtsi
++++ b/arch/arm64/boot/dts/rockchip/rk3576j.dtsi
+@@ -2294,7 +2294,7 @@ rknpu_mmu: iommu@27702000 {
+ 		status = "disabled";
+ 	};
+ 
+-	gpu: gpu@27800000 {
++	/*gpu: gpu@27800000 {
+ 		compatible = "arm,mali-bifrost";
+ 		reg = <0x0 0x27800000 0x0 0x20000>;
+ 
+@@ -2315,7 +2315,29 @@ gpu: gpu@27800000 {
+ 		#cooling-cells = <2>;
+ 		dynamic-power-coefficient = <1625>;
+ 		status = "disabled";
+-	};
++	};*/
++
++	gpu: gpu@27800000 {
++            compatible = "arm,mali-bifrost";
++            reg = <0x0 0x27800000 0x0 0x20000>;
++            interrupts = <GIC_SPI 347 IRQ_TYPE_LEVEL_HIGH>,
++                         <GIC_SPI 348 IRQ_TYPE_LEVEL_HIGH>,
++                         <GIC_SPI 349 IRQ_TYPE_LEVEL_HIGH>;
++            interrupt-names = "job", "mmu", "gpu";
++
++	    upthreshold = <40>;
++            downdifferential = <10>;
++
++            clocks = <&scmi_clk CLK_GPU>, <&cru CLK_GPU>;
++            clock-names = "gpu", "bus";
++            assigned-clocks = <&cru CLK_GPU>;
++            //assigned-clock-rates = <800000000>;
++	    assigned-clock-rates = <198000000>;
++            power-domains = <&power RK3576_PD_GPU>;
++	    #cooling-cells = <2>;
++            dynamic-power-coefficient = <1625>;
++            status = "disabled";
++    	};
+ 
+ 	gpu_opp_table: gpu-opp-table {
+ 		compatible = "operating-points-v2";
+diff --git a/arch/arm64/configs/rockchip_linux_defconfig b/arch/arm64/configs/rockchip_linux_defconfig
+index 938b40f07958..0695e652b9a5 100644
+--- a/arch/arm64/configs/rockchip_linux_defconfig
++++ b/arch/arm64/configs/rockchip_linux_defconfig
+@@ -3,7 +3,6 @@ CONFIG_DEFAULT_HOSTNAME="localhost"
+ CONFIG_SYSVIPC=y
+ CONFIG_NO_HZ=y
+ CONFIG_HIGH_RES_TIMERS=y
+-CONFIG_PREEMPT_VOLUNTARY=y
+ CONFIG_RCU_EXPERT=y
+ CONFIG_RCU_NOCB_CPU=y
+ CONFIG_IKCONFIG=y
+@@ -695,3 +694,21 @@ CONFIG_RCU_CPU_STALL_TIMEOUT=60
+ CONFIG_FUNCTION_TRACER=y
+ CONFIG_BLK_DEV_IO_TRACE=y
+ CONFIG_LKDTM=y
++CONFIG_HZ_PERIODIC=y
++CONFIG_PREEMPT_LAZY=y
++CONFIG_PREEMPT_RT=y
++CONFIG_PREEMPT_COUNT=y
++CONFIG_PREEMPTION=y
++CONFIG_PREEMPT_RCU=y
++CONFIG_TASKS_RCU=y
++CONFIG_RCU_BOOST=y
++CONFIG_RCU_BOOST_DELAY=500
++CONFIG_RCU_NOCB_CPU_CB_BOOST=y
++CONFIG_HZ_1000=y
++CONFIG_HZ=1000
++CONFIG_CPU_FREQ_DEFAULT_GOV_PERFORMANCE=y
++#CONFIG_DRM_GEM_SHMEM_HELPER=y
++#CONFIG_DRM_SCHED=y
++CONFIG_DRM_PANFROST=y
++
++
+diff --git a/drivers/gpu/drm/drm_ioctl.c b/drivers/gpu/drm/drm_ioctl.c
+index 6172f786012b..a039fbc76f1d 100644
+--- a/drivers/gpu/drm/drm_ioctl.c
++++ b/drivers/gpu/drm/drm_ioctl.c
+@@ -121,6 +121,13 @@ int drm_getunique(struct drm_device *dev, void *data,
+ 
+ 	mutex_lock(&dev->master_mutex);
+ 	master = file_priv->master;
++
++	if (master == NULL) {
++               u->unique_len = 0;
++               mutex_unlock(&dev->master_mutex);
++               return 0;
++       }
++
+ 	if (u->unique_len >= master->unique_len) {
+ 		if (copy_to_user(u->unique, master->unique, master->unique_len)) {
+ 			mutex_unlock(&dev->master_mutex);

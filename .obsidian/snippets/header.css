@@ -1,0 +1,55 @@
+.cm-header-1 {
+	 text-align: center;
+	 position: relative;
+	 margin-top: calc(var(--h1) - 0.1em);
+}
+.tag:not(.token) {
+  background-color: var(--text-accent);
+  border: none;
+  color: white;
+  font-size: 11px;
+  padding: 1px 8px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  margin: 0px 0px;
+  cursor: pointer;
+  border-radius: 14px;
+}
+.tag:not(.token):hover {
+  color: white;
+  background-color: var(--text-accent-hover);
+}
+
+body.color-scheme-options-flamingo.theme-light{
+	--header-color:#090809;
+}
+
+:is(.markdown-preview-view,.markdown-rendered) h1 {
+  color: var(--header-color);
+}
+
+:is(.markdown-preview-view,.markdown-rendered) h2 {
+  color:var(--header-color);
+}
+
+:is(.markdown-preview-view,.markdown-rendered) h3 {
+  color: var(--header-color);
+}
+
+:is(.markdown-preview-view,.markdown-rendered) h4 {
+  color: var(--header-color);
+}
+
+:is(.markdown-preview-view,.markdown-rendered) h5 {
+  color: var(--header-color);
+}
+
+:is(.markdown-preview-view,.markdown-rendered) h6 {
+  color: var(--header-color);
+}
+.cm-header-1, .cm-header-2, .cm-header-3, .cm-header-4, .cm-header-5, .cm-header-6 {
+	/*font-family:'cjkFonts 手寫4';*/
+	/*font-family:'LXGW Bright TC';*/
+	color:#090809;
+}

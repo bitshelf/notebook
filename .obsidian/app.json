@@ -1,0 +1,39 @@
+{
+  "defaultViewMode": "source",
+  "strictLineBreaks": false,
+  "foldHeading": true,
+  "foldIndent": true,
+  "vimMode": false,
+  "alwaysUpdateLinks": true,
+  "showUnsupportedFiles": true,
+  "attachmentFolderPath": "./assets",
+  "newFileLocation": "current",
+  "newFileFolderPath": "临时记录空间",
+  "legacyEditor": false,
+  "spellcheck": true,
+  "communityPluginSortOrder": "release",
+  "promptDelete": false,
+  "autoPairMarkdown": false,
+  "pdfExportSettings": {
+    "includeName": false,
+    "pageSize": "Legal",
+    "landscape": false,
+    "margin": "0",
+    "downscalePercent": 100
+  },
+  "trashOption": "local",
+  "livePreview": true,
+  "autoConvertHtml": true,
+  "fileSortOrder": "alphabetical",
+  "newLinkFormat": "relative",
+  "useMarkdownLinks": true,
+  "userIgnoreFilters": [
+    "pdf/",
+    "/.excalidraw.md/",
+    "Tools/Obsidian/Excalidraw/",
+    ".git"
+  ],
+  "showFrontmatter": false,
+  "showInlineTitle": false,
+  "propertiesInDocument": "visible"
+}

@@ -1,0 +1,216 @@
+{
+  "editor:toggle-highlight": [],
+  "file-explorer:new-file-in-new-pane": [],
+  "workspace:split-vertical": [
+    {
+      "modifiers": [
+        "Mod"
+      ],
+      "key": "\\"
+    }
+  ],
+  "obsidian-editor-shortcuts:duplicateLine": [],
+  "obsidian-editor-shortcuts:deleteLine": [],
+  "obsidian-editor-shortcuts:insertLineBelow": [],
+  "obsidian-pangu:pangu-format": [
+    {
+      "modifiers": [
+        "Mod",
+        "Shift"
+      ],
+      "key": "S"
+    }
+  ],
+  "obsidian-electron-window-tweaker:ewt-toggle-on-top": [
+    {
+      "modifiers": [
+        "Alt"
+      ],
+      "key": "M"
+    }
+  ],
+  "easy-typing-obsidian:easy-typing-format-switch": [],
+  "markdown-prettifier:markdown-prettifier-run": [],
+  "editor:delete-paragraph": [],
+  "obsidian-collapse-all-plugin:collapse-all-expand": [],
+  "quickadd:choice:db8efd45-6373-4671-8c1d-78161386d1ab": [
+    {
+      "modifiers": [
+        "Mod"
+      ],
+      "key": "M"
+    }
+  ],
+  "app:open-help": [],
+  "quickadd:runQuickAdd": [
+    {
+      "modifiers": [
+        "Mod"
+      ],
+      "key": "Q"
+    }
+  ],
+  "leader-hotkeys-obsidian:leader": [
+    {
+      "modifiers": [
+        "Mod"
+      ],
+      "key": ";"
+    }
+  ],
+  "obsidian-excalidraw-plugin:insert-link-to-element": [
+    {
+      "modifiers": [
+        "Mod",
+        "Shift"
+      ],
+      "key": "C"
+    }
+  ],
+  "note-refactor-obsidian:app:extract-selection-content-only": [
+    {
+      "modifiers": [
+        "Mod",
+        "Shift"
+      ],
+      "key": "M"
+    }
+  ],
+  "darlal-switcher-plus:switcher-plus:open": [
+    {
+      "modifiers": [
+        "Alt"
+      ],
+      "key": "P"
+    }
+  ],
+  "recent-files-obsidian:recent-files-open": [
+    {
+      "modifiers": [
+        "Mod"
+      ],
+      "key": "R"
+    }
+  ],
+  "editor:toggle-source": [],
+  "file-explorer:reveal-active-file": [
+    {
+      "modifiers": [
+        "Mod",
+        "Shift"
+      ],
+      "key": "E"
+    }
+  ],
+  "templater-obsidian:create-new-note-from-template": [],
+  "obsidian-linter:lint-file": [],
+  "Enhanced editing:mouse-start": [],
+  "obsidian-excalidraw-plugin:toggle-lock": [
+    {
+      "modifiers": [
+        "Mod",
+        "Shift"
+      ],
+      "key": "S"
+    }
+  ],
+  "easy-typing-obsidian:easy-typing-format-selection": [],
+  "quickadd:choice:5eedf50f-6fc6-49f3-8cbf-247bb599f698": [
+    {
+      "modifiers": [
+        "Alt",
+        "Mod"
+      ],
+      "key": "E"
+    }
+  ],
+  "obsidian-excalidraw-plugin:Downloaded/Set Stroke Width of Selected Elements": [
+    {
+      "modifiers": [
+        "Alt"
+      ],
+      "key": "W"
+    }
+  ],
+  "obsidian-excalidraw-plugin:Downloaded/Organic Line": [
+    {
+      "modifiers": [
+        "Alt"
+      ],
+      "key": "B"
+    }
+  ],
+  "editor:toggle-code": [
+    {
+      "modifiers": [
+        "Mod"
+      ],
+      "key": "E"
+    }
+  ],
+  "obsidian-excalidraw-plugin:Downloaded/Box Each Selected Groups": [
+    {
+      "modifiers": [
+        "Alt"
+      ],
+      "key": "G"
+    }
+  ],
+  "Enhanced editing:gaoliang-text": [],
+  "quickadd:choice:7818125a-4039-4f61-90bf-ee5bedeb0809": [],
+  "app:toggle-left-sidebar": [
+    {
+      "modifiers": [
+        "Alt",
+        "Mod"
+      ],
+      "key": "Q"
+    }
+  ],
+  "Enhanced editing:internal-link2": [],
+  "app:toggle-right-sidebar": [
+    {
+      "modifiers": [
+        "Alt",
+        "Mod"
+      ],
+      "key": "S"
+    }
+  ],
+  "Enhanced editing:shanchu-text": [],
+  "easy-typing-obsidian:easy-typing-format-article": [],
+  "obsidian-excalidraw-plugin:search-text": [
+    {
+      "modifiers": [
+        "Alt",
+        "Shift"
+      ],
+      "key": "F"
+    }
+  ],
+  "editor:insert-wikilink": [
+    {
+      "modifiers": [
+        "Mod"
+      ],
+      "key": "W"
+    }
+  ],
+  "obsidian-auto-link-title:enhance-url-with-title": [],
+  "easy-typing-obsidian:easy-typing-delete-blank-line": [],
+  "obsidian-excalidraw-plugin:save": [],
+  "editing-toolbar:editor:toggle-checklist-status": [
+    {
+      "modifiers": [
+        "Shift"
+      ],
+      "key": "Enter"
+    }
+  ],
+  "various-complements:show-suggestions": [],
+  "workspace:close": [],
+  "markdown:toggle-preview": [],
+  "easy-typing-obsidian:easy-typing-goto-new-line-after-cur-line": [],
+  "easy-typing-obsidian:easy-typing-toggle-comment": [],
+  "obsidian-auto-link-title:auto-link-title-normal-paste": []
+}

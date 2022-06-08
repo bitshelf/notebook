@@ -1,0 +1,9 @@
+permission:
+  read: white
+  write: white
+  exec: white
+  exec-sticky: 5
+  no-access: 245
+  octal: 6
+  acl: dark_cyan
+  context: cyan

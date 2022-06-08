@@ -1,0 +1,30 @@
+header: false
+indicators: true
+hyperlink: never
+
+# == Icons ==
+icons:
+  # When to use icons.
+  # When "classic" is set, this is set to "never".
+  # Possible values: always, auto, never
+  when: never
+  # Which icon theme to use.
+  # Possible values: fancy, unicode
+  # Default to 1 space
+ 
+color:
+  # When to colorize the output.
+  # When "classic" is set, this is set to "never".
+  # Possible values: never, auto, always
+  when: auto
+  # How to colorize the output.
+  # When "classic" is set, this is set to "no-color".
+  # Possible values: default, <theme-file-name>
+  # when specifying <theme-file-name>, lsd will look up theme file
+  # XDG Base Directory if relative, e.g. ~/.config/lsd/themes/<theme-file-name>.yaml,
+  # The file path if absolute
+  #date: '+%d %b %y'
+  theme: custom
+
+date: '+%Y-%m-%d %H:%M'
+#date: '+%Y-%m-%d %H:%M'
