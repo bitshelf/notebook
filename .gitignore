@@ -1,11 +1,19 @@
-.vault-stats
-.obsidian/
-.trash/
-Inbox/
-pdf/
-Resource/微信读书笔记/
+/.vault-stats
+/.obsidian/plugins/
+/.obsidian/themes/
+/.trash/
+/copilot/
+/Inbox/
+/pdf/
+/Resource/微信读书笔记/
 /Tools/Obsidian/Excalidraw/
 *.o
 *.bak
 Untitled*
 .DS_Store
+
+
+
+
+# Ignore Smart Environment folder
+.smart-env

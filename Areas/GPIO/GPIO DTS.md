@@ -1,5 +1,6 @@
 ---
-tags: Linux GPIO
+tags:
+  - Linux/GPIO
 ---
 # GPIO 配置
 ```c

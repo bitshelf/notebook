@@ -1,7 +1,6 @@
 ---
 tags: Android Allwinner
 ---
-
 # 总体框架
 #### 驱动模块可以分成 4 个部分：
 1. Pinctrl api: pinctrl 提供给上层用户调用的接口

@@ -1,6 +1,6 @@
 ---
 tags:
-  - Allwinneer/dts
+  - Allwinner/DTS
 ---
 # dts 参数释义
 ~~~dts

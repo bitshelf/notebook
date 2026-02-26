@@ -1,3 +1,7 @@
+---
+tags:
+  - GPU
+---
 ## 查看GPU频率
 ```bash
 $ cat /sys/devices/platform/ff9a0000.gpu/devfreq/ff9a0000.gpu/cur_freq 	//rk3399

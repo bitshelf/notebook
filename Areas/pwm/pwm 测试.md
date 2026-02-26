@@ -20,7 +20,7 @@ echo 1 > enable
 - **period**：用于配置 PWM 周期，可读可写；写入一个字符串数字值，以 ns（纳秒）为单位
 - **duty_cycle**：用于配置 PWM 的占空比，可读可写；写入一个字符串数字值，同样也是以 ns 为单位
 ## 查看 pwm 设备信息
-```shell
+```bash
 cat /sys/kernel/debug/pwm
 ```
 

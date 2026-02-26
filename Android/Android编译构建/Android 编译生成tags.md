@@ -10,6 +10,14 @@ tags: Android
 
 # 触发空操作
 make nothing
+
+# 方式1：Soong 原生（推荐，Android 14+）
+SOONG_GEN_COMPDB=true m nothing
+# 产出: out/soong/development/ide/compdb/compile_commands.json
+
+# 方式2：直接 symlink 到项目根
+SOONG_GEN_COMPDB=true SOONG_LINK_COMPDB_TO=$PWD m nothing
+# 产出: ./compile_commands.json（根目录）
 ```
 - 链接 `compile_commands.json` 到工作区根目录
 ```shell

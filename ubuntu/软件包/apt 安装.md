@@ -3,6 +3,29 @@ tags: Ubuntu
 ---
 
 # ubuntu 无 sudo 权限安装软件包
+## apt 安装，包被锁定
+```
+下列软件包有未满足的依赖关系： adbd : 依赖: android-libcutils (= 1:34.0.5-12~bpo12+1) 但是 1:29.0.6-28 正要被安装 E: 无法修正错误，因为您要求某些软件包保持现状，就是它们破坏了软件包间的依赖关系
+```
+解决
+```shell
+# 模拟安装，查看是否报错，不会真的安装
+sudo apt update
+
+sudo apt install --simulate \
+    -t bookworm-backports \
+    adbd
+    
+# 正式安装
+sudo apt install --yes \
+    -t bookworm-backports \
+    adb adbd
+ 
+# 解除对应 hold   
+sudo apt-mark unhold \
+    android-libcutils android-libbase android-liblog \
+    adb fastboot    
+```
 ## apt source 编译安装
 ```shell
 apt-get source PACKAGE

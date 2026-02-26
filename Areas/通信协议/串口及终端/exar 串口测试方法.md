@@ -1,8 +1,7 @@
 ---
-tags: Serial
-aliases： XR21
+tags:
+  - Serial
 ---
-
 ## 串口驱动测试
 1. 安装 microcom
 ```shell

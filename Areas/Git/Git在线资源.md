@@ -1,6 +1,8 @@
 ---
-tags:git
+tags:
+  - Git
 ---
+
 
 * Git 仓库信息介绍：<https://git-scm.com/docs/gitrepository-layout>
 <iframe 

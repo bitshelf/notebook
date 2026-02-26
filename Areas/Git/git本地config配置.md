@@ -16,8 +16,17 @@ tags: Git
 [credential]
        helper = store
 ```
+## 不同路径，不同配置
+```
+# ~/.gitconfig
+[user]
+	name = ***
+	email = ***@company.com
+[includeif "gitdir:~/.config"]
+	path = ~/.config/git/my-gitconfig
+```
 
-## 想通配置
+## 定制配置
 ~~~git
 [core]
         editor = vim

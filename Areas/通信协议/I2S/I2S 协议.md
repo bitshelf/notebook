@@ -1,7 +1,7 @@
 ---
-tags：I2S
+tags:
+  - I2S
 ---
-
 ## 一般的 $I^2S$
 1. 比特时脉线 (BCLK: bit clock line)
         标准名称为"连续串列时脉 (Continuous Serial Clock, SCK)"[1],一般称为"比特时脉(bit clock, BCLK)"[2]

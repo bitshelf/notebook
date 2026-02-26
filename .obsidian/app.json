@@ -35,5 +35,6 @@
   ],
   "showFrontmatter": false,
   "showInlineTitle": false,
-  "propertiesInDocument": "visible"
+  "propertiesInDocument": "visible",
+  "focusNewTab": false
 }

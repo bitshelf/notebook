@@ -40,3 +40,9 @@ cargo install -f bottom
 
 ### git delta
 - [GitHub - dandavison/delta: A syntax-highlighting pager for git, diff, and grep output](https://github.com/dandavison/delta)
+
+## 软件包版本管理
+mise: [GitHub - jdx/mise: dev tools, env vars, task runner · GitHub](https://github.com/jdx/mise)
+
+## 环境变量管理
+direnv: [GitHub - direnv/direnv: unclutter your .profile · GitHub](https://github.com/direnv/direnv)

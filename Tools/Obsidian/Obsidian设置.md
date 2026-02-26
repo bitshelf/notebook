@@ -1,3 +1,7 @@
+---
+tags:
+  - Obsidian
+---
 # 字体设置
 * 在`.obsidian/theme/`的`font-family`属性设置
 ## 可用字体

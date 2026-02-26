@@ -2,7 +2,6 @@
 tags:
   - Git
 ---
-
 ## 配置 Git SSH 代理
 在 ~/. ssh/config 文件中加入以下配置
 ```shell

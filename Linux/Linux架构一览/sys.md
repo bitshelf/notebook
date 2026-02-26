@@ -1,3 +1,7 @@
+---
+tags:
+  - Linux/debug
+---
 # sysfs
 * *sysfs*的挂载点是`/sys`目录， *sysfs*是一个虚拟的文件系统(还有其它的虚拟文件系统，例如usbfs和procfs)，sysfs导出了内核的数据结构
 * **sysfs** 的目的是将内核称为 “kobject” 的可读写属性公开给用户空间。

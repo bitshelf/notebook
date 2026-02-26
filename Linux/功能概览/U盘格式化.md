@@ -1,3 +1,7 @@
+---
+tags:
+  - U盘
+---
 # mkfs
 * 格式化为 ext4 分区: `sudo mkfs.ext4 /dev/sda1`
 > [!info] 注意

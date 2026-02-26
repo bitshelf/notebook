@@ -518,7 +518,7 @@ int sunxi_boot_init_gpio(void)
 	int nGpioNum=0;
 	int i=0;
 	char acGpioName[16];
-	
+
 	if (get_boot_work_mode() != WORK_MODE_BOOT) {
 		return 0;
 	}
@@ -529,8 +529,8 @@ int sunxi_boot_init_gpio(void)
 	if (!fdtdec_get_is_enabled(working_fdt, nodeoffset)) {
 		return 0;
 	}
-	
-	if (script_parser_fetch(FDT_PATH_BOOT_INIT_GPIO, "boot_gpio_num", (int *)&nGpioNum,sizeof(int) / 4) != 0) 
+
+	if (script_parser_fetch(FDT_PATH_BOOT_INIT_GPIO, "boot_gpio_num", (int *)&nGpioNum,sizeof(int) / 4) != 0)
 	{
 		return 0;
 	}
@@ -540,19 +540,14 @@ int sunxi_boot_init_gpio(void)
 	{
 		sprintf(acGpioName,"gpio%d",i);
 		printf("======YTR======acGpioName=%s\n",acGpioName);
-		if (fdt_get_one_gpio(FDT_PATH_BOOT_INIT_GPIO, acGpioName, &gpio_init) == 0) 
+		if (fdt_get_one_gpio(FDT_PATH_BOOT_INIT_GPIO, acGpioName, &gpio_init) == 0)
 		{
 			sunxi_gpio_request(&gpio_init, 1);
 		}
-		
+
 	}
-
-
-		
 	return 0;
 }
-
-
 
 #ifdef CONFIG_PMIC_TPS65185
 int tps65185_modules_init(void)

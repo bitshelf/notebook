@@ -1,5 +1,6 @@
 ---
-tags: Linux Docker
+tags:
+  - Docker
 ---
 
 # docker 安装

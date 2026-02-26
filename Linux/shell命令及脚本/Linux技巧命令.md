@@ -1,3 +1,8 @@
+---
+tags:
+  - Linux/command
+---
+# Linux 命令 tips
 * **`du -s * | sort -n | tail`** 
 > 列出当前目录里最大的10个文件
 > 
