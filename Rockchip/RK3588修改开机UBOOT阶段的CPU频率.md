@@ -8,7 +8,7 @@ RK3588 CPU在开机到uboot阶段的电压是固定0.75v（这个电压是pmic�
 如果有机器因为硬件设计或者其他原因导致在uboot阶段cpu不稳定，则可以尝试降低cpu的频率，修改方法如下：  
 因为uboot阶段的cpu电压是固定的，所以频率不能超过1.2GHz。
 
-```
+```diff
 diff --git a/arch/arm/include/asm/arch-rockchip/cru_rk3588.h b/arch/arm/include/asm/arch-rockchip/cru_rk3588.h
 index e96f190bcb..b1dc27fdfc 100644
 --- a/arch/arm/include/asm/arch-rockchip/cru_rk3588.h

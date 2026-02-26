@@ -1,5 +1,6 @@
 ---
-tags: Linux/command Wi-Fi
+tags:
+  - Wi-Fi
 ---
 
 # linux 配置文件

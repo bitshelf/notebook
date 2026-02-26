@@ -1,5 +1,6 @@
 ---
-tags:[shell]
+tags:
+  - Bash
 ---
 ## source与点命令
 -   source 命令的另一种写法是点符号，用法和 source 相同，从 Bourne Shell 而来

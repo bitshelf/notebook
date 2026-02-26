@@ -1,7 +1,7 @@
 ---
-tags: RTC command 
+tags:
+  - RTC
 ---
-
 # hwclock
 * 将系统时钟拷贝到硬件时钟：`hwclock -w` / `hwclock -systohc`
 * 将硬件时钟拷贝到系统时钟：`hwclock -s` / `hwclock -hctosys`

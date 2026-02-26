@@ -1,3 +1,7 @@
+---
+tags:
+  - Ubuntu
+---
 # 文件系统无法启动
 > [!fail] 失败
 > ~~~shell

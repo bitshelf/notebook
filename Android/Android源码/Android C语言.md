@@ -1,5 +1,6 @@
 ---
-tags: Android, C
+tags:
+  - Androd/C
 ---
 
 # Android 提供的 C 语言打印

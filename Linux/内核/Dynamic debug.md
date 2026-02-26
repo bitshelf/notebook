@@ -1,5 +1,6 @@
 ---
-tags: Linux Kernel
+tags:
+  - Linux/debug
 ---
 
 # Linux  Dynamic debug

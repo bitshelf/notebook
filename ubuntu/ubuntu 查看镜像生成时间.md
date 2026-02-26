@@ -1,5 +1,6 @@
 ---
-tags: Ubuntu command 
+tags:
+  - Ubuntu
 ---
 
 # Ubuntu 查看镜像生成时间

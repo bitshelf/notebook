@@ -1,7 +1,7 @@
 ---
-tags: Rockchip Link
+tags:
+  - Rockchip
 ---
-
 # Github
 1. <https://github.com/rockchip-linux>
 2. <https://github.com/rockchip-linux/rknn-toolkit2/tree/master/examples>

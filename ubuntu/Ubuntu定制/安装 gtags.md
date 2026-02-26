@@ -3,11 +3,14 @@ tags:
   - gtags
 ---
 ## 源码安装 gtags
+1. 下载源码：[Index of /pub/gnu/global](https://ftp.gnu.org/pub/gnu/global/)
 ```shell
-wget https://ftp.gnu.org/pub/gnu/global/global-6.6.tar.gz
-tar -zxvf global-6.6.tar.gz
-cd global-6.6/
-./configure --prefix=$HOME/.local/ --with-sqlite3
+wget https://ftp.gnu.org/pub/gnu/global/global-6.6.14.tar.gz
+
+./configure --prefix=$HOME/.local/ \
+--with-sqlite3 \
+--with-universal-ctags=$HOME/.local/bin/ctags
+
 make -j`nproc` install
 ```
 
@@ -15,6 +18,9 @@ make -j`nproc` install
 ```shell
 # install libjansson first
 sudo apt-get install libjansson-dev
+
+sudo apt install universal-ctags
+# or
 
 # then compile and install universal-ctags.
 #

@@ -1,7 +1,7 @@
 ---
-‌‌‌　　tags: [command]
+tags:
+  - Linux/command
 ---
-
 # ln 链接命令
 ~~~shell
 ‌‌‌ln [参数][源文件或目录][目标文件或目录]

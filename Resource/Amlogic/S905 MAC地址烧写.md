@@ -46,11 +46,11 @@ index 4ad4e61ad0..806a4a0834 100755
 > [!info] mac_ether.ini 文件内容
 > ~~~ini
 > [Group1]
-start = 02:E1:E2:35:40:70
-end = 02:E1:E2:36:40:70
-total = 65536
-used = 1
-current = 02:E1:E2:35:40:70
+> start = 02:E1:E2:35:40:70
+> end = 02:E1:E2:36:40:70
+> total = 65536
+> used = 1
+> current = 02:E1:E2:35:40:70
 >
 >
 >[fragment]

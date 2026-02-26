@@ -1,5 +1,6 @@
 ---
-tags: linux/Filesystem ADC
+tags:
+  - IIO/ADC
 ---
 
 1. 查看 ADC 通道值 

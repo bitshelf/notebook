@@ -1,3 +1,7 @@
+---
+tags:
+  - Debian
+---
 # 全局时区配置
 ~~~shell 
 ln -fs /usr/share/zoneinfo/Asia/Shanghai /etc/localtime

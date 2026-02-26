@@ -1,5 +1,6 @@
 ---
-tags: Linux command 
+tags:
+  - Linux/command
 ---
 
 # -exec

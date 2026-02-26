@@ -1,8 +1,7 @@
 ---
-tags: Android SELinux
+tags:
+  - Android/SElinux
 ---
-
-
 ## GPS 启动程序
 
 

@@ -1,7 +1,7 @@
 ---
-tags: Android Camera
+tags:
+  - Android/Camera
 ---
-
 # Android camera
 
 

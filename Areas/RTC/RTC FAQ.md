@@ -1,7 +1,7 @@
 ---
-tags: RTC command 
+tags:
+  - RTC
 ---
-
 # RTC 问题
 ### hwclock
 > [!question] RTC 设备可用，但是 `hwclock -r` 显示 

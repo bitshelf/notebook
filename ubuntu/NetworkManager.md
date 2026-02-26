@@ -1,5 +1,6 @@
 ---
-tags: Network Linux command 
+tags:
+  - Network/Debian
 ---
 
 # nmcli
@@ -108,7 +109,7 @@ systemctl mask NetworkManager-dispatcher
 *  `mask` 一个服务时，会使 `/etc/systemd/system` 的文件连接到 `/dev/null`, 当其他程序需要启动它，会无法启动（只能用于没有危险的服务，`systemctl mask bluetooth.service` 则会失败）
 * `unmask` 用于取消连接，取消屏蔽
 * `disable` 一个服务时，其他程序调用时，可以再次启动
-#Linux/systemd
+#Systemd
 #### 运行网络脚本
 术语 _网络脚本_ 通常是指 `/etc/init.d/network` 及所有它调用的已安装脚本。用户提供的文件通常被视为配置文件，但也可以将其解读为对脚本的修改
 只使用 **systemctl** 程序运行脚本则会清除所有现有环境变量，并确保一个干净的执行模式。该命令的格式如下：

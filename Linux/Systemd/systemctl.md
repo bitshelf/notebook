@@ -1,5 +1,8 @@
 ---
-tags: [Ubuntu,Debian,Linux/systemd]
+tags:
+  - Ubuntu
+  - Debian
+  - Systemd
 ---
 > [!info] info
 > * Systemd 并不是一个命令，而是一组命令

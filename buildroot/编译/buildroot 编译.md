@@ -11,7 +11,7 @@ tags: buildroot
 > [!example] rk3399pro（不同平台修改defconfig名字）
 > ```shell
 > source buildroot/build/envsetup.sh rockchip_rk3399pro
-make
+> make
 >```
 
 #### 配置编译环境

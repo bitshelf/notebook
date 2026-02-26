@@ -2,11 +2,21 @@
 tags: [command,Android,ip]
 ---
 # 命令
-1. `ip link set can0 down`
-2. `ip link set can0 type can bitrate 500000`
-3. `ip link set can0 up`
-4. `candump can0&` 后台接收总线上的数据（ `candump -h`)
-5. `cansend can0 123#DEADBEEF` 发送单个帧 (`cansend -h`)
+```shell
+ip link set can0 down
+ip link set can0 type can bitrate 500000
+ip link set can0 up
+# 后台接收总线上的数据
+candump can0&
+
+# 发送单个帧
+cansend can0 123#DEADBEEF
+
+
+ip link set can1 down;ip link set can1 type can bitrate 500000;ip link set can1 up;cansend can1 123#ABABABAB;candump can1&
+```
+
+
 ```shell
 ip link set can0 down;ip link set can0 type can bitrate 500000;ip link set can0 up;cansend can0 123#ABABABAB;candump can0&
 ```

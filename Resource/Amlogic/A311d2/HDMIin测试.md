@@ -1,5 +1,6 @@
 ---
-tags: Amlogic HDMI
+tags:
+  - HDMI_in
 ---
 ## RK3588 Linux Gstreamer 预览
 ```shell

@@ -1,5 +1,6 @@
 ---
-tags: Android Bazel
+tags:
+  - Bazel/Android
 ---
 
 ### 检查 Bazel 是否正常运行

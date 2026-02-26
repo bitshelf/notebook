@@ -1,7 +1,7 @@
 ---
-tags: Rockchip Display
+tags:
+  - Display/Rockchip
 ---
-
 # Rockchip 显示子系统
 - VOP是从存储器帧缓冲区到显示设备的显示接口, 是显示单元用来显示图像（比如输入NV12,RGB的Buffer，显示到屏幕）
 - 显示子系统是 Rockchip 平台显示输出相关软硬件系统的统称

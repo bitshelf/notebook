@@ -1,7 +1,7 @@
 ---
-tags: Linux Ubuntu Debian
+tags:
+  - SSH
 ---
-
 # ssh 允许 root 登录
 1. 修改配置文件：`/etc/ssh/sshd_config`
 ```shell:/etc/ssh/sshd_config

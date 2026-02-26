@@ -23,8 +23,8 @@ echo 0x0300b058 0xfff,0x0300b0a0 0xfff > write;cat write
 
 > [!info] debug 节点
 > ~~~shell
-mount  -t debugfs none /sys/kernel/debug
-cd /sys/kernel/debug/sunxi_pinctrl
+> mount  -t debugfs none /sys/kernel/debug
+> cd /sys/kernel/debug/sunxi_pinctrl
 >~~~
 
 1. 查看 pin 的配置
@@ -39,8 +39,8 @@ cat sunxi_pin_configure
 
 > [!info] 修改 pin 属性
 > ~~~shell
-echo PC2 1 > pull;cat pull
-cat sunxi_pin_configure # 查看修改情况
+> echo PC2 1 > pull;cat pull
+> cat sunxi_pin_configure # 查看修改情况
 >~~~
 >
 
@@ -60,8 +60,8 @@ cat /sys/kernel/debug/sunxi_pinctrl/dev_name
 
 > [!help] Prerequisites
 > ~~~shell
-mount -t debugfs none /sys/kernel/debug
-cd /sys/kernel/debug/pinctrl
+> mount -t debugfs none /sys/kernel/debug
+> cd /sys/kernel/debug/pinctrl
 >~~~
 1. 查看 PIN 的管理设备
 ~~~shell

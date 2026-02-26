@@ -1,7 +1,7 @@
 ---
-tags: Network Wi-Fi
+tags:
+  - Wi-Fi
 ---
-
 # 板子 WiFi 测试
 1. 测试需要到屏蔽室测试
 2. 使用直连方式

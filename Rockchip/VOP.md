@@ -1,5 +1,6 @@
 ---
-tags: Video DRM
+tags:
+  - Display/Rockchip
 ---
 
 # VOP

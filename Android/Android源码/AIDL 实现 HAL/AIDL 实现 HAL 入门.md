@@ -1,7 +1,7 @@
 ---
-tags: Android HAL
+tags:
+  - Android/HAL
 ---
-
 ## 通信架构
 ![](assets/AIDL%20通信架构.png)
 

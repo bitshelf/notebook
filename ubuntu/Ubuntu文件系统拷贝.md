@@ -30,7 +30,7 @@ ff_export_roots Udisk
 1. 启动板子，插上u盘，可能u盘要手动挂载，可以挂载在系统的`/mnt`下
 2. 看下板子的/文件系统挂载在哪个分区下,这里看到在*mmcblk1p8*下
 	```shell 
-	rpdzkj@rpdzkj:~$ lsblk
+	$ lsblk
 	NAME  MAJ:MIN RM SIZE RO TYPE MOUNTPOINT
 	├── mmcblk1rpmb  179:48  0 512K  0 disk
 	├── mmmcblk1boot0 179:16  0  4M  1 disk
@@ -53,8 +53,8 @@ sudo cp -a ubuntu/* rootfs/
 ```
 ### 导出后，减小镜像大小
 ```shell
-$ e2fsck -f linux-rootfs.img
-$ resize2fs -M linux-rootfs.img
+e2fsck -f linux-rootfs.img
+resize2fs -M linux-rootfs.img
 ```
 
 # 导出文件系统失败

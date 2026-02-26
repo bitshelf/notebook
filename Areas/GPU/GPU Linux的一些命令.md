@@ -1,3 +1,7 @@
+---
+tags:
+  - GPU
+---
 # Debian
 1. 查看 GPU 的占用情况
 ```shell
