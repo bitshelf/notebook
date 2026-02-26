@@ -1,5 +1,6 @@
 ---
-tags: Rockchip DRM
+tags:
+  - DRM
 ---
 
 # rockchip DRM

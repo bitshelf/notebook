@@ -1,5 +1,6 @@
 ---
-tags: Makefile Autotools
+tags:
+  - Autotools
 ---
 ## Autotools工具、项目、库文件关系图
 ![](assets/c1e914f000731a2d48f4b0bd627a191c.png)

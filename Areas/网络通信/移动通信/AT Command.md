@@ -1,5 +1,6 @@
 ---
-tags: LTE  Network 
+tags:
+  - LTE
 ---
 
 # AT command

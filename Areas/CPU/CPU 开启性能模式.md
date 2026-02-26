@@ -1,5 +1,6 @@
 ---
-tags: Linux CPU
+tags:
+  - CPU/ARM
 ---
 
 # 打开 CPU 性能模式

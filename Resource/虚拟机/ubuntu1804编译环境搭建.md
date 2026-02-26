@@ -1,5 +1,6 @@
 ---
-tags: ubuntu1804
+tags:
+  - Ubuntu
 ---
 
 # Ubuntu1804 虚拟机安装记录

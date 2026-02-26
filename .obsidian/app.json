@@ -29,11 +29,11 @@
   "useMarkdownLinks": true,
   "userIgnoreFilters": [
     "pdf/",
-    "/.excalidraw.md/",
     "Tools/Obsidian/Excalidraw/",
     ".git"
   ],
   "showFrontmatter": false,
-  "showInlineTitle": false,
-  "propertiesInDocument": "visible"
+  "showInlineTitle": true,
+  "propertiesInDocument": "visible",
+  "focusNewTab": false
 }

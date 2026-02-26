@@ -1,3 +1,8 @@
+---
+tags:
+  - CAN
+---
+
 1. 查询当前网络设备:  
 ```shell
 ifconfig -a

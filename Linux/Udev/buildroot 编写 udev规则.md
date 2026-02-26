@@ -8,7 +8,7 @@ udevadm info --attribute-walk --name=/dev/ttyACM10
 ```
 获取 usb 插拔信息
 ```shell
-udevadm monitor--udev
+udevadm monitor --udev
 ```
 ## 编写规则
 - 不能混合匹配多个祖先设备属性

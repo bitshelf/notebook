@@ -1,6 +1,8 @@
 ---
-tags: Linux Ubuntu
+tags:
+  - Packages/Ubuntu
 ---
+# deb 包制作
 1. 下载源码：
 ```shell
 apt source <package-name>

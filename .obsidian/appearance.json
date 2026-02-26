@@ -4,17 +4,17 @@
   "translucency": false,
   "cssTheme": "Border",
   "enabledCssSnippets": [
-    "list",
-    "head1center",
-    "header",
-    "titlebar",
     "canvas",
+    "head1center",
+    "table",
+    "list",
     "scrollbar",
-    "table"
+    "titlebar",
+    "header"
   ],
   "textFontFamily": "Microsoft YaHei,Cascadia Code,Courier New",
   "interfaceFontFamily": "微软雅黑",
-  "monospaceFontFamily": "Cascadia Code",
+  "monospaceFontFamily": "Cascadia Code NF,Cascadia Code",
   "accentColor": "",
   "nativeMenus": true,
   "showViewHeader": true,

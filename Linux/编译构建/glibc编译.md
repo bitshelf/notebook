@@ -1,7 +1,7 @@
 ---
-tags: Linux glibc
+tags:
+  - Linux/glibc
 ---
-
 # glibc 编译
 ### glibc 源码下载
 ```shell

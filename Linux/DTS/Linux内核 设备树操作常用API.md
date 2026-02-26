@@ -1,3 +1,8 @@
+---
+tags:
+  - DTS
+---
+# Linux DTS 操作常用 API
 [Linux设备树语法详解](http://www.cnblogs.com/xiaojiang1025/p/6131381.html)一文中介绍了设备树的语法，这里主要介绍内核中提供的操作设备树的API，这些API通常都在**"include/of.h"**中声明。
 
 ## device\_node

@@ -1,7 +1,7 @@
 ---
-tags: Linux USB
+tags:
+  - OTG
 ---
-
 ## 切换到 device 模式
 ```shell
 echo peripheral > /sys/devices/platform/fe8a0000.usb2-phy/otg_mode

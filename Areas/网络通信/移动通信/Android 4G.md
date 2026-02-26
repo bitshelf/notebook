@@ -1,5 +1,6 @@
 ---
-tags: LTE Network 
+tags:
+  - LTE/Android
 ---
 # 开发板 4G 操作
  *  `getprop | grep rild` 查看调用的 so 路径

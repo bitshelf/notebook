@@ -21,7 +21,7 @@ udevadm test /dev/mmcblk0p1
 
 ### 监控 udev 事件
 ```shell
-udevadm minitor
+udevadm monitor
 ```
 
 ````ad-example

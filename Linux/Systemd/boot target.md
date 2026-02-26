@@ -1,5 +1,6 @@
 ---
-tags: Linux/systemd 
+tags:
+  - Systemd
 ---
 
 # systemd 启动目标

@@ -1,7 +1,7 @@
 ---
-tags: Linux DebugFS
+tags:
+  - DebugFS
 ---
-
 ## debugfs
 - mounted on `/sys/kernel/debug`
 

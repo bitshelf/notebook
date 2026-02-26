@@ -1,5 +1,6 @@
 ---
-tags: Linux/command Wi-Fi
+tags:
+  - Wi-Fi
 ---
 
 > [!info] wpa_supplicant

@@ -1,5 +1,6 @@
 ---
-tags: Ubuntu Network
+tags:
+  - NETwork/Debian
 ---
 
 # Ubuntu DNS 配置

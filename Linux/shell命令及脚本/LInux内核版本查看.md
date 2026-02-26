@@ -1,5 +1,6 @@
 ---
-tags: Linux Kernel
+tags:
+  - Linux/Kernel
 ---
 
 # Linux 内核版本查看

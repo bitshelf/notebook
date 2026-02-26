@@ -1,5 +1,6 @@
 ---
-tags: Android Frameworks
+tags:
+  - Android/framework
 ---
 
 ## Link

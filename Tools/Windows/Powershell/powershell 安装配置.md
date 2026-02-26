@@ -7,18 +7,6 @@ tags: PowerShell
 ```powershell
 winget install Microsoft.PowerShell
 ```
-### 安装 oh-my-posh: 
-```powershell
-winget install JanDeDobbeleer.OhMyPosh
-```
-### 安裝 oh-my-posh 模組: 
-```powershell
-Install-Module oh-my-posh -Scope CurrentUser -Force
-```
-### 更新 oh-my-posh：
-```powershell
-Update-Module oh-my-posh
-```
 ### 安裝 [Terminal-Icons](https://github.com/devblackops/Terminal-Icons) 模組： 
 ```powershell
 Install-Module -Name Terminal-Icons -Repository PSGallery -Force
@@ -60,7 +48,9 @@ PROFILE 配置文件： [Microsoft.PowerShell_profile](assets/Microsoft.PowerShe
 Set-ExecutionPolicy -Scope CurrentUser
 # 选择 RemoteSigned
 ```
+- ![scoop](../scoop.md)
 # Link
+- [PSCompletions \| PSCompletions - PowerShell Completions Module](https://pscompletions.abgox.com/zh-CN/)
 * [powershell 安装](https://blog.miniasp.com/post/2021/11/24/PowerShell-prompt-with-Oh-My-Posh-and-Windows-Terminal)
 
 # 示例

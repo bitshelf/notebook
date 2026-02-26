@@ -1,3 +1,8 @@
+---
+tags:
+  - U盘
+---
+
 1. 查看当前所有分区
 	```shell
 	sudo fdisk -l

@@ -1,3 +1,7 @@
+---
+tags:
+  - buildroot/Network
+---
 ## 在 `/etc/dhcpcd.conf` 追加静态 IP 配置信息
 ~~~config
 interface eth0  

@@ -1,7 +1,9 @@
 ---
-tags:Android 
+tags:
+  - AOSP
 ---
-- `device/rockchip/rk356x/overlay/frameworks/base/packages/SettingsProvider/res/values/defaults.xml`
+# 去掉锁屏
+ `device/rockchip/rk356x/overlay/frameworks/base/packages/SettingsProvider/res/values/defaults.xml`
 ```diff
 -    <integer name="def_screen_off_timeout">60000</integer>
 +    <integer name="def_screen_off_timeout">2147483647</integer>

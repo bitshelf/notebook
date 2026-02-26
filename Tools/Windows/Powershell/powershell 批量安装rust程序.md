@@ -1,7 +1,7 @@
 ---
-tags: Rust PowerShell
+tags:
+  - Windowns/PowerShell
 ---
-
 # powershell 安装 rust 程序
 ```powershell
 $env:RUSTUP_DIST_SERVER="https://mirrors.ustc.edu.cn/rust-static"

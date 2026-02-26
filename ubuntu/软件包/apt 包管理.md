@@ -1,5 +1,6 @@
 ---
-tags: apt Ubuntu 
+tags:
+  - Ubuntu
 ---
 
 # 依赖

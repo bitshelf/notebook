@@ -1,7 +1,7 @@
 ---
-tags: Linux Kernel 
+tags:
+  - Linux/Kernel
 ---
-
 # Link & Refecens
 * https://www.kernel.org/doc/html/latest/
 <iframe 

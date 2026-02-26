@@ -1,5 +1,6 @@
 ---
-tags: U-Boot Rockchip
+tags:
+  - U-Boot
 ---
 
 # U-boot 延时修改

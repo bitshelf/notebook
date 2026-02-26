@@ -1,5 +1,6 @@
 ---
-tags: Rust Android 
+tags:
+  - Rust/Android
 ---
 
 # Link & References

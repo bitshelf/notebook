@@ -1,5 +1,6 @@
 ---
-tags: Android adb
+tags:
+  - Android/adb
 ---
 # ADB工具
 

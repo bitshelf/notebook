@@ -1,30 +1,44 @@
 ---
-
-kanban-plugin: board
-
+tags:
+  - ObsdianNavigation
 ---
-
-## 进行中
-
-
-
-## 任务池
-
-
-
-## 已完成
-
-**完成**
-
-
-## bug
-
-
-
-
-
-%% kanban:settings
+# 🗂️ 任务看板
+```base
+filters:
+  and:
+    - 'file.hasProperty("status")'
+    - 'file.ext == "md"'
+views:
+  - type: kanban
+    name: 任务看板
+    groupBy:
+      property: note.status
+      direction: ASC
+    groupOrder:
+      - 未开始
+      - 进行中
+      - 已完成
+    order:
+      - file.name
+      - note.priority
+      - note.due
+  - type: table
+    name: 任务清单
+    order:
+      - file.name
+      - note.status
+      - note.priority
+      - note.due
+      - file.folder
+    sort:
+      - property: note.status
+        direction: ASC
+    groupBy:
+      property: note.status
+      direction: ASC
+    groupOrder:
+      - 未开始
+      - 进行中
+      - 已完成
+newItemFolder: Tasks
 ```
-{"kanban-plugin":"board","show-checkboxes":true}
-```
-%%

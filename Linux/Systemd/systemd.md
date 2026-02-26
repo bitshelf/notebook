@@ -1,5 +1,6 @@
 ---
-tags: Linux/systemd Linux command 
+tags:
+  - Systemd
 ---
 
 # systemd

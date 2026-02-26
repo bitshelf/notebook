@@ -1,7 +1,7 @@
 ---
-tags: SELinux Android
+tags:
+  - Android/SElinux
 ---
-
 ## SELinux Policy 语言介绍
 - SELinux 中，每种东西都会被赋予一个安全属性，官方说法叫 Security Context
 

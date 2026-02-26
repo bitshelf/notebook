@@ -1,8 +1,7 @@
 ---
-tags: MBR GPT
+tags:
+  - GPT
 ---
-
-
 > [!info] fdisk
 > 使用 fdisk 不能建立分区。原因是 fdisk 只能建立 2TB 大小的分区
 

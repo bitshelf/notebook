@@ -1,5 +1,6 @@
 ---
-tags: Android rk356x
+tags:
+  - Rockchip/Android
 ---
 
 # RK356x Android 11 移植 GMS

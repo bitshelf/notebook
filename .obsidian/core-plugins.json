@@ -1,7 +1,7 @@
 {
   "file-explorer": true,
   "global-search": true,
-  "switcher": false,
+  "switcher": true,
   "graph": true,
   "backlink": true,
   "outgoing-link": true,
@@ -19,7 +19,7 @@
   "random-note": false,
   "outline": true,
   "word-count": false,
-  "slides": false,
+  "slides": true,
   "audio-recorder": false,
   "workspaces": true,
   "file-recovery": true,
@@ -28,5 +28,7 @@
   "canvas": true,
   "bookmarks": true,
   "properties": true,
-  "webviewer": true
+  "webviewer": false,
+  "footnotes": true,
+  "bases": true
 }

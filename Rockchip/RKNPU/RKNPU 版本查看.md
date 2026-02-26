@@ -1,5 +1,6 @@
 ---
-tags: Rockchip NPU
+tags:
+  - Rockchip/NPU
 ---
 
 # RKNPU 版本查看

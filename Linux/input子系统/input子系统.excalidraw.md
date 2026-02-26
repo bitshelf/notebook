@@ -1,7 +1,7 @@
 ---
-
 excalidraw-plugin: parsed
-
+tags:
+  - excalidraw
 ---
 ==⚠  Switch to EXCALIDRAW VIEW in the MORE OPTIONS menu of this document. ⚠==
 
@@ -15,7 +15,7 @@ input Device Drivers ^vz1AV15S
 
 
 # Embedded files
-a58f0b2c5ae3997f333d1f4821e55eee8e4876bd: [[images/Pasted Image 20220223133721_460.jpg]]
+a58f0b2c5ae3997f333d1f4821e55eee8e4876bd: [[Pasted Image 20220223133721_460.jpg]]
 
 %%
 # Drawing

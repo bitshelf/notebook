@@ -1,7 +1,7 @@
 ---
-tags: HDR Camera
+tags:
+  - Camera/HDR
 ---
-
 # HDR 基础
 ## 什么是 HDR？
 - HDR 全称是 High-Dynamic Range，即高动态范围图像技术。这项技术最早应用于摄影，在拍照过程中开启 HDR，可以让原先的暗场景变得更明亮更通透

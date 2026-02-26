@@ -1,7 +1,7 @@
 ---
-tags: Linux Kernel
+tags:
+  - Linux
 ---
-
 # Linux kernel 编译
 ```shell
 make help

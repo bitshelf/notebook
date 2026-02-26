@@ -1,5 +1,6 @@
 ---
-tags: Ubuntu Network
+tags:
+  - LTE
 ---
 
 # 配置自动连接

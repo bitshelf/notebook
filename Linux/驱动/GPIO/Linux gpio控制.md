@@ -47,7 +47,7 @@ int main(int argc, char *argv[])
 	output_line = gpiod_chip_find_line(output_chip, "BLUE_LED");
 
 	/* config as output and set a description */
-	gpiod_line_request_output(output_line, "embarcadosDemo",
+	gpiod_line_request_output(output_line, "gpio_test",
 	GPIOD_LINE_ACTIVE_STATE_HIGH);
 
 	while (1) {
@@ -88,4 +88,5 @@ echo 1 > /sys/class/gpio/gpio21/value
 - [gpiochip - Rust](https://docs.rs/gpiochip/latest/gpiochip/)
 - [gpiod 编译 An Introduction to chardev GPIO and Libgpiod on the Raspberry PI – Beyondlogic](https://www.beyondlogic.org/an-introduction-to-chardev-gpio-and-libgpiod-on-the-raspberry-pi/)
 - [General Purpose Input/Output (GPIO) — The Linux Kernel documentation](https://docs.kernel.org/driver-api/gpio/index.html)
-- [GPIO 边沿触发示例](https://lloydrochester.com/post/hardware/libgpiod-event-rpi/)
+- [GPIO 边沿触发示例](https://lloydrochester.com/post/hardware/libgpiod-event-rpi/
+- [带命令行参数的 GPIO C 程序](https://github.com/starnight/libgpiod-example/blob/master/libgpiod-scan/main.c)

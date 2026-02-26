@@ -1,3 +1,7 @@
+---
+tags:
+  - Bash
+---
 ## && 运算符
 ~~~shell
 command1  && command2 #如果这个命令执行成功&&那么执行这个命令

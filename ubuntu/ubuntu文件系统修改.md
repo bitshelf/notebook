@@ -1,3 +1,7 @@
+---
+tags:
+  - Ubuntu
+---
 # ubuntu 系统启动菜单Debian目录名修改
 1. `vim usr/share/desktop-directories/lxde-debian.directory`
 2. 在目录`usr/share/pixmaps`添加ubuntu的 Icon

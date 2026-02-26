@@ -1,3 +1,8 @@
+---
+tags:
+  - mipi
+---
+
 # Dual-channel
 * 子模式①和 Single-channel 的主要区别是 `dsi, lanes` 的值大于 4
 * 子模式②和 Single-channel 的主要区别是 `dsi,lanes`，`clock-frequency`，`hactive`，`hfront-porch`，`hsync-len`，`hback-portch` 在单个 panel 的基础上 x2

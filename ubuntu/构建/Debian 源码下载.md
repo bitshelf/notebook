@@ -1,8 +1,8 @@
 ---
-tags: Ubuntu  Debian 
+tags:
+  - Debian
 ---
-
-## Debian 源码下载 
+# Debian 源码下载 
 1. 到[网站](https://cdimage.debian.org/debian-cd/current/arm64/jigdo-cd/)下载
 	1. `debian-11.6.0-arm64-netinst.jigdo`
 	2. `debian-11.6.0-arm64-netinst.template`
