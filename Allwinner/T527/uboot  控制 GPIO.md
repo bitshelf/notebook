@@ -15,6 +15,9 @@ tags:
 ```
 ![GPIO 说明](../assets/%E5%85%A8%E5%BF%97GPIO%E8%AE%BE%E5%A4%87%E6%A0%91%E4%BF%A1%E6%81%AF.excalidraw)
 
+
+
+![board_common](assets/board_common.c#L513-L550)
 ### 修改 board_common. c
 - `brandy/brandy-2.0/u-boot-2018/board/sunxi/board_common.c`
 ```c
@@ -54,11 +57,8 @@ int sunxi_boot_init_gpio(void)
                 }
 
         }
-
-
-
         return 0;
 }
 ```
 
-- 修改后的文件：![](assets/board_common.c)
+- 修改后的文件：![](assets/board_common.c#513-550)

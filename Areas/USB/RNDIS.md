@@ -1,5 +1,6 @@
 ---
-tags: USB Ethernet
+tags:
+  - USB/Network
 ---
 
 # RNDIS

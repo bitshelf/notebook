@@ -1,5 +1,6 @@
 ---
-tags: Linux Ubuntu
+tags:
+  - Ubuntu
 ---
 
 # 虚拟机 Ubuntu 磁盘扩容

@@ -1,7 +1,7 @@
 ---
-tags: Rust Windowns Linux
+tags:
+  - Rust
 ---
-
 # cargo 配置
 ## cargo 配置文件目录
 -  `/.cargo/config.toml`

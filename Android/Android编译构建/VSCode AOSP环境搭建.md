@@ -1,7 +1,7 @@
 ---
-tags: Android Vscode
+tags:
+  - AOSP/VsCode
 ---
-
 # VsCode for Android
 ## Clangd 配置
 环境配置

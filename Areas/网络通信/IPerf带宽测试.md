@@ -1,7 +1,7 @@
 ---
-tag: iperf
+tags:
+  - Linux/perf
 ---
-
 # 以太网测试
 ## UDP 测试
 1. 服务端运行：`iperf -s -b 1600M -i 1`

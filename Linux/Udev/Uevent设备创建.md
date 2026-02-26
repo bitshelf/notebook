@@ -1,5 +1,6 @@
 ---
-tags: Linux udev
+tags:
+  - udev
 ---
 
 # Uevent 设备创建过程

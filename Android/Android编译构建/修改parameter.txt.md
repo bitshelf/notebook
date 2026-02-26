@@ -1,5 +1,6 @@
 ---
-tags: Android Rockchip
+tags:
+  - Rockchip
 ---
 
 # Rockchip 修改 parameter. txt

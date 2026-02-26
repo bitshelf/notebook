@@ -1,7 +1,7 @@
 ---
-tags: Ubuntu Network
+tags:
+  - DNS/Ubuntu
 ---
-
 # DNS 服务配置
 1. 配置文件：`/etc/systemd/resolved.conf`
 2. 查看当前使用的 DNS 配置

@@ -1,7 +1,7 @@
 ---
-tags: GN ninja
+tags:
+  - ninja
 ---
-
 # GN 和 ninja
 GN 的全称为 Generate Ninja（生成 Ninja）
 * 不同于 `make`，`gn` 仅完成了工作的一半

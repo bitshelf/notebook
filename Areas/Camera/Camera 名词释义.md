@@ -1,5 +1,6 @@
 ---
-tags: Camera  V4l2 
+tags:
+  - V4l2
 ---
 
 ## 摄像头架构名词释义

@@ -1,5 +1,6 @@
 ---
-tags: Android Rockchip 
+tags:
+  - Rockchip/Android
 ---
 # 注意
 1. Android12.0 不能直接烧写 kernel.img 和 resource.img

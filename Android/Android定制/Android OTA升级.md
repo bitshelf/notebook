@@ -1,5 +1,6 @@
 ---
-tags: Android Rockchip
+tags:
+  - OTA/Android
 ---
 
 # Android12 OTA 差分升级

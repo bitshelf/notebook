@@ -1,5 +1,6 @@
 ---
-tags: Camera Rockchip
+tags:
+  - ISP/ISP20
 ---
 
 # ISP20

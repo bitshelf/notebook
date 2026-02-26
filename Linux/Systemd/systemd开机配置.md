@@ -16,11 +16,11 @@ tags: Systemd
 > [!example] 服务启动文件示例
 > ```config
 > # /lib/systemd/system/ssh.service
-[Unit]
-Description=OpenBSD Secure Shell server
-Documentation=man:sshd(8) man:sshd_config(5)
-After=network.target auditd.service
-ConditionPathExists=!/etc/ssh/sshd_not_to_be_run
+> [Unit]
+> Description=OpenBSD Secure Shell server
+> Documentation=man:sshd(8) man:sshd_config(5)
+> After=network.target auditd.service
+> ConditionPathExists=!/etc/ssh/sshd_not_to_be_run
 >
 > [Service]
 > EnvironmentFile=-/etc/default/ssh

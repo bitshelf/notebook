@@ -1,3 +1,7 @@
+---
+tags:
+  - OTG
+---
 # USB OTG的工作原理
 #OTG 
 1. 提供有限的主机能力和一个MiniAB插座、支持主机流通协议(Host Negotiatio n Protocol, HNP),并和外设式OTG设备一样支持事务请求协议(Session Request Protocol, SRP)

@@ -1,7 +1,7 @@
 ---
-tags: Windowns  PowerShell 
+tags:
+  - Windowns/PowerShell
 ---
-
 ## wezterm 配置
 - 路径：`~/.config/wezterm/wezterm.lua`
 ```lua

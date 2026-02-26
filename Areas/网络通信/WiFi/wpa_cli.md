@@ -1,5 +1,6 @@
 ---
-tags: Linux/command Wi-Fi
+tags:
+  - Wi-Fi
 ---
 
 > [!info] wpa_supplicant
@@ -13,13 +14,13 @@ tags: Linux/command Wi-Fi
 > [!error] wpa_cli 报错
 > ```shell
 > root@RK3588:/# wpa_cli
-wpa_cli v2.9
-Copyright (c) 2004-2019, Jouni Malinen <j@w1.fi> and contributors
+> wpa_cli v2.9
+> Copyright (c) 2004-2019, Jouni Malinen <j@w1.fi> and contributors
 >
-This software may be distributed under the terms of the BSD license.
-See README for more details.
+> This software may be distributed under the terms of the BSD license.
+> See README for more details.
 >
-Interactive mode
+> Interactive mode
 >
 >Could not connect to wpa_supplicant: (nil) - re-trying
 > ```

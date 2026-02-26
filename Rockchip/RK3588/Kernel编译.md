@@ -1,7 +1,7 @@
 ---
-tags: Android  Kernel 
+tags:
+  - Rockchip/Kernel
 ---
-
 ## RK3588 Android12 内核编译
 - kernel 编译完后需要通过 android 去打包成 boot. img
 - 需要过 GMS 认证的 google 有要求要用 clang 编译内核

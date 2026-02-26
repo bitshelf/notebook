@@ -1,7 +1,7 @@
 ---
-tags: Linux Makefile
+tags:
+  - Autotools
 ---
-
 # 配置文件
 ![](assets/Autotools%20%E5%88%9B%E5%BB%BA%20Makefile%20%E6%B5%81%E7%A8%8B.excalidraw)
 ## 生成 Makefile 的通用规则文件 Makefile. in

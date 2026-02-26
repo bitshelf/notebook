@@ -1,7 +1,7 @@
 ---
-tags: OpenHarmony rk356x
+tags:
+  - OpenHarmony
 ---
-
 # Openharmony 标准移植
 
 > [!tips] 参考网址

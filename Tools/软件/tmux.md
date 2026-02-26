@@ -1,7 +1,7 @@
 ---
-tags: Linux Tools
+tags:
+  - Linux/Tools
 ---
-
 # tmux
 -   **会话** - 每个会话都是一个独立的工作区，其中包含一个或多个窗口
     -   `tmux` 开始一个新的会话

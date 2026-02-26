@@ -1,7 +1,7 @@
 ---
-tags: Linux, command, 
+tags:
+  - Linux/command
 ---
-
 # 直接执行
 >示例： `./script.sh`
 * <mark class="hltr-yellow">要求文件具有可执行权限  </mark> 

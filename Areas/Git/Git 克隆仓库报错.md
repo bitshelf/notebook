@@ -1,7 +1,6 @@
 ---
 tags: Git
 ---
-
 # Git 克隆报错
 > [!error] server certificate verification failed. CAfile: /etc/ssl/certs/ca-certificates.crt CRLfile: none
 > 

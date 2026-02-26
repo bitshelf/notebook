@@ -1,5 +1,6 @@
 ---
-tags: Linux Camera
+tags:
+  - Camera/Linux
 ---
 
 # Linux Camera 架构

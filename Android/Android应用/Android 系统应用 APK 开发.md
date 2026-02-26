@@ -249,3 +249,4 @@ cleanup
 
 ## Link 
 - [写给应用开发的 Android Framework 教程——玩转 AOSP篇 之使用 Android Studio 开发系统 App - 掘金](https://juejin.cn/post/7207358268804579386)
+- [教你签自己的系统！LineageOS Release Key 签名刷机教程 // CYRUS STUDIO](https://cyrus-studio.github.io/blog/posts/%E6%95%99%E4%BD%A0%E7%AD%BE%E8%87%AA%E5%B7%B1%E7%9A%84%E7%B3%BB%E7%BB%9Flineageos-release-key-%E7%AD%BE%E5%90%8D%E5%88%B7%E6%9C%BA%E6%95%99%E7%A8%8B/)

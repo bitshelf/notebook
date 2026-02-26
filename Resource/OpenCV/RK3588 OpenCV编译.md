@@ -1,7 +1,7 @@
 ---
-tags: OpenCV Debian
+tags:
+  - OpenCV
 ---
-
 # Debian 11 OpenCV 编译 
 1. 开发板计算资源有限，编译配置文件修
 ```shell

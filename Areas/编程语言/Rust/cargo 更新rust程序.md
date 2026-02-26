@@ -1,5 +1,6 @@
 ---
-tags: Rust Linux
+tags:
+  - Rust/Cargo
 ---
 # cargo
 ## cargo install 

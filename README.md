@@ -1,7 +1,9 @@
 # 介绍
-这是一个使用 Obsidian 撰写的 Markdown 笔记
-* 依赖以下 Obsidian 插件
-	* excalidraw
-	* kanban
-	* Dataview
-	* Embedded Code Title
+
+嵌入式 Linux 技术笔记库，以 Obsidian 笔记的形式维护，主要记录移植适配、驱动调试和芯片平台实践。
+
+方向包括：
+
+- Linux 内核、驱动
+- Rockchip、Allwinner
+- Android、OpenHarmony、Ubuntu、Yocto、buildroot

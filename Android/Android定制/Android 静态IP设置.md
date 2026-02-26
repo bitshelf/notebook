@@ -1,5 +1,6 @@
 ---
-tags: Android Network Allwinner 
+tags:
+  - Network/Android
 ---
 
 # Link & References

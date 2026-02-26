@@ -1,5 +1,6 @@
 ---
-tags： Bus
+tags:
+  - BUS
 ---
 
 # APB

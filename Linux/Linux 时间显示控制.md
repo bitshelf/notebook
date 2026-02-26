@@ -1,5 +1,6 @@
 ---
-tags: Linux Time
+tags:
+  - Linux/Time
 ---
 
 ## format：输出的时间格式可用的转义序列

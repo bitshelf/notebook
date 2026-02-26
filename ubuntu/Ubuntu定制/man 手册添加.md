@@ -1,5 +1,6 @@
 ---
-tags: Linux command
+tags:
+  - Debian
 ---
 
 ## man 手册添加
