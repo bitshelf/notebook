@@ -1,0 +1,12 @@
+{
+  "name": "github-attachments",
+  "private": true,
+  "type": "module",
+  "main": "index.mjs",
+  "quartz": {
+    "name": "github-attachments",
+    "category": "transformer",
+    "version": "1.0.0",
+    "defaultOrder": 25
+  }
+}

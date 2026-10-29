@@ -1,0 +1,11 @@
+{
+  "name": "notebook",
+  "compatibility_date": "2026-11-06",
+  "workers_dev": true,
+  "assets": {
+    "directory": "./public",
+    "html_handling": "auto-trailing-slash",
+    "not_found_handling": "404-page",
+  },
+  "preview_urls": false,
+}

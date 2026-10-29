@@ -1,0 +1,15 @@
+{
+  "name": "site-diagrams",
+  "private": true,
+  "type": "module",
+  "main": "index.mjs",
+  "quartz": {
+    "name": "site-diagrams",
+    "category": "transformer",
+    "version": "1.0.0",
+    "quartzVersion": ">=5.0.0"
+  },
+  "scripts": {
+    "build": "node --check index.mjs"
+  }
+}

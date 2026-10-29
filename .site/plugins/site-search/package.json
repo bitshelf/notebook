@@ -1,0 +1,26 @@
+{
+  "name": "site-search",
+  "private": true,
+  "type": "module",
+  "main": "index.mjs",
+  "exports": {
+    ".": "./index.mjs",
+    "./components": "./index.mjs"
+  },
+  "quartz": {
+    "name": "site-search",
+    "category": "component",
+    "version": "1.0.0",
+    "quartzVersion": ">=5.0.0",
+    "components": {
+      "Search": {
+        "displayName": "Search",
+        "defaultPosition": "left",
+        "defaultPriority": 20
+      }
+    }
+  },
+  "scripts": {
+    "build": "node --check index.mjs"
+  }
+}

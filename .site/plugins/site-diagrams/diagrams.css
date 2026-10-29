@@ -1,0 +1,38 @@
+.bs-diagram {
+  margin: 1.5rem 0;
+  --pele-bg: var(--background-primary);
+  --pele-fg: var(--text-normal);
+  --pele-muted: var(--text-muted);
+  --pele-line: var(--text-normal);
+  --pele-surface: var(--background-secondary);
+  --pele-surface-alt: var(--background-primary-alt);
+  --pele-border: var(--background-modifier-border);
+  --pele-accent: var(--text-accent);
+  --pele-font: var(--bodyFont);
+  --pele-font-mono: var(--codeFont);
+}
+.bs-diagram-canvas {
+  width: 100%;
+  min-height: 120px;
+  overflow: hidden;
+}
+.bs-diagram details {
+  margin-top: 0.5rem;
+}
+.bs-diagram summary {
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+}
+.bs-diagram svg {
+  max-width: 100%;
+}
+@media (max-width: 799px) {
+  .bs-diagram-canvas button {
+    min-width: 44px;
+    min-height: 44px;
+  }
+}
