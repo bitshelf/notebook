@@ -1,0 +1,74 @@
+name: Deploy to EdgeOne Pages
+
+# Optional third deployment target (Tencent EdgeOne Pages). GitHub Pages is the
+# primary target and is handled by deploy-site.yml. This workflow is a no-op
+# until the repository secret below is configured.
+#
+# Required repository secret:
+#   EDGEONE_API_TOKEN - EdgeOne Pages API token (console -> API Token)
+#
+# Optional repository variables (Settings -> Secrets and variables -> Actions -> Variables):
+#   EDGEONE_PROJECT   - EdgeOne Pages project name, default: bitshelf-notebook
+#   EDGEONE_SITE_URL  - canonical URL, default: https://bitshelf-notebook.edgeone.app
+#
+# Alternatively use EdgeOne Pages' native Git integration: it reads
+# .site/edgeone.json (root directory .site) and needs no workflow/secrets.
+# See .site/README.md for details.
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: edgeone-pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    env:
+      EDGEONE_API_TOKEN: ${{ secrets.EDGEONE_API_TOKEN }}
+      EDGEONE_PROJECT: ${{ vars.EDGEONE_PROJECT || 'bitshelf-notebook' }}
+      SITE_URL: ${{ vars.EDGEONE_SITE_URL || 'https://bitshelf-notebook.edgeone.app' }}
+    steps:
+      - name: Check EdgeOne credentials
+        id: gate
+        run: |
+          if [ -n "${EDGEONE_API_TOKEN}" ]; then
+            echo "enabled=true" >> "${GITHUB_OUTPUT}"
+          else
+            echo "enabled=false" >> "${GITHUB_OUTPUT}"
+            echo "::notice::Skipping EdgeOne Pages deploy: configure the EDGEONE_API_TOKEN repository secret to enable it."
+          fi
+
+      - if: steps.gate.outputs.enabled == 'true'
+        uses: actions/checkout@v6
+        with:
+          # Full history is needed for the per-file "last updated" timestamps.
+          fetch-depth: 0
+
+      - if: steps.gate.outputs.enabled == 'true'
+        uses: actions/setup-node@v6
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: .site/package-lock.json
+
+      - name: Build site for EdgeOne Pages
+        if: steps.gate.outputs.enabled == 'true'
+        run: bash .site/scripts/build.sh
+
+      - name: Deploy to EdgeOne Pages
+        if: steps.gate.outputs.enabled == 'true'
+        run: |
+          npx --yes edgeone@1.6.47 pages deploy .site/public \
+            -n "${EDGEONE_PROJECT}" \
+            -t "${EDGEONE_API_TOKEN}" \
+            -e production \
+            --json

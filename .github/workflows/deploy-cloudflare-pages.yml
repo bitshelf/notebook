@@ -1,0 +1,79 @@
+name: Deploy to Cloudflare Pages
+
+# Optional second deployment target. GitHub Pages is the primary one and is
+# handled by deploy-site.yml. This workflow is a no-op until the repository
+# secrets below are configured (it only checks them and exits with a notice).
+#
+# Required repository secrets:
+#   CLOUDFLARE_API_TOKEN   - API token with the "Cloudflare Pages: Edit" permission
+#   CLOUDFLARE_ACCOUNT_ID  - Cloudflare account id
+#
+# Optional repository variables (Settings -> Secrets and variables -> Actions -> Variables):
+#   CLOUDFLARE_PAGES_PROJECT - Pages project name, default: bitshelf-notebook
+#   CLOUDFLARE_SITE_URL      - canonical URL, default: https://bitshelf-notebook.pages.dev
+#
+# Alternatively use Cloudflare's native Git integration (no workflow, no
+# secrets): Root directory .site, build command `bash scripts/build.sh`,
+# output directory `public`, env NODE_VERSION=22 and SITE_URL=<canonical url>.
+# See .site/README.md for details.
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: cloudflare-pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    env:
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+      CLOUDFLARE_PAGES_PROJECT: ${{ vars.CLOUDFLARE_PAGES_PROJECT || 'bitshelf-notebook' }}
+      SITE_URL: ${{ vars.CLOUDFLARE_SITE_URL || 'https://bitshelf-notebook.pages.dev' }}
+    steps:
+      - name: Check Cloudflare credentials
+        id: gate
+        run: |
+          if [ -n "${CLOUDFLARE_API_TOKEN}" ] && [ -n "${CLOUDFLARE_ACCOUNT_ID}" ]; then
+            echo "enabled=true" >> "${GITHUB_OUTPUT}"
+          else
+            echo "enabled=false" >> "${GITHUB_OUTPUT}"
+            echo "::notice::Skipping Cloudflare Pages deploy: configure the CLOUDFLARE_API_TOKEN and CLOUDFLARE_ACCOUNT_ID repository secrets to enable it."
+          fi
+
+      - if: steps.gate.outputs.enabled == 'true'
+        uses: actions/checkout@v6
+        with:
+          # Full history is needed for the per-file "last updated" timestamps.
+          fetch-depth: 0
+
+      - if: steps.gate.outputs.enabled == 'true'
+        uses: actions/setup-node@v6
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: .site/package-lock.json
+
+      - name: Build site for Cloudflare Pages
+        if: steps.gate.outputs.enabled == 'true'
+        run: bash .site/scripts/build.sh
+
+      - name: Deploy to Cloudflare Pages
+        if: steps.gate.outputs.enabled == 'true'
+        run: |
+          npx --yes wrangler@4 pages project create "${CLOUDFLARE_PAGES_PROJECT}" --production-branch main || true
+          npx --yes wrangler@4 pages deploy .site/public \
+            --project-name "${CLOUDFLARE_PAGES_PROJECT}" \
+            --branch main \
+            --commit-hash "${GITHUB_SHA}" \
+            --commit-message "Deploy ${GITHUB_SHA}" \
+            --commit-dirty=true
