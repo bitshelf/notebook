@@ -1,0 +1,59 @@
+name: Update official Quartz stable release
+on:
+  workflow_dispatch:
+permissions:
+  contents: write
+  pull-requests: write
+concurrency:
+  group: update-quartz
+  cancel-in-progress: false
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: .site/package-lock.json
+      - name: Prepare official stable release
+        id: update
+        run: |
+          node .site/scripts/sync-quartz.mjs
+          if git diff --quiet -- .site; then
+            echo 'changed=false' >> "$GITHUB_OUTPUT"
+          else
+            echo 'changed=true' >> "$GITHUB_OUTPUT"
+          fi
+      - name: Lock dependencies and verify
+        if: steps.update.outputs.changed == 'true'
+        working-directory: .site
+        env:
+          SKIP_INSTALL: '1'
+        run: |
+          npm install --package-lock-only --ignore-scripts --no-audit --no-fund
+          npm ci --no-audit --no-fund
+          npm run patch:plugins
+          npm run test:site
+          node node_modules/typescript/bin/tsc --noEmit --incremental false
+          npm run build
+      - name: Open or update upgrade PR
+        if: steps.update.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git switch -c automation/quartz-stable
+          git add .site
+          git commit -m 'chore: update official Quartz stable release'
+          git push --force origin HEAD:automation/quartz-stable
+          if ! gh pr list --head automation/quartz-stable --json number --jq '.[0].number' | grep -q '[0-9]'; then
+            printf '%s\n' 'Updates the official stable Quartz tag and dependency lockfile while preserving site configuration and extensions.' '' 'Validation: site regression tests and a full site build passed.' > "$RUNNER_TEMP/quartz-pr.md"
+            gh pr create --head automation/quartz-stable --title 'Update official Quartz stable release' --body-file "$RUNNER_TEMP/quartz-pr.md"
+          fi
