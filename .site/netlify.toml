@@ -1,0 +1,43 @@
+# Netlify deployment for the BitShelf notebook site (mirrors .site/platform/_headers
+# semantics; the generated _headers file in the publish directory is also honored).
+
+[build]
+  base = ".site"
+  command = "npm run build"
+  publish = "public"
+
+[build.environment]
+  NODE_VERSION = "24"
+  # Netlify serves from the site root, so the generated basepath/canonical
+  # URLs must point here (default baseUrl is the GitHub Pages subpath).
+  # SITE_URL is also set in the Netlify UI (Site configuration → Environment
+  # variables) and must be updated when the site is renamed.
+  # Do NOT set SKIP_INSTALL here: scripts/build.mjs re-runs npm ci, and the
+  # post-install patch-plugins step must run on a fresh node_modules or the
+  # crawl-links fix (needed for cross-folder excalidraw transcludes) is lost
+  # to stale build caches.
+
+# Mirror the security/cache headers from .site/platform/_headers.
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    X-Frame-Options = "SAMEORIGIN"
+
+[[headers]]
+  for = "/static/*"
+  [headers.values]
+    Cache-Control = "public, max-age=3600"
+
+# Pagefind shards are content-addressed and immutable — cache for a year.
+# entry.json is the cache-busting entry point and stays revalidated.
+[[headers]]
+  for = "/pagefind/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/pagefind/pagefind-entry.json"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"

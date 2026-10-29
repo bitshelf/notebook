@@ -1,0 +1,12 @@
+{
+  "name": "site-markdown",
+  "private": true,
+  "type": "module",
+  "main": "index.mjs",
+  "quartz": {
+    "name": "markdown-note-embeds",
+    "category": "transformer",
+    "version": "1.0.0",
+    "defaultOrder": 29
+  }
+}

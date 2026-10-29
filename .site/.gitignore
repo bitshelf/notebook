@@ -1,0 +1,21 @@
+node_modules/
+public/
+content/
+.quartz/
+*.log
+quartz/.quartz-cache/
+tsconfig.tsbuildinfo
+pnpm-lock.yaml
+# local scratch directories used while building / debugging
+.dsh-tmp/
+
+# Local plugin resolution records contain machine-specific absolute paths.
+/quartz.lock.json
+/plugins/*/package-lock.json
+# Diagnostic output
+coverage/
+prof/
+*.cpuprofile
+
+# Wrangler local cache and credentials are never site sources.
+.wrangler/

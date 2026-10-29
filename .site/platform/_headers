@@ -1,0 +1,26 @@
+# Static response headers for Cloudflare Pages (copied to the output root by
+# scripts/build.sh). GitHub Pages ignores this file; EdgeOne Pages uses the
+# equivalent configuration in .site/edgeone.json.
+#
+# https://developers.cloudflare.com/pages/configuration/headers/
+
+/*
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  X-Frame-Options: SAMEORIGIN
+
+# Quartz writes fully content-hashed assets into /static (scripts, component
+# CSS, resource bundles). A short TTL keeps contentIndex.json reasonably fresh
+# while still allowing browser caching for repeat visits.
+/static/*
+  Cache-Control: public, max-age=3600
+
+# Pagefind index shards are content-addressed (hashes in filenames) and never
+# change once written, so they can be cached immutably. This is the dominant
+# cost of the first search on each visit (~50 shard requests, one RTT each).
+/pagefind/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# entry.json is the cache-busting entry point — keep it revalidated.
+/pagefind/pagefind-entry.json
+  Cache-Control: public, max-age=0, must-revalidate
