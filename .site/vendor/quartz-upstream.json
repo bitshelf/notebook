@@ -1,0 +1,48 @@
+{
+  "$comment": "上游 Quartz 跟踪配置：记录 .site 里哪些文件来自上游、哪些是本站自有、哪些允许覆盖、以及 package.json 需要叠加的站点字段。升级上游时由 scripts/sync-quartz.mjs 读取本文件。",
+  "repo": "https://github.com/jackyzha0/quartz.git",
+  "branch": "v5",
+  "ref": "97a2d05f80c4c50534959b1d0d41cc4b3895625e",
+  "vendoredDirs": [
+    "quartz"
+  ],
+  "vendoredFiles": [
+    ".gitattributes",
+    ".node-version",
+    ".npmrc",
+    "LICENSE.txt",
+    "globals.d.ts",
+    "index.d.ts",
+    "quartz.ts",
+    "tsconfig.json"
+  ],
+  "overrides": [
+    "quartz/styles/custom.scss",
+    "quartz/static/icon.png"
+  ],
+  "ignoredUpstreamPaths": [
+    ".github",
+    ".prettierignore",
+    ".prettierrc",
+    "CODE_OF_CONDUCT.md",
+    "Dockerfile",
+    "content",
+    "docs",
+    "quartz.config.default.yaml"
+  ],
+  "packageJsonOverlay": {
+    "engines": {
+      "npm": ">=10"
+    },
+    "dependencies": {
+      "@quartz-community/obsidian-plugin-excalidraw": "^1.0.0",
+      "@quartz-themes/catppuccin": "^1.0.1"
+    },
+    "scripts": {
+      "patch:plugins": "node scripts/patch-plugins.mjs",
+      "patch:core": "node scripts/patch-core.mjs",
+      "check:vendor": "node scripts/check-quartz-vendor.mjs",
+      "sync:quartz": "node scripts/sync-quartz.mjs"
+    }
+  }
+}

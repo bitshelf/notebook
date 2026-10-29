@@ -1,0 +1,10 @@
+node_modules/
+public/
+content/
+.quartz/
+*.log
+quartz/.quartz-cache/
+tsconfig.tsbuildinfo
+pnpm-lock.yaml
+# local scratch directories used while building / debugging
+.dsh-tmp/

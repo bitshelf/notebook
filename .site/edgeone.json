@@ -1,0 +1,22 @@
+{
+  "name": "bitshelf-notebook",
+  "installCommand": "npm install --no-audit --no-fund",
+  "buildCommand": "bash scripts/build.sh",
+  "outputDirectory": "public",
+  "nodeVersion": "22.11.0",
+  "headers": [
+    {
+      "source": "/*",
+      "headers": [
+        { "key": "X-Content-Type-Options", "value": "nosniff" },
+        { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" },
+        { "key": "X-Frame-Options", "value": "SAMEORIGIN" }
+      ]
+    },
+    {
+      "source": "/static/*",
+      "headers": [{ "key": "Cache-Control", "value": "public, max-age=3600" }]
+    }
+  ],
+  "redirects": []
+}

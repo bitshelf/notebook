@@ -1,0 +1,16 @@
+# Static response headers for Cloudflare Pages (copied to the output root by
+# scripts/build.sh). GitHub Pages ignores this file; EdgeOne Pages uses the
+# equivalent configuration in .site/edgeone.json.
+#
+# https://developers.cloudflare.com/pages/configuration/headers/
+
+/*
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  X-Frame-Options: SAMEORIGIN
+
+# Quartz writes fully content-hashed assets into /static (scripts, component
+# CSS, resource bundles). A short TTL keeps contentIndex.json reasonably fresh
+# while still allowing browser caching for repeat visits.
+/static/*
+  Cache-Control: public, max-age=3600
