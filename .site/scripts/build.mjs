@@ -81,7 +81,7 @@ export function copyContent(source, destination, relative = "") {
 }
 
 // Publication reads HEAD, never the working tree or staging area.
-export function copyCommittedContent(repository, destination) {
+export async function copyCommittedContent(repository, destination) {
   const snapshot = fs.mkdtempSync(path.join(os.tmpdir(), "bitshelf-source-"));
   try {
     const archive = path.join(snapshot, "snapshot.tar");
@@ -93,7 +93,8 @@ export function copyCommittedContent(repository, destination) {
         stdio: "pipe",
       },
     );
-    execFileSync("tar", ["-xf", archive, "-C", snapshot], { stdio: "pipe" });
+    const tar = await import("tar");
+    tar.x({ file: archive, cwd: snapshot, sync: true });
     copyContent(snapshot, destination);
   } finally {
     const resolved = fs.realpathSync(snapshot);
@@ -143,7 +144,7 @@ export async function build() {
   run("scripts/patch-plugins.mjs");
   const content = fs.mkdtempSync(path.join(os.tmpdir(), "bitshelf-content-"));
   try {
-    copyCommittedContent(repoRoot, content);
+    await copyCommittedContent(repoRoot, content);
     fs.copyFileSync(
       path.join(siteRoot, "homepage.md"),
       path.join(content, "index.md"),

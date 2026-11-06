@@ -141,7 +141,8 @@
       "esbuild": "0.28.2",
       "prettier": "3.9.6",
       "tsx": "4.23.13",
-      "typescript": "5.9.3"
+      "typescript": "5.9.3",
+      "tar": "7.5.22"
     }
   }
 }

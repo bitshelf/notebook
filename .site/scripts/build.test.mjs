@@ -13,7 +13,7 @@ import {
   build,
 } from "./build.mjs";
 
-test("publication excludes untracked and staged notes and reads committed note contents", () => {
+test("publication excludes untracked and staged notes and reads committed note contents", async () => {
   const fixture = fs.mkdtempSync(path.join(os.tmpdir(), "bitshelf-test-"));
   try {
     const repo = path.join(fixture, "repo"),
@@ -22,8 +22,8 @@ test("publication excludes untracked and staged notes and reads committed note c
     const git = (...args) =>
       execFileSync("git", args, { cwd: repo, stdio: "pipe" });
     git("init");
-    fs.writeFileSync(path.join(repo, "published.md"), "committed content");
-    git("add", "published.md");
+    fs.writeFileSync(path.join(repo, "中文笔记.md"), "committed content");
+    git("add", "中文笔记.md");
     git(
       "-c",
       "user.name=Site Test",
@@ -34,16 +34,16 @@ test("publication excludes untracked and staged notes and reads committed note c
       "fixture",
     );
     fs.writeFileSync(
-      path.join(repo, "published.md"),
+      path.join(repo, "中文笔记.md"),
       "private unpublished changes",
     );
     fs.writeFileSync(path.join(repo, "staged.md"), "private staged note");
     git("add", "staged.md");
     fs.writeFileSync(path.join(repo, "untracked.md"), "private draft");
-    copyCommittedContent(repo, output);
-    assert.deepEqual(fs.readdirSync(output), ["published.md"]);
+    await copyCommittedContent(repo, output);
+    assert.deepEqual(fs.readdirSync(output), ["中文笔记.md"]);
     assert.equal(
-      fs.readFileSync(path.join(output, "published.md"), "utf8"),
+      fs.readFileSync(path.join(output, "中文笔记.md"), "utf8"),
       "committed content",
     );
   } finally {
