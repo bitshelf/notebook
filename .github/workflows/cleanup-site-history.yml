@@ -15,7 +15,7 @@ jobs:
       - name: Keep approved successful release and remove older history
         env:
           GH_TOKEN: ${{ github.token }}
-          KEEP_SHA: 532cb496ed9c003e55755bb5a43ad1355ab7db1f
+          KEEP_SHA: 9c73628a087c0ac6b065845c5b8b2d26aefeab44
         shell: python
         run: |
           import os, json, time, urllib.request, urllib.error
