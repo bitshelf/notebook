@@ -52,7 +52,7 @@ cd .site && npx quartz build --serve     # 本地预览 http://localhost:8080
 
 ### GitHub Pages（主站，已启用）
 
-- `.github/workflows/deploy-site.yml`：push 到 `main` 自动构建部署，另有每天 UTC 18:00（北京时间 02:00）定时重建
+- `.github/workflows/deploy-site.yml`：仅 push 到 `main` 自动构建部署，无每日定时重建；保留手动运行入口
 - 仓库 Settings → Pages → Source 选 **GitHub Actions**
 - workflow 会自动把 `SITE_URL` 设为 `https://<owner>.github.io/<repo>`
 
@@ -71,7 +71,7 @@ cd .site && npx quartz build --serve     # 本地预览 http://localhost:8080
    - `CLOUDFLARE_API_TOKEN`（API token，权限：Cloudflare Pages: Edit）
    - `CLOUDFLARE_ACCOUNT_ID`
 2. 可选 variables：`CLOUDFLARE_PAGES_PROJECT`（默认 `bitshelf-notebook`）、`CLOUDFLARE_SITE_URL`（默认 `https://bitshelf-notebook.pages.dev`）
-3. `.github/workflows/deploy-cloudflare-pages.yml` 会自动构建并 `wrangler pages deploy`；未配置 secrets 时该 workflow 直接跳过（不会失败）
+3. `.github/workflows/deploy-cloudflare-pages.yml` 仅保留手动运行，不监听 push，避免与原生 Git 集成重复部署。
 
 说明：`platform/_headers` 会被复制到 `public/_headers`，由 Cloudflare Pages 应用安全响应头与 `/static/*` 缓存策略。Cloudflare Pages 限制单文件 ≤25 MiB（本方案不发布大附件，正常不会触发）。
 
@@ -93,7 +93,7 @@ cd .site && npx quartz build --serve     # 本地预览 http://localhost:8080
 
 1. 添加 secret：`EDGEONE_API_TOKEN`（EdgeOne Pages → API Token）
 2. 可选 variables：`EDGEONE_PROJECT`（默认 `bitshelf-notebook`）、`EDGEONE_SITE_URL`（默认 `https://bitshelf-notebook.edgeone.app`）
-3. `.github/workflows/deploy-edgeone-pages.yml` 会执行 `edgeone pages deploy .site/public -n <project> -t <token> -e production`；项目不存在时会自动创建
+3. `.github/workflows/deploy-edgeone-pages.yml` 仅保留手动运行；日常推送由 EdgeOne 原生 Git 集成自动构建发布，避免重复部署。
 
 ## 平台相关文件
 
@@ -126,8 +126,8 @@ Quartz 核心跟随官方最新稳定标签，源码与本站配置、插件隔�
 ## Cloudflare Workers 静态资源部署
 
 `wrangler.jsonc` 对应现有 Worker `notebook`，公开域名为 `https://notebook.ljzyx86.workers.dev`。
-本地先登录官方 Wrangler，再设置 `SITE_URL=https://notebook.ljzyx86.workers.dev` 构建，最后运行 `npm run deploy:cloudflare`。
+生产发布由 Cloudflare 原生 Git 集成从 GitHub `main` 拉取源码、构建和部署，不从本地直接上传。
 Cloudflare 原生 Git 构建根目录为 `.site`，构建命令为 `npm run build`，部署命令为 `npm run deploy:cloudflare`。
-原生 Git 检出失败时可用本地直接部署；这不依赖 Cloudflare 克隆笔记仓库。
+克隆时设置 `GIT_LFS_SKIP_SMUDGE=1`，避免下载不发布的大附件。三个平台均无每日定时构建；官方 Quartz 升级 workflow 也仅手动触发。
 构建后将重复的大块内联主题 CSS 提取成带内容哈希的共享文件，以控制 GitHub Pages 发布体积。
 Bases 表格默认列宽统一为 45% / 30% / 25%，可独立拖动表头边界调整，自动记忆；双击边界恢复默认。

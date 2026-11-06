@@ -1,4 +1,4 @@
-name: Deploy to EdgeOne Pages
+name: Manually deploy to EdgeOne Pages
 
 # Optional third deployment target (Tencent EdgeOne Pages). GitHub Pages is the
 # primary target and is handled by deploy-site.yml. This workflow is a no-op
@@ -16,9 +16,6 @@ name: Deploy to EdgeOne Pages
 # See .site/README.md for details.
 
 on:
-  push:
-    branches:
-      - main
   workflow_dispatch:
 
 permissions:

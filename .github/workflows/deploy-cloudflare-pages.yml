@@ -1,4 +1,4 @@
-name: Deploy to Cloudflare Pages
+name: Manually deploy to Cloudflare Pages
 
 # Optional second deployment target. GitHub Pages is the primary one and is
 # handled by deploy-site.yml. This workflow is a no-op until the repository
@@ -18,9 +18,6 @@ name: Deploy to Cloudflare Pages
 # See .site/README.md for details.
 
 on:
-  push:
-    branches:
-      - main
   workflow_dispatch:
 
 permissions:
