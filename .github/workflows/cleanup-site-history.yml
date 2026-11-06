@@ -1,0 +1,94 @@
+name: Approved one-time site history cleanup
+on:
+  push:
+    branches: [maintenance/site-history-cleanup-532cb49]
+    paths: [.github/workflows/cleanup-site-history.yml]
+permissions:
+  contents: read
+  actions: write
+  deployments: write
+jobs:
+  cleanup:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Keep approved successful release and remove older history
+        env:
+          GH_TOKEN: ${{ github.token }}
+          KEEP_SHA: 532cb496ed9c003e55755bb5a43ad1355ab7db1f
+        shell: python
+        run: |
+          import os, json, time, urllib.request, urllib.error
+          repo = os.environ['GITHUB_REPOSITORY']
+          assert repo == 'bitshelf/notebook'
+          sha = os.environ['KEEP_SHA']
+          own_run = int(os.environ['GITHUB_RUN_ID'])
+          base = 'https://api.github.com/repos/' + repo
+          headers = {'Authorization': 'Bearer ' + os.environ['GH_TOKEN'],
+                     'Accept': 'application/vnd.github+json',
+                     'X-GitHub-Api-Version': '2022-11-28',
+                     'User-Agent': 'approved-notebook-history-maintenance'}
+          def api(path, method='GET', body=None):
+              data = json.dumps(body).encode() if body is not None else None
+              request = urllib.request.Request(base + path, data=data,
+                  headers={**headers, 'Content-Type': 'application/json'}, method=method)
+              with urllib.request.urlopen(request, timeout=45) as response:
+                  content = response.read()
+                  return json.loads(content) if content else None
+          def collection(path, key=None):
+              rows = []
+              for page in range(1, 101):
+                  join = '&' if '?' in path else '?'
+                  result = api(path + join + 'per_page=100&page=' + str(page))
+                  batch = result[key] if key else result
+                  rows.extend(batch)
+                  if len(batch) < 100:
+                      return rows
+              raise RuntimeError('Unexpected history size; no deletion authorized')
+          def assert_head():
+              assert api('/branches/main')['commit']['sha'] == sha, 'Main changed; stop cleanup'
+          assert_head()
+          keep_run = None
+          for attempt in range(60):
+              runs = api('/actions/workflows/deploy-site.yml/runs?head_sha=' + sha + '&per_page=20')['workflow_runs']
+              good = [r for r in runs if r['head_sha'] == sha and r['status'] == 'completed' and r['conclusion'] == 'success']
+              if good:
+                  keep_run = good[0]['id']
+                  break
+              if runs and all(r['status'] == 'completed' for r in runs):
+                  raise RuntimeError('Approved release did not deploy successfully; keep all history')
+              time.sleep(10)
+          assert keep_run, 'Approved release is not successful yet; keep all history'
+          deployments = collection('/deployments')
+          candidates = [d for d in deployments if d['sha'] == sha and d['environment'] == 'github-pages']
+          assert candidates, 'No deployment for approved release; keep all history'
+          keep_deployment = None
+          for deployment in candidates:
+              statuses = api('/deployments/' + str(deployment['id']) + '/statuses')
+              if statuses and statuses[0]['state'] == 'success':
+                  keep_deployment = deployment['id']
+                  break
+          assert keep_deployment, 'Approved deployment is not active and successful'
+          old_deployments = [d for d in deployments if d['id'] != keep_deployment]
+          assert all(d['environment'] == 'github-pages' for d in old_deployments), 'Unexpected environment; stop'
+          old_runs = [r for r in collection('/actions/runs', 'workflow_runs') if r['id'] not in (keep_run, own_run)]
+          assert all(r['status'] == 'completed' for r in old_runs), 'Another run is active; stop'
+          print(json.dumps({'keep_sha': sha, 'keep_run': keep_run, 'keep_deployment': keep_deployment,
+              'delete_deployments': [d['id'] for d in old_deployments],
+              'delete_runs': [r['id'] for r in old_runs]}, indent=2), flush=True)
+          for deployment in old_deployments:
+              assert_head()
+              path = '/deployments/' + str(deployment['id'])
+              api(path + '/statuses', 'POST', {'state': 'inactive', 'auto_inactive': False,
+                  'description': 'User-approved cleanup; latest successful release preserved'})
+              api(path, 'DELETE')
+              print('Deleted deployment', deployment['id'], flush=True)
+          for run in old_runs:
+              assert_head()
+              api('/actions/runs/' + str(run['id']), 'DELETE')
+              print('Deleted run', run['id'], flush=True)
+          remaining_deployments = collection('/deployments')
+          remaining_runs = collection('/actions/runs', 'workflow_runs')
+          assert [d['id'] for d in remaining_deployments] == [keep_deployment]
+          assert {r['id'] for r in remaining_runs} == {keep_run, own_run}
+          print('Verified: one successful deployment; release run and temporary cleanup run remain', flush=True)
