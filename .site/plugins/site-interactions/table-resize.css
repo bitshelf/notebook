@@ -1,0 +1,48 @@
+.bases-table-wrapper {
+  scrollbar-gutter: stable;
+}
+.bases-table.bs-resizable-table {
+  table-layout: fixed;
+  width: 100%;
+}
+.bs-resizable-table :is(th, td) {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.bs-resizable-table thead th {
+  overflow: visible;
+  padding-right: 1rem;
+}
+.bs-column-resizer {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: -5px;
+  width: 10px;
+  z-index: 3;
+  cursor: col-resize;
+  touch-action: none;
+  user-select: none;
+}
+.bs-column-resizer::after {
+  content: "";
+  position: absolute;
+  left: 4px;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: transparent;
+}
+.bs-column-resizer:hover::after,
+.bs-column-resizer:focus-visible::after {
+  background: var(--secondary);
+}
+.bs-column-resizer:focus-visible {
+  outline: 2px solid var(--secondary);
+  outline-offset: -2px;
+}
+body.bs-column-dragging,
+body.bs-column-dragging * {
+  cursor: col-resize !important;
+  user-select: none !important;
+}

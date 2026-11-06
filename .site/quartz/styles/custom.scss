@@ -1,3 +1,5 @@
+// Official stable Quartz expects the site stylesheet to include its base layout.
+@use "./base.scss";
 @use "./variables.scss" as *;
 
 // ============================================================================
@@ -16,22 +18,24 @@
 //  * 颜色尽量用 color-mix(var(--darkgray) … , var(--light)) 派生，保证亮暗通用。
 // ============================================================================
 
-
 // ----------------------------------------------------------------------------
 // 1. Design tokens & 中文字体栈
 // ----------------------------------------------------------------------------
 :root:root {
   // 中文优先的系统字体栈（微软雅黑 / Noto Sans SC / PingFang ...）
-  --bs-font-body: "Microsoft YaHei", "微软雅黑", "PingFang SC", "Hiragino Sans GB",
+  --bs-font-body:
+    "Microsoft YaHei", "微软雅黑", "PingFang SC", "Hiragino Sans GB",
     "Noto Sans SC", "Source Han Sans SC", "WenQuanYi Micro Hei", "Segoe UI",
-    system-ui, -apple-system, BlinkMacSystemFont, Roboto, "Helvetica Neue", Arial,
-    "Apple Color Emoji", "Segoe UI Emoji", sans-serif;
-  --bs-font-head: "Microsoft YaHei", "微软雅黑", "PingFang SC", "Hiragino Sans GB",
+    system-ui, -apple-system, BlinkMacSystemFont, Roboto, "Helvetica Neue",
+    Arial, "Apple Color Emoji", "Segoe UI Emoji", sans-serif;
+  --bs-font-head:
+    "Microsoft YaHei", "微软雅黑", "PingFang SC", "Hiragino Sans GB",
     "Noto Sans SC", "Source Han Sans SC", "Segoe UI", system-ui, -apple-system,
     BlinkMacSystemFont, Roboto, "Helvetica Neue", Arial, sans-serif;
-  --bs-font-mono: "Cascadia Code NF", "Cascadia Code", "Cascadia Mono", "JetBrains Mono",
-    "Fira Code", "IBM Plex Mono", "SFMono-Regular", Menlo, Consolas, "Courier New",
-    monospace;
+  --bs-font-mono:
+    "Cascadia Code NF", "Cascadia Code", "Cascadia Mono", "JetBrains Mono",
+    "Fira Code", "IBM Plex Mono", "SFMono-Regular", Menlo, Consolas,
+    "Courier New", monospace;
 
   // Quartz / Obsidian 字体变量统一接管（比 :root 更高特异度，压过主题层与
   // resource-style-9857b007.css 里的 google fonts 声明）
@@ -58,7 +62,8 @@
   --bs-radius-pill: 999px;
   --bs-fast: 140ms;
   --bs-ease: cubic-bezier(0.4, 0, 0.2, 1);
-  --bs-shadow-sm: 0 1px 2px rgba(17, 17, 27, 0.04), 0 2px 8px rgba(17, 17, 27, 0.045);
+  --bs-shadow-sm:
+    0 1px 2px rgba(17, 17, 27, 0.04), 0 2px 8px rgba(17, 17, 27, 0.045);
   --bs-shadow-md: 0 4px 18px rgba(17, 17, 27, 0.09);
   --bs-shadow-lg: 0 18px 48px rgba(17, 17, 27, 0.16);
 
@@ -94,7 +99,6 @@
   --bs-border: color-mix(in srgb, var(--darkgray) 17%, transparent);
   --bs-border-strong: color-mix(in srgb, var(--darkgray) 30%, transparent);
 }
-
 
 // ----------------------------------------------------------------------------
 // 2. 全局：排版基线 / 选区 / 滚动条
@@ -154,7 +158,6 @@ article + hr,
 ::-webkit-scrollbar-corner {
   background: transparent;
 }
-
 
 // ----------------------------------------------------------------------------
 // 3. 正文排版（标题 / 段落 / 链接 / 列表 / 分割线 / 图片 / kbd / mark）
@@ -223,7 +226,9 @@ article + hr,
     color: var(--bs-muted);
     transform: none;
     vertical-align: middle;
-    transition: opacity var(--bs-fast) var(--bs-ease), color var(--bs-fast) var(--bs-ease);
+    transition:
+      opacity var(--bs-fast) var(--bs-ease),
+      color var(--bs-fast) var(--bs-ease);
   }
   :is(h1, h2, h3, h4, h5, h6):hover > a[role="anchor"] {
     opacity: 0.55;
@@ -323,7 +328,8 @@ article + hr,
     border-radius: 50%;
     background-color: var(--light);
     cursor: pointer;
-    transition: background-color var(--bs-fast) var(--bs-ease),
+    transition:
+      background-color var(--bs-fast) var(--bs-ease),
       border-color var(--bs-fast) var(--bs-ease);
   }
   input[type="checkbox"]:hover {
@@ -422,7 +428,6 @@ article + hr,
   }
 }
 
-
 // ----------------------------------------------------------------------------
 // 4. 引用块 & Callout（各种类型）
 // ----------------------------------------------------------------------------
@@ -442,10 +447,15 @@ article + hr,
 blockquote.callout {
   margin: 1rem 0;
   padding: 0.12rem 1.05rem 0.55rem;
-  border: 1px solid color-mix(in srgb, var(--color, var(--secondary)) 32%, transparent);
+  border: 1px solid
+    color-mix(in srgb, var(--color, var(--secondary)) 32%, transparent);
   border-left: 3px solid var(--color, var(--secondary));
   border-radius: var(--bs-radius);
-  background: color-mix(in srgb, var(--color, var(--secondary)) 7%, var(--light));
+  background: color-mix(
+    in srgb,
+    var(--color, var(--secondary)) 7%,
+    var(--light)
+  );
   overflow: hidden;
 }
 .callout > .callout-content {
@@ -495,7 +505,6 @@ blockquote.callout {
 .markdown-preview-view .callout a:hover {
   opacity: 0.8;
 }
-
 
 // ----------------------------------------------------------------------------
 // 5. 表格（Obsidian Border + table.css：圆角、斑马纹、hover、横向滚动）
@@ -551,7 +560,6 @@ blockquote.callout {
 .markdown-preview-view .table-container td code {
   font-size: 0.84em;
 }
-
 
 // ----------------------------------------------------------------------------
 // 6. 代码：行内代码 / 代码块 / 标题条 / 复制按钮
@@ -615,7 +623,9 @@ blockquote.callout {
 .markdown-preview-view figure[data-rehype-pretty-code-figure] {
   margin: 1rem 0 1.25rem;
 }
-.markdown-preview-view figure[data-rehype-pretty-code-figure] > [data-rehype-pretty-code-title] {
+.markdown-preview-view
+  figure[data-rehype-pretty-code-figure]
+  > [data-rehype-pretty-code-title] {
   display: block;
   width: auto;
   margin: 0;
@@ -654,7 +664,9 @@ pre > .expand-button {
   border: 1px solid var(--bs-border);
   border-radius: var(--bs-radius-sm);
   box-shadow: var(--bs-shadow-sm);
-  transition: opacity var(--bs-fast) var(--bs-ease), border-color var(--bs-fast) var(--bs-ease);
+  transition:
+    opacity var(--bs-fast) var(--bs-ease),
+    border-color var(--bs-fast) var(--bs-ease);
 }
 pre > .clipboard-button > svg,
 pre > .expand-button > svg {
@@ -677,7 +689,6 @@ pre > .expand-button:hover > svg {
   fill: var(--secondary);
 }
 
-
 // ----------------------------------------------------------------------------
 // 7. 标签 pill & 属性 Properties
 // ----------------------------------------------------------------------------
@@ -696,7 +707,9 @@ ul.tags > li > a {
   border: 1px solid color-mix(in srgb, var(--secondary) 20%, transparent);
   border-radius: var(--bs-radius-pill);
   text-decoration: none;
-  transition: background var(--bs-fast) var(--bs-ease), color var(--bs-fast) var(--bs-ease);
+  transition:
+    background var(--bs-fast) var(--bs-ease),
+    color var(--bs-fast) var(--bs-ease);
 }
 .markdown-preview-view a.tag-link::before,
 .note-properties .tag-link::before {
@@ -789,7 +802,6 @@ ul.tags > li > a:hover {
   padding: 0.1em 0.3em;
 }
 
-
 // ----------------------------------------------------------------------------
 // 8. 页面头部：面包屑 / 文章标题 / 元信息
 // ----------------------------------------------------------------------------
@@ -841,7 +853,9 @@ ul.tags > li > a:hover {
   margin: 0.2rem 0 0.5rem;
 }
 // 正文首行就是 H1 时，隐藏重复的 page title（更接近 Obsidian 阅读体验）
-body:has(article .markdown-preview-view > h1:first-child) .page-header .article-title {
+body:has(article .markdown-preview-view > h1:first-child)
+  .page-header
+  .article-title {
   display: none;
 }
 
@@ -868,7 +882,6 @@ body:has(article .markdown-preview-view > h1:first-child) .page-header .article-
 .content-meta a:hover {
   color: var(--secondary);
 }
-
 
 // ----------------------------------------------------------------------------
 // 9. 站点 chrome：左/右侧栏、站点标题、文件树、TOC、关系图、反向链接、footer
@@ -920,7 +933,9 @@ h2.page-title,
   mask-position: center;
   -webkit-mask-size: contain;
   mask-size: contain;
-  filter: drop-shadow(0 1px 2px color-mix(in srgb, var(--secondary) 35%, transparent));
+  filter: drop-shadow(
+    0 1px 2px color-mix(in srgb, var(--secondary) 35%, transparent)
+  );
 }
 .page-title a:hover {
   color: var(--secondary);
@@ -954,7 +969,11 @@ h2.page-title,
     min-height: 0;
     overflow: hidden;
   }
-  .page > #quartz-body .sidebar.left .explorer:not(.collapsed) > .explorer-content {
+  .page
+    > #quartz-body
+    .sidebar.left
+    .explorer:not(.collapsed)
+    > .explorer-content {
     flex: 1 1 auto;
     min-height: 0;
     overflow-y: auto;
@@ -984,7 +1003,9 @@ h2.page-title,
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  transition: background var(--bs-fast) var(--bs-ease), color var(--bs-fast) var(--bs-ease);
+  transition:
+    background var(--bs-fast) var(--bs-ease),
+    color var(--bs-fast) var(--bs-ease);
 }
 .explorer-content ul li > a:hover {
   background: color-mix(in srgb, var(--secondary) 9%, transparent);
@@ -1087,7 +1108,9 @@ ul.toc-content.overflow > li > a.in-view {
   color: var(--bs-muted);
   background: color-mix(in srgb, var(--light) 72%, transparent);
   border: 1px solid var(--bs-border);
-  transition: color var(--bs-fast) var(--bs-ease), border-color var(--bs-fast) var(--bs-ease);
+  transition:
+    color var(--bs-fast) var(--bs-ease),
+    border-color var(--bs-fast) var(--bs-ease);
 }
 .graph > .graph-outer > .global-graph-icon:hover {
   color: var(--secondary);
@@ -1178,7 +1201,6 @@ footer a {
   }
 }
 
-
 // ----------------------------------------------------------------------------
 // 10. 顶部工具栏：搜索按钮 + 暗色 / 阅读模式按钮对齐
 // ----------------------------------------------------------------------------
@@ -1205,7 +1227,9 @@ footer a {
   background: color-mix(in srgb, var(--darkgray) 4%, var(--light));
   border: 1px solid var(--bs-border);
   border-radius: var(--bs-radius-pill);
-  transition: background var(--bs-fast) var(--bs-ease), border-color var(--bs-fast) var(--bs-ease),
+  transition:
+    background var(--bs-fast) var(--bs-ease),
+    border-color var(--bs-fast) var(--bs-ease),
     color var(--bs-fast) var(--bs-ease);
 }
 .search > .search-button > p {
@@ -1245,7 +1269,8 @@ button.readermode {
   background-color: var(--quartz-icon-color, var(--bs-muted));
   border: 1px solid transparent;
   border-radius: var(--bs-radius-sm);
-  transition: background-color var(--bs-fast) var(--bs-ease),
+  transition:
+    background-color var(--bs-fast) var(--bs-ease),
     border-color var(--bs-fast) var(--bs-ease);
 }
 button.darkmode:hover,
@@ -1299,7 +1324,9 @@ button.readermode svg {
   background: var(--light);
   color: var(--bs-muted);
   cursor: pointer;
-  transition: color var(--bs-fast) var(--bs-ease), border-color var(--bs-fast) var(--bs-ease);
+  transition:
+    color var(--bs-fast) var(--bs-ease),
+    border-color var(--bs-fast) var(--bs-ease);
 }
 .bs-graph-toggle:hover {
   color: var(--secondary);
@@ -1339,7 +1366,9 @@ body.bs-graph-collapsed .graph .bs-graph-toggle svg {
 }
 .search > .search-container > .search-space > input:focus {
   border-color: color-mix(in srgb, var(--secondary) 60%, transparent);
-  box-shadow: 0 0 0 3px color-mix(in srgb, var(--secondary) 16%, transparent), var(--bs-shadow-md);
+  box-shadow:
+    0 0 0 3px color-mix(in srgb, var(--secondary) 16%, transparent),
+    var(--bs-shadow-md);
 }
 .search > .search-container > .search-space > .search-layout {
   overflow: hidden;
@@ -1357,12 +1386,22 @@ body.bs-graph-collapsed .graph .bs-graph-toggle svg {
   border-radius: var(--bs-radius-xs);
   padding: 0 0.08em;
 }
-.search > .search-container > .search-space > .search-layout > .results-container .result-card {
+.search
+  > .search-container
+  > .search-space
+  > .search-layout
+  > .results-container
+  .result-card {
   padding: 0.72rem 0.95rem;
   border-bottom: 1px solid var(--bs-border);
   transition: background var(--bs-fast) var(--bs-ease);
 }
-.search > .search-container > .search-space > .search-layout > .results-container .result-card:hover,
+.search
+  > .search-container
+  > .search-space
+  > .search-layout
+  > .results-container
+  .result-card:hover,
 .search
   > .search-container
   > .search-space
@@ -1371,13 +1410,25 @@ body.bs-graph-collapsed .graph .bs-graph-toggle svg {
   .result-card.focus {
   background: var(--bs-hover);
 }
-.search > .search-container > .search-space > .search-layout > .results-container .result-card > h3 {
+.search
+  > .search-container
+  > .search-space
+  > .search-layout
+  > .results-container
+  .result-card
+  > h3 {
   font-size: 0.95rem;
   font-weight: 650;
   color: var(--secondary);
   margin: 0 0 0.15rem;
 }
-.search > .search-container > .search-space > .search-layout > .results-container .result-card > p {
+.search
+  > .search-container
+  > .search-space
+  > .search-layout
+  > .results-container
+  .result-card
+  > p {
   margin-top: 0.35em;
   color: var(--bs-muted);
   font-size: 0.84em;
@@ -1395,7 +1446,11 @@ body.bs-graph-collapsed .graph .bs-graph-toggle svg {
   color: var(--secondary);
   font-weight: 600;
 }
-.search > .search-container > .search-space > .search-layout > .preview-container {
+.search
+  > .search-container
+  > .search-space
+  > .search-layout
+  > .preview-container {
   padding: 0.8rem 1.6rem;
   color: var(--bs-text);
   border-left: 1px solid var(--bs-border);
@@ -1408,15 +1463,22 @@ body.bs-graph-collapsed .graph .bs-graph-toggle svg {
   box-shadow: var(--bs-shadow-md);
   overflow: hidden;
 }
-.search > .search-container > .search-space > .tag-suggestions > .tag-suggestion-item {
+.search
+  > .search-container
+  > .search-space
+  > .tag-suggestions
+  > .tag-suggestion-item {
   color: var(--bs-text);
   font-family: var(--bs-font-body);
 }
-.search > .search-container > .search-space > .tag-suggestions > .tag-suggestion-item.active {
+.search
+  > .search-container
+  > .search-space
+  > .tag-suggestions
+  > .tag-suggestion-item.active {
   color: var(--secondary);
   background: var(--bs-hover);
 }
-
 
 // ----------------------------------------------------------------------------
 // 11. 阅读模式
@@ -1442,7 +1504,6 @@ body.bs-graph-collapsed .graph .bs-graph-toggle svg {
 :root[reader-mode="on"] .sidebar.right:hover {
   opacity: 1;
 }
-
 
 // ----------------------------------------------------------------------------
 // 12. 转写 / 内嵌块（transclude、bases-inline、canvas、excalidraw）
@@ -1540,7 +1601,6 @@ body.bs-graph-collapsed .graph .bs-graph-toggle svg {
   margin-bottom: 0.2rem;
 }
 
-
 // ----------------------------------------------------------------------------
 // 13. Bases 数据库视图（表格 / 看板 / 卡片 / 列表 / 画廊 / 空状态）
 // ----------------------------------------------------------------------------
@@ -1560,7 +1620,9 @@ body.bs-graph-collapsed .graph .bs-graph-toggle svg {
   background: transparent;
   border: 1px solid var(--bs-border);
   border-radius: var(--bs-radius-pill);
-  transition: color var(--bs-fast) var(--bs-ease), background var(--bs-fast) var(--bs-ease),
+  transition:
+    color var(--bs-fast) var(--bs-ease),
+    background var(--bs-fast) var(--bs-ease),
     border-color var(--bs-fast) var(--bs-ease);
 }
 .bases-view-tabs button:hover {
@@ -1771,7 +1833,9 @@ body.bs-graph-collapsed .graph .bs-graph-toggle svg {
   border-radius: var(--bs-radius-lg);
   background: var(--light);
   box-shadow: var(--bs-shadow-sm);
-  transition: border-color var(--bs-fast) var(--bs-ease), box-shadow var(--bs-fast) var(--bs-ease),
+  transition:
+    border-color var(--bs-fast) var(--bs-ease),
+    box-shadow var(--bs-fast) var(--bs-ease),
     transform var(--bs-fast) var(--bs-ease);
   overflow: hidden;
 }
@@ -1812,7 +1876,9 @@ body.bs-graph-collapsed .graph .bs-graph-toggle svg {
   border-radius: var(--bs-radius-lg);
   box-shadow: var(--bs-shadow-sm);
   overflow: hidden;
-  transition: border-color var(--bs-fast) var(--bs-ease), box-shadow var(--bs-fast) var(--bs-ease);
+  transition:
+    border-color var(--bs-fast) var(--bs-ease),
+    box-shadow var(--bs-fast) var(--bs-ease);
 }
 .bases-gallery-item:hover {
   border-color: color-mix(in srgb, var(--secondary) 45%, transparent);
@@ -1867,7 +1933,9 @@ body.bs-graph-collapsed .graph .bs-graph-toggle svg {
   border-radius: var(--bs-radius);
   background: var(--light);
   box-shadow: var(--bs-shadow-sm);
-  transition: border-color var(--bs-fast) var(--bs-ease), box-shadow var(--bs-fast) var(--bs-ease);
+  transition:
+    border-color var(--bs-fast) var(--bs-ease),
+    box-shadow var(--bs-fast) var(--bs-ease);
 }
 .bases-board-card:hover {
   border-color: color-mix(in srgb, var(--secondary) 40%, transparent);
@@ -1897,7 +1965,6 @@ body.bs-graph-collapsed .graph .bs-graph-toggle svg {
   color: var(--bs-muted);
 }
 
-
 // ----------------------------------------------------------------------------
 // 14. Canvas 白板（节点 / 边 / 控件 / 侧栏）
 // ----------------------------------------------------------------------------
@@ -1909,7 +1976,11 @@ body.bs-graph-collapsed .graph .bs-graph-toggle svg {
 }
 .canvas-container {
   background-color: var(--light);
-  background-image: radial-gradient(circle, var(--bs-canvas-dot) 1px, transparent 1.1px);
+  background-image: radial-gradient(
+    circle,
+    var(--bs-canvas-dot) 1px,
+    transparent 1.1px
+  );
   background-size: 22px 22px;
 }
 .canvas-node {
@@ -1917,7 +1988,9 @@ body.bs-graph-collapsed .graph .bs-graph-toggle svg {
   border-radius: var(--bs-radius);
   background: var(--light);
   box-shadow: var(--bs-shadow-sm);
-  transition: box-shadow var(--bs-fast) var(--bs-ease), border-color var(--bs-fast) var(--bs-ease);
+  transition:
+    box-shadow var(--bs-fast) var(--bs-ease),
+    border-color var(--bs-fast) var(--bs-ease);
 }
 .canvas-node:hover {
   box-shadow: var(--bs-shadow-md);
@@ -1935,7 +2008,11 @@ body.bs-graph-collapsed .graph .bs-graph-toggle svg {
   border-style: dashed;
   border-width: 1.5px;
   border-radius: var(--bs-radius-lg);
-  background: color-mix(in srgb, var(--canvas-node-color, var(--gray)) 4%, transparent);
+  background: color-mix(
+    in srgb,
+    var(--canvas-node-color, var(--gray)) 4%,
+    transparent
+  );
 }
 .canvas-node-group .canvas-group-label {
   padding: 0.08rem 0.55rem;
@@ -1985,7 +2062,9 @@ body.bs-graph-collapsed .graph .bs-graph-toggle svg {
   border: 1px solid var(--bs-border);
   border-radius: var(--bs-radius-sm);
   box-shadow: var(--bs-shadow-sm);
-  transition: background var(--bs-fast) var(--bs-ease), border-color var(--bs-fast) var(--bs-ease),
+  transition:
+    background var(--bs-fast) var(--bs-ease),
+    border-color var(--bs-fast) var(--bs-ease),
     color var(--bs-fast) var(--bs-ease);
 }
 .canvas-controls button:hover,
@@ -2016,7 +2095,6 @@ body.bs-graph-collapsed .graph .bs-graph-toggle svg {
   background: var(--light);
 }
 
-
 // ----------------------------------------------------------------------------
 // 15. Excalidraw 绘图页（frame / 画布 / 控件 / 侧栏 / 内嵌卡片）
 // ----------------------------------------------------------------------------
@@ -2038,7 +2116,9 @@ body.bs-graph-collapsed .graph .bs-graph-toggle svg {
   border: 1px solid var(--bs-border);
   border-radius: var(--bs-radius-sm);
   box-shadow: var(--bs-shadow-sm);
-  transition: background var(--bs-fast) var(--bs-ease), border-color var(--bs-fast) var(--bs-ease),
+  transition:
+    background var(--bs-fast) var(--bs-ease),
+    border-color var(--bs-fast) var(--bs-ease),
     color var(--bs-fast) var(--bs-ease);
 }
 .excalidraw-controls button:hover {
@@ -2100,7 +2180,6 @@ body.bs-graph-collapsed .graph .bs-graph-toggle svg {
   color: var(--bs-heading);
 }
 
-
 // ----------------------------------------------------------------------------
 // 16. 首页（landing）
 // ----------------------------------------------------------------------------
@@ -2136,7 +2215,6 @@ body[data-slug="index"] .markdown-preview-view h2::before {
   border-radius: var(--bs-radius-pill);
   background: linear-gradient(180deg, var(--secondary), var(--tertiary));
 }
-
 
 // ----------------------------------------------------------------------------
 // 17. 响应式
@@ -2198,7 +2276,11 @@ body[data-slug="index"] .markdown-preview-view h2::before {
   .search > .search-container > .search-space > .search-layout > div {
     height: auto;
   }
-  .search > .search-container > .search-space > .search-layout .preview-container {
+  .search
+    > .search-container
+    > .search-space
+    > .search-layout
+    .preview-container {
     display: none;
   }
   .markdown-preview-view {
@@ -2284,7 +2366,9 @@ body[data-slug="index"] .markdown-preview-view h2::before {
     background: var(--light);
     color: var(--bs-muted);
     cursor: pointer;
-    transition: color var(--bs-fast) var(--bs-ease), border-color var(--bs-fast) var(--bs-ease),
+    transition:
+      color var(--bs-fast) var(--bs-ease),
+      border-color var(--bs-fast) var(--bs-ease),
       background var(--bs-fast) var(--bs-ease);
   }
   .bs-sidebar-hide:hover {
@@ -2308,7 +2392,9 @@ body[data-slug="index"] .markdown-preview-view h2::before {
     color: var(--darkgray);
     cursor: pointer;
     box-shadow: var(--bs-shadow-md);
-    transition: color var(--bs-fast) var(--bs-ease), border-color var(--bs-fast) var(--bs-ease);
+    transition:
+      color var(--bs-fast) var(--bs-ease),
+      border-color var(--bs-fast) var(--bs-ease);
   }
   #bs-sidebar-toggle:hover {
     color: var(--secondary);
@@ -2329,14 +2415,14 @@ body[data-slug="index"] .markdown-preview-view h2::before {
     display: flex;
   }
 
-  body.bs-sidebar-collapsed .sidebar.left {
+  body.bs-sidebar-collapsed .page > #quartz-body .sidebar.left {
     display: none;
   }
 
   body.bs-sidebar-drawer {
     overflow: hidden;
   }
-  body.bs-sidebar-drawer .sidebar.left {
+  body.bs-sidebar-drawer .page > #quartz-body .sidebar.left {
     display: block;
     position: fixed;
     top: 0;
@@ -2382,7 +2468,9 @@ body[data-slug="index"] .markdown-preview-view h2::before {
     font-size: 0.72rem;
     font-weight: 600;
     cursor: pointer;
-    transition: color var(--bs-fast) var(--bs-ease), border-color var(--bs-fast) var(--bs-ease);
+    transition:
+      color var(--bs-fast) var(--bs-ease),
+      border-color var(--bs-fast) var(--bs-ease);
   }
   body.bs-sidebar-drawer .bs-sidebar-pin .bs-pin-ico {
     display: flex;
@@ -2415,7 +2503,9 @@ body[data-slug="index"] .markdown-preview-view h2::before {
     background: var(--light);
     color: var(--bs-muted);
     cursor: pointer;
-    transition: color var(--bs-fast) var(--bs-ease), border-color var(--bs-fast) var(--bs-ease),
+    transition:
+      color var(--bs-fast) var(--bs-ease),
+      border-color var(--bs-fast) var(--bs-ease),
       background var(--bs-fast) var(--bs-ease);
   }
   .bs-sidebar-hide-right:hover {
@@ -2439,7 +2529,9 @@ body[data-slug="index"] .markdown-preview-view h2::before {
     color: var(--darkgray);
     cursor: pointer;
     box-shadow: var(--bs-shadow-md);
-    transition: color var(--bs-fast) var(--bs-ease), border-color var(--bs-fast) var(--bs-ease);
+    transition:
+      color var(--bs-fast) var(--bs-ease),
+      border-color var(--bs-fast) var(--bs-ease);
   }
   #bs-sidebar-right-toggle:hover {
     color: var(--secondary);
@@ -2460,14 +2552,14 @@ body[data-slug="index"] .markdown-preview-view h2::before {
     display: flex;
   }
 
-  body.bs-sidebar-right-collapsed .sidebar.right {
+  body.bs-sidebar-right-collapsed .page > #quartz-body .sidebar.right {
     display: none;
   }
 
   body.bs-sidebar-right-drawer {
     overflow: hidden;
   }
-  body.bs-sidebar-right-drawer .sidebar.right {
+  body.bs-sidebar-right-drawer .page > #quartz-body .sidebar.right {
     display: block;
     position: fixed;
     top: 0;
@@ -2513,7 +2605,9 @@ body[data-slug="index"] .markdown-preview-view h2::before {
     font-size: 0.72rem;
     font-weight: 600;
     cursor: pointer;
-    transition: color var(--bs-fast) var(--bs-ease), border-color var(--bs-fast) var(--bs-ease);
+    transition:
+      color var(--bs-fast) var(--bs-ease),
+      border-color var(--bs-fast) var(--bs-ease);
   }
   body.bs-sidebar-right-drawer .bs-sidebar-pin-right .bs-pin-ico {
     display: flex;
@@ -2602,7 +2696,9 @@ body[data-slug="index"] .markdown-preview-view h2::before {
   font-weight: 600;
   cursor: pointer;
   box-shadow: var(--bs-shadow-sm);
-  transition: color var(--bs-fast) var(--bs-ease), border-color var(--bs-fast) var(--bs-ease);
+  transition:
+    color var(--bs-fast) var(--bs-ease),
+    border-color var(--bs-fast) var(--bs-ease);
 }
 #bs-quickbar .bs-quickbar-search svg {
   width: 15px;
@@ -2698,7 +2794,9 @@ body.bs-sidebar-right-drawer #bs-sidebar-right-toggle {
 }
 // 右侧栏作为普通列显示时，快捷栏放在它左侧，避免压住「关系图谱」面板
 @media all and (min-width: 800px) {
-  body.bs-has-right-sidebar:not(.bs-sidebar-right-collapsed):not(.bs-sidebar-right-drawer)
+  body.bs-has-right-sidebar:not(.bs-sidebar-right-collapsed):not(
+      .bs-sidebar-right-drawer
+    )
     #bs-quickbar {
     right: 332px;
   }
@@ -2772,8 +2870,10 @@ body.bs-sidebar-right-drawer #bs-sidebar-right-toggle {
   border-radius: var(--bs-radius);
   background: color-mix(in srgb, var(--darkgray) 1.5%, var(--light));
   box-shadow: var(--bs-shadow-sm);
-  transition: border-color var(--bs-fast) var(--bs-ease),
-    background var(--bs-fast) var(--bs-ease), transform var(--bs-fast) var(--bs-ease);
+  transition:
+    border-color var(--bs-fast) var(--bs-ease),
+    background var(--bs-fast) var(--bs-ease),
+    transform var(--bs-fast) var(--bs-ease);
 }
 .page-listing .section-li:has(> .section > .meta:empty) > .section:hover {
   border-color: color-mix(in srgb, var(--secondary) 42%, transparent);
@@ -2909,7 +3009,10 @@ button.readermode {
   #bs-sidebar-right-toggle {
     right: 12px;
   }
-  body.bs-has-right-sidebar.bs-sidebar-right-collapsed:not(.bs-sidebar-right-drawer) #bs-quickbar {
+  body.bs-has-right-sidebar.bs-sidebar-right-collapsed:not(
+      .bs-sidebar-right-drawer
+    )
+    #bs-quickbar {
     right: 52px;
   }
 }
@@ -2989,7 +3092,9 @@ footer ul {
   cursor: pointer;
   touch-action: manipulation;
   box-shadow: var(--bs-shadow-sm);
-  transition: color var(--bs-fast) var(--bs-ease), border-color var(--bs-fast) var(--bs-ease);
+  transition:
+    color var(--bs-fast) var(--bs-ease),
+    border-color var(--bs-fast) var(--bs-ease);
 }
 #bs-back-btn svg {
   width: 15px;
@@ -3051,4 +3156,127 @@ body:has(#quartz-root[data-frame="canvas"]) #bs-quickbar {
   left: 52px;
   top: 12px;
   z-index: 320;
+}
+
+// Current stable Quartz: responsive site presentation.
+.markdown-preview-view h2 {
+  color: var(--h2-color, var(--secondary));
+}
+.markdown-preview-view h3 {
+  color: var(--h3-color, var(--secondary));
+}
+.page > #quartz-body > .center {
+  min-width: 0;
+}
+.bases-table-wrapper {
+  overscroll-behavior-inline: contain;
+  scrollbar-gutter: stable;
+}
+.bases-table td {
+  overflow-wrap: anywhere;
+}
+@media (min-width: 1200px) {
+  body:not(.bs-sidebar-collapsed):not(.bs-sidebar-right-collapsed)
+    .page
+    > #quartz-body {
+    grid-template-columns: 260px minmax(0, 1fr) 240px;
+  }
+  body.bs-sidebar-right-collapsed:not(.bs-sidebar-collapsed)
+    .page
+    > #quartz-body {
+    grid-template-columns: 260px minmax(0, 1fr);
+  }
+  body.bs-sidebar-collapsed:not(.bs-sidebar-right-collapsed)
+    .page
+    > #quartz-body {
+    grid-template-columns: minmax(0, 1fr) 240px;
+  }
+  body.bs-has-right-sidebar:not(.bs-sidebar-right-collapsed):not(
+      .bs-sidebar-right-drawer
+    )
+    #bs-quickbar {
+    right: 252px;
+  }
+}
+@media (min-width: 800px) and (max-width: 1199px) {
+  body:not(.bs-sidebar-collapsed) .page > #quartz-body {
+    grid-template-columns: 240px minmax(0, 1fr);
+  }
+}
+@media (max-width: 799px) {
+  .page {
+    padding-inline: 0;
+  }
+  .page > #quartz-body {
+    width: 100%;
+    min-width: 0;
+  }
+  .page > #quartz-body > .center {
+    padding: 0 14px 24px;
+  }
+  .page > #quartz-body .sidebar.left {
+    position: relative;
+    height: auto;
+    padding: 16px 14px 8px;
+    gap: 12px;
+  }
+  .page > #quartz-body .sidebar.right {
+    display: none;
+  }
+  .page-title a {
+    font-size: 1rem;
+  }
+  .page-header {
+    margin-top: 1rem;
+  }
+  .markdown-preview-view {
+    font-size: 1rem;
+    line-height: 1.8;
+  }
+  .markdown-preview-view h2 {
+    font-size: 1.22rem;
+  }
+  .bases-table.bs-resizable-table {
+    min-width: 640px;
+  }
+  .bases-table :is(th, td) {
+    padding: 10px 12px;
+  }
+  .bases-table-wrapper {
+    max-width: 100%;
+    -webkit-overflow-scrolling: touch;
+  }
+  .bs-column-resizer {
+    width: 18px;
+    right: -9px;
+  }
+  .bs-column-resizer::after {
+    left: 8px;
+  }
+  #bs-quickbar {
+    top: 10px;
+    right: 12px;
+  }
+  #bs-quickbar button {
+    min-height: 44px;
+    min-width: 44px;
+  }
+  .search-button {
+    min-height: 44px;
+  }
+  .markdown-preview-view pre {
+    max-width: 100%;
+    overflow-x: auto;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    transition: none !important;
+    animation: none !important;
+  }
 }

@@ -16,3 +16,6 @@ pnpm-lock.yaml
 coverage/
 prof/
 *.cpuprofile
+
+# Wrangler local cache and credentials are never site sources.
+.wrangler/

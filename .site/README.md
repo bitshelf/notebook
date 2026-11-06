@@ -40,7 +40,7 @@ cd .site && npx quartz build --serve     # 本地预览 http://localhost:8080
 | 安装命令 / Install command | `npm ci`（`build.sh` 内也会执行，可留空） |
 | 构建命令 / Build command | `npm run build` |
 | 输出目录 / Output directory | `public` |
-| Node.js | 22+（`.site/.nvmrc` = 22；GitHub Actions 用 24） |
+| Node.js | 22.21.1（`.site/.nvmrc`；GitHub Actions 用 24） |
 
 每个平台的 `SITE_URL` 必须换成该平台的最终域名（写进 `baseUrl`，用于 sitemap/RSS/404 绝对路径等）：
 
@@ -80,9 +80,12 @@ cd .site && npx quartz build --serve     # 本地预览 http://localhost:8080
 **方式 A：Git 集成（推荐，零 secrets）**
 
 1. 控制台：国内 <https://console.cloud.tencent.com/edgeone> / 国际 <https://console.tencentcloud.com/edgeone> → Pages → 创建项目 → 导入 Git 仓库
-2. 项目根目录必须填 **`.site`**：EdgeOne 的「根目录」是执行构建命令的路径，而 `edgeone.json` 只从项目根目录读取，所以配置放在 `.site/edgeone.json`（构建命令、输出目录、Node 22.11.0、响应头都已定义）
-3. 环境变量：`SITE_URL=https://<项目名>.edgeone.app`
-4. 自定义域名：国内版绑定自定义域名需要 ICP 备案；国际版默认域名可直接使用
+2. 生产分支选择 `main`，框架选择 Other / 自定义，项目根目录填 **`.site`**；配置文件为 `.site/edgeone.json`。
+3. 确认安装命令 `npm ci --no-audit --no-fund`、构建命令 `SKIP_INSTALL=1 npm run build`、输出目录 `public`、Node `22.21.1`。平台安装一次依赖，构建脚本跳过重复安装。不要用 Node 22.11.0：当前 yargs 依赖要求 22.12 以上。
+4. 环境变量：`SITE_URL` 填控制台实际分配的完整 HTTPS 域名或最终自定义域名，不要照抄项目名推测域名。保存后部署；域名变化时更新变量并重新构建。
+5. 自定义域名与可用加速区域按控制台要求配置。
+
+推荐只启用一种自动部署入口：使用原生 Git 集成时，不再配置下面的 Actions token，避免同一次推送触发两次部署。
 
 > 说明：`edgeone.json` 不能放进 `.github/` 等其它目录（EdgeOne 不会读取）。如果坚持用仓库根作为项目根，则没有自动配置，需要在控制台手动填：安装命令 `npm --prefix .site ci`、构建命令 `npm --prefix .site run build`、输出目录 `.site/public`、Node 22。
 
@@ -118,3 +121,13 @@ Quartz 核心跟随官方最新稳定标签，源码与本站配置、插件隔�
 - 中文字体/Excalidraw 手写字体走 Google Fonts / unpkg CDN，访问受限时会回退系统字体，不影响功能
 - 三平台同时部署时，请确认每边自定义域名后同步修改对应的 `SITE_URL`，否则绝对 URL（RSS/sitemap/404）会指向别的域名
 - Cloudflare Pages 限制单文件 ≤25 MiB、20,000 个文件；EdgeOne Pages 国内版绑定自定义域名需要 ICP 备案
+
+
+## Cloudflare Workers 静态资源部署
+
+`wrangler.jsonc` 对应现有 Worker `notebook`，公开域名为 `https://notebook.ljzyx86.workers.dev`。
+本地先登录官方 Wrangler，再设置 `SITE_URL=https://notebook.ljzyx86.workers.dev` 构建，最后运行 `npm run deploy:cloudflare`。
+Cloudflare 原生 Git 构建根目录为 `.site`，构建命令为 `npm run build`，部署命令为 `npm run deploy:cloudflare`。
+原生 Git 检出失败时可用本地直接部署；这不依赖 Cloudflare 克隆笔记仓库。
+构建后将重复的大块内联主题 CSS 提取成带内容哈希的共享文件，以控制 GitHub Pages 发布体积。
+Bases 表格默认列宽统一为 45% / 30% / 25%，可独立拖动表头边界调整，自动记忆；双击边界恢复默认。

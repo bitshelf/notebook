@@ -37,16 +37,17 @@ jobs:
           SITE_URL: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}
         run: npm --prefix .site run build
 
-      - uses: actions/upload-pages-artifact@v3
+      - uses: actions/upload-pages-artifact@v5
         with:
           path: .site/public
 
   deploy:
     needs: build
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5
