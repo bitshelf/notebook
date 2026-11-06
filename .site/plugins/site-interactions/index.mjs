@@ -15,9 +15,16 @@ export default function SiteInteractions() {
   return {
     name: "SiteInteractions",
     markdownPlugins: () => [],
-    externalResources: () => ({
+    externalResources: (ctx) => ({
       css: [{ content: resizeCss, inline: true }],
       js: [
+        {
+          contentType: "inline",
+          // Publish the configured site path before navigation plugins initialize.
+          script: `;(() => { const basePath = ${JSON.stringify(new URL(`https://${ctx.cfg.configuration.baseUrl}`).pathname.replace(/\/$/, ""))}; const apply = () => { document.body.dataset.basepath = basePath }; apply(); document.addEventListener("nav", apply); })();`,
+          loadTime: "afterDOMReady",
+          spaPreserve: true,
+        },
         {
           contentType: "inline",
           script: resizeScript,

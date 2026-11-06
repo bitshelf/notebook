@@ -31,7 +31,7 @@
   top: 0;
   bottom: 0;
   width: 2px;
-  background: transparent;
+  background: var(--bs-border-strong, var(--gray));
 }
 .bs-column-resizer:hover::after,
 .bs-column-resizer:focus-visible::after {

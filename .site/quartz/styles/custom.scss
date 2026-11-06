@@ -1681,6 +1681,9 @@ body.bs-graph-collapsed .graph .bs-graph-toggle svg {
   text-align: left;
   vertical-align: middle;
 }
+.bases-table :is(th, td):not(:last-child) {
+  border-inline-end: 1px solid var(--bs-border-strong, var(--gray));
+}
 .bases-table thead th {
   position: sticky;
   top: 0;
