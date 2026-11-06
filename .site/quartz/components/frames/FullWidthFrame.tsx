@@ -19,7 +19,7 @@ export const FullWidthFrame: PageFrame = {
     beforeBody,
     pageBody: Content,
     afterBody,
-    footer,
+    footer: Footer,
   }: PageFrameProps) {
     return (
       <>
@@ -44,9 +44,7 @@ export const FullWidthFrame: PageFrame = {
             ))}
           </div>
         </div>
-        {footer.map((FooterComponent) => (
-          <FooterComponent {...componentData} />
-        ))}
+        <Footer {...componentData} />
       </>
     )
   },

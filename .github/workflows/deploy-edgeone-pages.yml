@@ -62,7 +62,7 @@ jobs:
 
       - name: Build site for EdgeOne Pages
         if: steps.gate.outputs.enabled == 'true'
-        run: bash .site/scripts/build.sh
+        run: npm --prefix .site run build
 
       - name: Deploy to EdgeOne Pages
         if: steps.gate.outputs.enabled == 'true'

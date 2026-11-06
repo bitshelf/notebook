@@ -20,17 +20,15 @@ BitShelf Notebook 的 Quartz 5 站点配置。笔记本体在仓库根目录，�
 - zip / exe / apk / pdf 等附件保留在仓库，但不会发布到网页
 - 从 git 历史恢复每个文件的最后修改时间，保证 Bases「最近更新」等视图有意义
 
-本地构建（Node 22+，需要 git + bash）：
+本地构建（Node 22+，需要 git）：
 
 ```bash
-bash .site/scripts/build.sh              # 输出 .site/public
-SITE_URL=https://example.com bash .site/scripts/build.sh   # 覆盖 canonical URL
+npm --prefix .site run build            # 输出 .site/public
+SITE_URL=https://example.com npm --prefix .site run build   # 覆盖 canonical URL
 cd .site && npx quartz build --serve     # 本地预览 http://localhost:8080
 ```
 
-脚本顺序：`npm install` → `scripts/patch-plugins.mjs`（给版本锁定的第三方 Quartz 插件打补丁）→ `scripts/check-quartz-vendor.mjs`（校验核心与上游 Quartz 基线一致）→ 复制内容 → `scripts/restore-dates.mjs` → `scripts/normalize-content.mjs` → `quartz build` → 复制平台配置文件（`_headers`）。
-
-`baseUrl` 会在构建期间按 `SITE_URL` 临时改写（退出时自动恢复），所以同一个仓库可以直接部署到带路径前缀的 GitHub Pages 和根路径的 Cloudflare/EdgeOne。
+脚本顺序：`npm ci` → 插件补丁 → 独享临时目录复制内容 → 恢复日期与规范化内容 → 构建 → 复制平台配置。`SITE_URL` 在运行时覆盖配置，不改写源码文件。
 
 ## 部署（三平台）
 
@@ -39,8 +37,8 @@ cd .site && npx quartz build --serve     # 本地预览 http://localhost:8080
 | 配置项 | 值 |
 | --- | --- |
 | 根目录 / Root directory | `.site` |
-| 安装命令 / Install command | `npm install`（`build.sh` 内也会执行，可留空） |
-| 构建命令 / Build command | `bash scripts/build.sh` |
+| 安装命令 / Install command | `npm ci`（`build.sh` 内也会执行，可留空） |
+| 构建命令 / Build command | `npm run build` |
 | 输出目录 / Output directory | `public` |
 | Node.js | 22+（`.site/.nvmrc` = 22；GitHub Actions 用 24） |
 
@@ -63,7 +61,7 @@ cd .site && npx quartz build --serve     # 本地预览 http://localhost:8080
 **方式 A：Git 集成（推荐，零 secrets）**
 
 1. 控制台 <https://dash.cloudflare.com/?to=/:account/workers-and-pages> → Create application → Pages → Connect to Git → 选本仓库
-2. 构建配置：Root directory `.site`、Build command `bash scripts/build.sh`、Build output `public`
+2. 构建配置：Root directory `.site`、Build command `npm run build`、Build output `public`
 3. 环境变量：`NODE_VERSION=22`、`SITE_URL=https://<项目名>.pages.dev`
 4. 保存并部署；自定义域名在项目 → Custom domains 添加
 
@@ -86,7 +84,7 @@ cd .site && npx quartz build --serve     # 本地预览 http://localhost:8080
 3. 环境变量：`SITE_URL=https://<项目名>.edgeone.app`
 4. 自定义域名：国内版绑定自定义域名需要 ICP 备案；国际版默认域名可直接使用
 
-> 说明：`edgeone.json` 不能放进 `.github/` 等其它目录（EdgeOne 不会读取）。如果坚持用仓库根作为项目根，则没有自动配置，需要在控制台手动填：安装命令 `npm --prefix .site install`、构建命令 `bash .site/scripts/build.sh`、输出目录 `.site/public`、Node 22。
+> 说明：`edgeone.json` 不能放进 `.github/` 等其它目录（EdgeOne 不会读取）。如果坚持用仓库根作为项目根，则没有自动配置，需要在控制台手动填：安装命令 `npm --prefix .site ci`、构建命令 `npm --prefix .site run build`、输出目录 `.site/public`、Node 22。
 
 **方式 B：GitHub Actions**
 
@@ -107,27 +105,15 @@ cd .site && npx quartz build --serve     # 本地预览 http://localhost:8080
 
 ## 第三方插件补丁
 
-Quartz 5 的 Bases 插件对"虚拟页"（Quartz 生成的 folder index 页、Canvas/Excalidraw 页）没有区分，会让这些页面混进数据库视图的条目里；`Kanban` 视图类型也需要映射到内置 board 渲染器；另外还修了日期排序/格式化、`file.size`、中文文案和 explorer 打开页面时窗口自动滚动的问题。`scripts/patch-plugins.mjs` 在每次 `npm install` 之后对 `@quartz-community/bases-page`、`@quartz-community/explorer` 打幂等补丁（补丁目标不存在时构建直接失败，避免静默回归）。
+Quartz 5 的 Bases 插件对"虚拟页"（Quartz 生成的 folder index 页、Canvas/Excalidraw 页）没有区分，会让这些页面混进数据库视图的条目里；`Kanban` 视图类型也需要映射到内置 board 渲染器；另外还修了日期排序/格式化、`file.size`、中文文案和 explorer 打开页面时窗口自动滚动的问题。`scripts/patch-plugins.mjs` 在每次 `npm ci` 之后对 `@quartz-community/bases-page`、`@quartz-community/explorer` 打幂等补丁（补丁目标不存在时构建直接失败，避免静默回归）。
 
-## 上游 Quartz 升级（与上游解耦）
+## 官方 Quartz 升级与本站扩展
 
-`.site/quartz` 是内置（vendored）的 Quartz v5 核心。除 `vendor/core-patches.mjs` 登记的 2 个补丁文件外，其余核心文件与上游逐字节一致；本站定制只放在 `quartz/styles/custom.scss`、`quartz/static/icon.png`、`quartz.config.yaml` 和 `scripts/` 里，升级时不会冲突。
-
-```bash
-cd .site
-node scripts/sync-quartz.mjs --dry-run   # 预览上游会改哪些文件
-node scripts/sync-quartz.mjs             # 同步上游核心 + 重打登记补丁 + 重建 manifest
-git diff .site                           # 审查改动（package.json / 补丁 / 覆盖文件警告）
-npm install && bash scripts/build.sh     # 更新依赖并本地构建验证
-```
-
-- `node scripts/check-quartz-vendor.mjs` 校验核心文件没有未登记的漂移（构建脚本会自动执行，CI 不一致即失败）；
-- 第三方插件补丁（Bases / Explorer / Excalidraw / Canvas）仍由 `scripts/patch-plugins.mjs` 负责，升级插件后跑一次 `--check` 即可；
-- 完整的审计结论、补丁清单、回滚方式和升级细节见 [`vendor/README.md`](vendor/README.md)。
+Quartz 核心跟随官方最新稳定标签，源码与本站配置、插件隔离。维护边界、升级流程和验证方式见 [MAINTENANCE.md](MAINTENANCE.md)。
 
 ## 已知限制
 
-- zip / exe / apk / rar / tgz / pdf 等大附件不发布，笔记里指向它们的链接在网页版会 404（可在需要时改成 GitHub 链接）
+- zip / exe / apk / rar / tgz / pdf 等附件不发布到站点；构建时自动将附件链接和嵌入转换为 GitHub 文件链接。未跟踪或无法唯一定位的附件转到仓库搜索页
 - 更新时间来自 git 提交时间；同一次提交的大量文件时间相同，Bases「最近更新」里大量并列属于正常现象。Cloudflare/EdgeOne 的 Git 集成构建通常是浅克隆，能取到的提交历史更少，时间精度会进一步下降（只影响排序展示，不影响内容）
 - 中文字体/Excalidraw 手写字体走 Google Fonts / unpkg CDN，访问受限时会回退系统字体，不影响功能
 - 三平台同时部署时，请确认每边自定义域名后同步修改对应的 `SITE_URL`，否则绝对 URL（RSS/sitemap/404）会指向别的域名

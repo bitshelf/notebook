@@ -11,11 +11,6 @@ export const CommonArgv = {
     default: false,
     describe: "print out extra logging information",
   },
-  concurrency: {
-    number: true,
-    alias: ["c"],
-    describe: "max parallel operations (default: number of CPU cores)",
-  },
 }
 
 export const CreateArgv = {
@@ -116,5 +111,36 @@ export const BuildArgv = {
     boolean: true,
     default: false,
     describe: "show detailed bundle information",
+  },
+  concurrency: {
+    number: true,
+    describe: "how many threads to use to parse notes",
+  },
+}
+
+export const PluginInstallArgv = {
+  ...CommonArgv,
+  _: {
+    type: "string",
+    demandOption: true,
+    describe: "package names to install",
+  },
+}
+
+export const PluginUninstallArgv = {
+  ...CommonArgv,
+  _: {
+    type: "string",
+    demandOption: true,
+    describe: "package names to uninstall",
+  },
+}
+
+export const PluginSearchArgv = {
+  ...CommonArgv,
+  query: {
+    string: true,
+    alias: ["q"],
+    describe: "search query for plugins",
   },
 }

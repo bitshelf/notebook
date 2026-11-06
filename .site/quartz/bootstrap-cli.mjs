@@ -1,34 +1,38 @@
 #!/usr/bin/env -S node --no-deprecation
-const [major] = process.versions.node.split(".").map(Number)
-if (major < 22) {
-  console.error(
-    `\nQuartz requires Node.js >= 22, but you are running Node.js ${process.version}.\n` +
-      `Please upgrade: https://nodejs.org/\n`,
-  )
-  process.exit(1)
-}
 import yargs from "yargs"
 import { hideBin } from "yargs/helpers"
 import {
   handleBuild,
   handleCreate,
+  handleUpdate,
   handleUpgrade,
   handleRestore,
   handleSync,
 } from "./cli/handlers.js"
-
+import { handleMigrate } from "./cli/migrate-handler.js"
 import {
-  handlePluginInstallUnified,
+  handlePluginInstall as handleGitPluginInstall,
   handlePluginAdd,
   handlePluginRemove,
+  handlePluginUpdate,
+  handlePluginRestore,
   handlePluginList,
-  handlePluginStatus,
   handlePluginEnable,
   handlePluginDisable,
   handlePluginConfig,
+  handlePluginCheck,
   handlePluginPrune,
+  handlePluginResolve,
 } from "./cli/plugin-git-handlers.js"
-import { CommonArgv, BuildArgv, CreateArgv, SyncArgv } from "./cli/args.js"
+import {
+  CommonArgv,
+  BuildArgv,
+  CreateArgv,
+  SyncArgv,
+  PluginInstallArgv,
+  PluginUninstallArgv,
+  PluginSearchArgv,
+} from "./cli/args.js"
 import { version } from "./cli/constants.js"
 
 async function launchTui() {
@@ -40,7 +44,7 @@ async function launchTui() {
   if (!existsSync(tuiPath)) {
     console.error(
       "TUI plugin not installed. Install with:\n" +
-        "  npx quartz plugin add @quartz-community/tui\n",
+        "  npx quartz plugin add github:quartz-community/tui\n",
     )
     process.exit(1)
   }
@@ -80,13 +84,16 @@ yargs(hideBin(process.argv))
     await handleCreate(argv)
   })
   .command(
-    ["upgrade", "update"],
-    "Upgrade Quartz to the latest version",
+    "update [names..]",
+    "Update installed plugins to latest version",
     CommonArgv,
     async (argv) => {
-      await handleUpgrade(argv)
+      await handleUpdate(argv)
     },
   )
+  .command("upgrade", "Upgrade Quartz to the latest version", CommonArgv, async (argv) => {
+    await handleUpgrade(argv)
+  })
   .command(
     "restore",
     "Try to restore your content folder from the cache",
@@ -101,6 +108,9 @@ yargs(hideBin(process.argv))
   .command("build", "Build Quartz into a bundle of static HTML files", BuildArgv, async (argv) => {
     await handleBuild(argv)
   })
+  .command("migrate", "Migrate old config to quartz.config.yaml", CommonArgv, async () => {
+    await handleMigrate()
+  })
   .command("tui", "Launch interactive plugin manager", CommonArgv, async () => {
     await launchTui()
   })
@@ -108,177 +118,106 @@ yargs(hideBin(process.argv))
     "plugin [subcommand]",
     "Manage Quartz plugins",
     (yargs) => {
-      return (
-        yargs
-          .command(
-            "install [names..]",
-            "Install plugins from lockfile or config",
-            {
-              ...CommonArgv,
-              "from-config": {
-                boolean: true,
-                default: false,
-                describe: "install plugins referenced in quartz.config.yaml instead of lockfile",
-              },
-              latest: {
-                boolean: true,
-                default: false,
-                describe: "fetch latest version from remote instead of pinned lockfile commit",
-              },
-              clean: {
-                boolean: true,
-                default: false,
-                describe: "skip plugins whose directory already exists",
-              },
-              "dry-run": {
-                boolean: true,
-                default: false,
-                describe: "show what would happen without making changes",
-              },
+      return yargs
+        .command("install", "Install plugins from quartz.lock.json", CommonArgv, async () => {
+          await handleGitPluginInstall()
+        })
+        .command("add <repos..>", "Add plugins from Git repositories", CommonArgv, async (argv) => {
+          await handlePluginAdd(argv.repos)
+        })
+        .command("remove <names..>", "Remove installed plugins", CommonArgv, async (argv) => {
+          await handlePluginRemove(argv.names)
+        })
+        .command(
+          "update [names..]",
+          "Update installed plugins to latest version",
+          CommonArgv,
+          async (argv) => {
+            await handlePluginUpdate(argv.names)
+          },
+        )
+        .command("list", "List all installed plugins", CommonArgv, async () => {
+          await handlePluginList()
+        })
+        .command(
+          "restore",
+          "Restore plugins from lockfile (exact versions)",
+          CommonArgv,
+          async () => {
+            await handlePluginRestore()
+          },
+        )
+        .command(
+          "enable <names..>",
+          "Enable plugins in quartz.config.yaml",
+          CommonArgv,
+          async (argv) => {
+            await handlePluginEnable(argv.names)
+          },
+        )
+        .command(
+          "disable <names..>",
+          "Disable plugins in quartz.config.yaml",
+          CommonArgv,
+          async (argv) => {
+            await handlePluginDisable(argv.names)
+          },
+        )
+        .command(
+          "config <name>",
+          "View or set plugin configuration",
+          {
+            ...CommonArgv,
+            set: {
+              string: true,
+              describe: "Set a config value (key=value)",
             },
-            async (argv) => {
-              await handlePluginInstallUnified({
-                names: argv.names?.length ? argv.names : undefined,
-                fromConfig: argv.fromConfig,
-                latest: argv.latest,
-                clean: argv.clean,
-                dryRun: argv.dryRun,
-                concurrency: argv.concurrency,
-              })
+          },
+          async (argv) => {
+            await handlePluginConfig(argv.name, { set: argv.set })
+          },
+        )
+        .command("check", "Check for plugin updates", CommonArgv, async () => {
+          await handlePluginCheck()
+        })
+        .command(
+          "prune",
+          "Remove installed plugins no longer referenced in config",
+          {
+            ...CommonArgv,
+            "dry-run": {
+              boolean: true,
+              default: false,
+              describe: "show what would be pruned without making changes",
             },
-          )
-          .command(
-            "add <repos..>",
-            "Add plugins from Git repositories",
-            {
-              ...CommonArgv,
-              name: {
-                string: true,
-                alias: ["as"],
-                describe: "Override the plugin name (for resolving conflicts with duplicate names)",
-              },
-              subdir: {
-                string: true,
-                describe: "Subdirectory within the repository containing the plugin",
-              },
+          },
+          async (argv) => {
+            await handlePluginPrune({ dryRun: argv.dryRun })
+          },
+        )
+        .command(
+          "resolve",
+          "Install plugins from config that are not yet in the lockfile",
+          {
+            ...CommonArgv,
+            "dry-run": {
+              boolean: true,
+              default: false,
+              describe: "show what would be resolved without making changes",
             },
-            async (argv) => {
-              await handlePluginAdd(argv.repos, {
-                name: argv.name,
-                subdir: argv.subdir,
-                concurrency: argv.concurrency,
-              })
-            },
-          )
-          .command("remove <names..>", "Remove installed plugins", CommonArgv, async (argv) => {
-            await handlePluginRemove(argv.names)
-          })
-          .command("list", "List all installed plugins", CommonArgv, async () => {
-            await handlePluginList()
-          })
-          .command(
-            "enable <names..>",
-            "Enable plugins in quartz.config.yaml",
-            CommonArgv,
-            async (argv) => {
-              await handlePluginEnable(argv.names)
-            },
-          )
-          .command(
-            "disable <names..>",
-            "Disable plugins in quartz.config.yaml",
-            CommonArgv,
-            async (argv) => {
-              await handlePluginDisable(argv.names)
-            },
-          )
-          .command(
-            "config <name>",
-            "View or set plugin configuration",
-            {
-              ...CommonArgv,
-              set: {
-                string: true,
-                describe: "Set a config value (key=value)",
-              },
-            },
-            async (argv) => {
-              await handlePluginConfig(argv.name, { set: argv.set })
-            },
-          )
-          .command(
-            "prune",
-            "Remove installed plugins no longer referenced in config",
-            {
-              ...CommonArgv,
-              "dry-run": {
-                boolean: true,
-                default: false,
-                describe: "show what would be pruned without making changes",
-              },
-            },
-            async (argv) => {
-              await handlePluginPrune({ dryRun: argv.dryRun })
-            },
-          )
-          // Hidden deprecated aliases
-          .command("restore", false, CommonArgv, async (argv) => {
-            console.log(
-              "\x1b[33m⚠ 'plugin restore' is deprecated. Use 'plugin install --clean' instead.\x1b[0m",
-            )
-            await handlePluginInstallUnified({ clean: true, concurrency: argv.concurrency })
-          })
-          .command("update [names..]", false, CommonArgv, async (argv) => {
-            console.log(
-              "\x1b[33m⚠ 'plugin update' is deprecated. Use 'plugin install --latest' instead.\x1b[0m",
-            )
-            await handlePluginInstallUnified({
-              names: argv.names?.length ? argv.names : undefined,
-              latest: true,
-              concurrency: argv.concurrency,
-            })
-          })
-          .command("check", false, CommonArgv, async (argv) => {
-            console.log(
-              "\x1b[33m⚠ 'plugin check' is deprecated. Use 'plugin install --latest --dry-run' instead.\x1b[0m",
-            )
-            await handlePluginInstallUnified({
-              latest: true,
-              dryRun: true,
-              concurrency: argv.concurrency,
-            })
-          })
-          .command(
-            "resolve",
-            false,
-            {
-              ...CommonArgv,
-              "dry-run": {
-                boolean: true,
-                default: false,
-                describe: "show what would be resolved without making changes",
-              },
-            },
-            async (argv) => {
-              console.log(
-                "\x1b[33m⚠ 'plugin resolve' is deprecated. Use 'plugin install --from-config' instead.\x1b[0m",
-              )
-              await handlePluginInstallUnified({
-                fromConfig: true,
-                dryRun: argv.dryRun,
-                concurrency: argv.concurrency,
-              })
-            },
-          )
-          .demandCommand(0, "")
-      )
+          },
+          async (argv) => {
+            await handlePluginResolve({ dryRun: argv.dryRun })
+          },
+        )
+        .demandCommand(0, "")
     },
     async (argv) => {
       if (!argv._.includes("plugin") || argv._.length > 1) return
-      await handlePluginStatus()
+      await launchTui()
     },
   )
-  .showHelpOnFail(true)
+  .showHelpOnFail(false)
   .help()
   .strict()
   .demandCommand().argv

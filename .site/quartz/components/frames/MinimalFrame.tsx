@@ -10,15 +10,13 @@ import { PageFrame, PageFrameProps } from "./types"
  */
 export const MinimalFrame: PageFrame = {
   name: "minimal",
-  render({ componentData, pageBody: Content, footer }: PageFrameProps) {
+  render({ componentData, pageBody: Content, footer: Footer }: PageFrameProps) {
     return (
       <>
         <div class="center minimal">
           <Content {...componentData} />
         </div>
-        {footer.map((FooterComponent) => (
-          <FooterComponent {...componentData} />
-        ))}
+        <Footer {...componentData} />
       </>
     )
   },

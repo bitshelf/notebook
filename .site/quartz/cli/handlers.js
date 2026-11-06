@@ -22,12 +22,11 @@ import {
   gitPull,
   popContentFolder,
   stashContentFolder,
-  symlinkOrCopy,
 } from "./helpers.js"
 import {
   handlePluginRestore,
   handlePluginCheck,
-  handlePluginResolve,
+  handlePluginUpdate,
 } from "./plugin-git-handlers.js"
 import {
   configExists,
@@ -37,7 +36,6 @@ import {
   writePluginsJson,
   extractPluginName,
   updateGlobalConfig,
-  LOCKFILE_PATH,
 } from "./plugin-data.js"
 import {
   UPSTREAM_NAME,
@@ -211,7 +209,7 @@ export async function handleCreate(argv) {
         preserveTimestamps: true,
       })
     } else if (setupStrategy === "symlink") {
-      await symlinkOrCopy(originalFolder, contentFolder)
+      await fs.promises.symlink(originalFolder, contentFolder, "dir")
     }
   } else if (setupStrategy === "new") {
     await fs.promises.writeFile(
@@ -275,12 +273,15 @@ See the [documentation](https://quartz.jzhao.xyz) for how to get started.
   // Strip protocol prefix if user included it
   baseUrl = baseUrl.replace(/^https?:\/\//, "").replace(/\/+$/, "")
 
-  if (template && template !== "default") {
-    createConfigFromTemplate(template)
-    console.log(styleText("green", `Created quartz.config.yaml from '${template}' template`))
-  } else {
-    createConfigFromTemplate("default")
-    console.log(styleText("green", "Created quartz.config.yaml from defaults"))
+  // Create config if it doesn't exist
+  if (!configExists()) {
+    if (template && template !== "default") {
+      createConfigFromTemplate(template)
+      console.log(styleText("green", `Created quartz.config.yaml from '${template}' template`))
+    } else {
+      createConfigFromTemplate("default")
+      console.log(styleText("green", "Created quartz.config.yaml from defaults"))
+    }
   }
 
   // Update markdownLinkResolution in the crawl-links plugin options via YAML config
@@ -301,9 +302,6 @@ See the [documentation](https://quartz.jzhao.xyz) for how to get started.
   // Update baseUrl in configuration
   updateGlobalConfig({ baseUrl })
 
-  // install plugins referenced in the template config
-  await handlePluginResolve()
-
   // setup remote
   execSync(`git remote show upstream || git remote add upstream ${QUARTZ_SOURCE_REPO}`, {
     stdio: "ignore",
@@ -321,11 +319,6 @@ See the [documentation](https://quartz.jzhao.xyz) for how to get started.
  * @param {*} argv arguments for `build`
  */
 export async function handleBuild(argv) {
-  if (argv.concurrency !== undefined && argv.concurrency < 1) {
-    console.error("Concurrency must be at least 1")
-    process.exit(1)
-  }
-
   if (argv.serve) {
     argv.watch = true
   }
@@ -346,11 +339,6 @@ export async function handleBuild(argv) {
     metafile: true,
     sourcemap: true,
     sourcesContent: false,
-    logOverride: {
-      "direct-eval": "silent",
-      "equals-negative-zero": "silent",
-      "duplicate-object-key": "silent",
-    },
     plugins: [
       sassPlugin({
         type: "css-text",
@@ -415,10 +403,8 @@ export async function handleBuild(argv) {
     }
 
     const result = await ctx.rebuild().catch((err) => {
-      console.error(
-        `${styleText("red", "Failed to build Quartz.")} Check for syntax errors in your configuration or plugins.`,
-      )
-      console.log(`Reason: ${styleText("gray", err.message ?? String(err))}`)
+      console.error(`${styleText("red", "Couldn't parse Quartz configuration:")} ${fp}`)
+      console.log(`Reason: ${styleText("grey", err)}`)
       process.exit(1)
     })
     release()
@@ -495,7 +481,7 @@ export async function handleBuild(argv) {
           status >= 200 && status < 300
             ? styleText("green", `[${status}]`)
             : styleText("red", `[${status}]`)
-        console.log(statusString + styleText("gray", ` ${argv.baseDir}${req.url}`))
+        console.log(statusString + styleText("grey", ` ${argv.baseDir}${req.url}`))
         release()
       }
 
@@ -506,7 +492,7 @@ export async function handleBuild(argv) {
         })
         console.log(
           styleText("yellow", "[302]") +
-            styleText("gray", ` ${argv.baseDir}${req.url} -> ${newFp}`),
+            styleText("grey", ` ${argv.baseDir}${req.url} -> ${newFp}`),
         )
         res.end()
       }
@@ -553,26 +539,8 @@ export async function handleBuild(argv) {
       return serve()
     })
 
-    server.on("error", (err) => {
-      if (err.code === "EADDRINUSE") {
-        console.error(
-          `Port ${argv.port} is already in use. Try a different port with --port <number>`,
-        )
-        process.exit(1)
-      }
-      throw err
-    })
     server.listen(argv.port)
     const wss = new WebSocketServer({ port: argv.wsPort })
-    wss.on("error", (err) => {
-      if (err.code === "EADDRINUSE") {
-        console.error(
-          `WebSocket port ${argv.wsPort} is already in use. Try a different port with --wsPort <number>`,
-        )
-        process.exit(1)
-      }
-      throw err
-    })
     wss.on("connection", (ws) => connections.push(ws))
     console.log(
       styleText(
@@ -593,8 +561,6 @@ export async function handleBuild(argv) {
       "**/*.tsx",
       "**/*.scss",
       "package.json",
-      "quartz.config.yaml",
-      "quartz.config.default.yaml",
     ])
     chokidar
       .watch(paths, { ignoreInitial: true })
@@ -602,7 +568,7 @@ export async function handleBuild(argv) {
       .on("change", () => build(clientRefresh))
       .on("unlink", () => build(clientRefresh))
 
-    console.log(styleText("gray", "hint: exit with ctrl+c"))
+    console.log(styleText("grey", "hint: exit with ctrl+c"))
   }
 }
 
@@ -617,53 +583,16 @@ export async function handleUpgrade(argv) {
   console.log("Backing up your content")
   execSync(`git remote show upstream || git remote add upstream ${QUARTZ_SOURCE_REPO}`)
   await stashContentFolder(contentFolder)
-
-  const lockfileBackup = LOCKFILE_PATH + ".bak"
-  const hasLockfile = fs.existsSync(LOCKFILE_PATH)
-  if (hasLockfile) {
-    fs.copyFileSync(LOCKFILE_PATH, lockfileBackup)
-  }
-
   console.log(
     "Pulling updates... you may need to resolve some `git` conflicts if you've made changes to components or plugins.",
   )
 
-  let pullOk = false
   try {
     gitPull(UPSTREAM_NAME, QUARTZ_SOURCE_BRANCH)
-    pullOk = true
   } catch {
-    if (hasLockfile) {
-      try {
-        fs.copyFileSync(lockfileBackup, LOCKFILE_PATH)
-        execSync(`git add ${LOCKFILE_PATH}`)
-        const remaining = execSync("git diff --name-only --diff-filter=U", {
-          encoding: "utf-8",
-        }).trim()
-        if (remaining.length === 0) {
-          execSync("git commit --no-edit")
-          pullOk = true
-          console.log(styleText("cyan", "Resolved quartz.lock.json merge conflict automatically."))
-        }
-      } catch {
-        // Could not auto-resolve, fall through to manual resolution
-      }
-    }
-
-    if (!pullOk) {
-      console.log(
-        styleText("red", "An error occurred while pulling updates.") +
-          "\nCheck your network connection and git credentials. If you see merge conflicts, resolve them manually and run `npx quartz sync --no-pull`.",
-      )
-      await popContentFolder(contentFolder)
-      if (fs.existsSync(lockfileBackup)) fs.unlinkSync(lockfileBackup)
-      return
-    }
-  }
-
-  if (hasLockfile && fs.existsSync(lockfileBackup)) {
-    fs.copyFileSync(lockfileBackup, LOCKFILE_PATH)
-    fs.unlinkSync(lockfileBackup)
+    console.log(styleText("red", "An error occurred above while pulling updates."))
+    await popContentFolder(contentFolder)
+    return
   }
 
   await popContentFolder(contentFolder)
@@ -700,10 +629,7 @@ export async function handleUpgrade(argv) {
   if (res.status === 0) {
     console.log(styleText("green", "Dependencies updated!"))
   } else {
-    console.log(
-      styleText("red", "An error occurred while installing dependencies.") +
-        "\nTry running `npm install` manually to see detailed errors.",
-    )
+    console.log(styleText("red", "An error occurred above while installing dependencies."))
   }
 
   console.log("Restoring plugins from lockfile...")
@@ -713,6 +639,16 @@ export async function handleUpgrade(argv) {
   await handlePluginCheck()
 
   console.log(styleText("green", "Done!"))
+}
+
+/**
+ * Handles `npx quartz update`
+ * Shortcut for `npx quartz plugin update` — updates all installed plugins.
+ * @param {*} argv arguments for `update`
+ */
+export async function handleUpdate(argv) {
+  console.log(`\n${styleText(["bgGreen", "black"], ` Quartz v${version} `)} \n`)
+  await handlePluginUpdate(argv.names)
 }
 
 /**
@@ -772,10 +708,7 @@ export async function handleSync(argv) {
     try {
       gitPull(ORIGIN_NAME, QUARTZ_SOURCE_BRANCH)
     } catch {
-      console.log(
-        styleText("red", "An error occurred while pulling updates from your repository.") +
-          "\nCheck your network connection and git credentials.",
-      )
+      console.log(styleText("red", "An error occurred above while pulling updates."))
       await popContentFolder(contentFolder)
       return
     }
@@ -790,8 +723,7 @@ export async function handleSync(argv) {
     })
     if (res.status !== 0) {
       console.log(
-        styleText("red", `An error occurred while pushing to remote ${ORIGIN_NAME}.`) +
-          "\nCheck that you have push access to the remote repository.",
+        styleText("red", `An error occurred above while pushing to remote ${ORIGIN_NAME}.`),
       )
       return
     }

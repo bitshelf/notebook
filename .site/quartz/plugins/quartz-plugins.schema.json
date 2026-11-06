@@ -165,11 +165,8 @@
           }
         },
         "analytics": {
-          "oneOf": [
-            { "type": "null" },
-            { "type": "object", "description": "Analytics configuration" }
-          ],
-          "description": "Analytics configuration (null to disable)"
+          "type": "object",
+          "description": "Analytics configuration"
         },
         "ignorePatterns": {
           "type": "array",
@@ -177,6 +174,11 @@
             "type": "string"
           },
           "description": "Patterns to ignore during processing"
+        },
+        "defaultDateType": {
+          "type": "string",
+          "enum": ["created", "modified", "published"],
+          "description": "Default date type for pages"
         }
       }
     },
@@ -189,37 +191,8 @@
         "additionalProperties": false,
         "properties": {
           "source": {
-            "oneOf": [
-              {
-                "type": "string",
-                "description": "Plugin source path or identifier. Supports github:user/repo, git+https://, and https:// URLs. Append #ref to pin to a specific branch or tag (e.g., github:user/repo#my-branch). Local file paths (e.g., ./my-plugin, ../sibling-plugin, /absolute/path) are also supported for local development or airgapped environments."
-              },
-              {
-                "type": "object",
-                "required": ["repo"],
-                "additionalProperties": false,
-                "properties": {
-                  "name": {
-                    "type": "string",
-                    "description": "Override name for the plugin directory. If omitted, the name is derived from the repository URL."
-                  },
-                  "repo": {
-                    "type": "string",
-                    "description": "Git repository URL (e.g., https://github.com/user/repo.git). Supports the same URL formats as the string source."
-                  },
-                  "subdir": {
-                    "type": "string",
-                    "description": "Subdirectory within the repository containing the plugin. Used when the plugin is not at the repository root."
-                  },
-                  "ref": {
-                    "type": "string",
-                    "description": "Git ref (branch or tag) to pin to. If omitted, the default branch is used."
-                  }
-                },
-                "description": "Object source with explicit repo URL and optional subdirectory, ref, and name overrides for monorepo-style plugins."
-              }
-            ],
-            "description": "Plugin source: either a string path/identifier or an object with repo/subdir configuration."
+            "type": "string",
+            "description": "Plugin source path or identifier. Supports github:user/repo, git+https://, and https:// URLs. Append #ref to pin to a specific branch or tag (e.g., github:user/repo#my-branch). Local file paths (e.g., ./my-plugin, ../sibling-plugin, /absolute/path) are also supported for local development or airgapped environments."
           },
           "enabled": {
             "type": "boolean",
@@ -241,7 +214,7 @@
             "properties": {
               "position": {
                 "type": "string",
-                "enum": ["left", "right", "beforeBody", "afterBody", "body"],
+                "enum": ["left", "right", "beforeBody", "afterBody"],
                 "description": "Layout position"
               },
               "priority": {

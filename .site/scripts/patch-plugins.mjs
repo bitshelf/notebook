@@ -72,7 +72,14 @@ const targetFile = path.join(
 // The explorer plugin ships the same inline script twice (plugin entry and the
 // component subpath that Quartz actually loads), so both copies must be patched.
 const explorerFiles = [
-  path.join(siteRoot, "node_modules", "@quartz-community", "explorer", "dist", "index.js"),
+  path.join(
+    siteRoot,
+    "node_modules",
+    "@quartz-community",
+    "explorer",
+    "dist",
+    "index.js",
+  ),
   path.join(
     siteRoot,
     "node_modules",
@@ -101,8 +108,10 @@ const basesFilterPatches = [
     edits: [
       {
         find: "    return !node.not.every((child) => evaluateFilter(child, context));",
-        replace: "    return !node.not.some((child) => evaluateFilter(child, context));",
-        marker: "    return !node.not.some((child) => evaluateFilter(child, context));",
+        replace:
+          "    return !node.not.some((child) => evaluateFilter(child, context));",
+        marker:
+          "    return !node.not.some((child) => evaluateFilter(child, context));",
       },
     ],
   },
@@ -130,7 +139,8 @@ const canvasPageFile = path.join(
 const excalidrawDatesPatches = [
   {
     id: "excalidraw:virtual-dates",
-    description: "ExcalidrawPage.generate(): attach source mtime to virtual pages for Bases file.mtime",
+    description:
+      "ExcalidrawPage.generate(): attach source mtime to virtual pages for Bases file.mtime",
     edits: [
       {
         find: "import { readFileSync } from 'fs';",
@@ -176,7 +186,8 @@ const excalidrawDatesPatches = [
 const canvasDatesPatches = [
   {
     id: "canvas:virtual-dates",
-    description: "CanvasPage.generate(): attach source mtime to virtual pages for Bases file.mtime",
+    description:
+      "CanvasPage.generate(): attach source mtime to virtual pages for Bases file.mtime",
     edits: [
       {
         find: "import { readFileSync } from 'fs';",
@@ -234,10 +245,15 @@ const checkOnly = process.argv.includes("--check")
 const patches = [
   {
     id: "bases:skip-virtual-in-fileLookup",
-    description: "resolveBasesEntries(): do not index virtual pages in fileLookup",
+    description:
+      "resolveBasesEntries(): do not index virtual pages in fileLookup",
     edits: [
       {
-        find: ["  for (const fd of allFiles) {", "    if (fd.unlisted === true) continue;", ""].join("\n"),
+        find: [
+          "  for (const fd of allFiles) {",
+          "    if (fd.unlisted === true) continue;",
+          "",
+        ].join("\n"),
         replace: [
           "  for (const fd of allFiles) {",
           "    if (fd.unlisted === true) continue;",
@@ -250,7 +266,8 @@ const patches = [
   },
   {
     id: "bases:sort-missing-last",
-    description: "sortEntries(): missing (undefined/null) values always sort last",
+    description:
+      "sortEntries(): missing (undefined/null) values always sort last",
     edits: [
       {
         find: [
@@ -268,13 +285,15 @@ const patches = [
           "      if (cmp !== 0) return sign * cmp;",
           "",
         ].join("\n"),
-        marker: "      const leftMissing = leftValue === void 0 || leftValue === null;\n",
+        marker:
+          "      const leftMissing = leftValue === void 0 || leftValue === null;\n",
       },
     ],
   },
   {
     id: "bases:sort-date-values",
-    description: "compareSort(): compare Date values by timestamp instead of weekday-name strings",
+    description:
+      "compareSort(): compare Date values by timestamp instead of weekday-name strings",
     edits: [
       {
         find: [
@@ -292,16 +311,20 @@ const patches = [
           "  if (a instanceof Date && b instanceof Date) return a.getTime() - b.getTime();",
           '  if (typeof a === "number" && typeof b === "number") return a - b;',
         ].join("\n"),
-        marker: "  if (a instanceof Date && b instanceof Date) return a.getTime() - b.getTime();\n",
+        marker:
+          "  if (a instanceof Date && b instanceof Date) return a.getTime() - b.getTime();\n",
       },
     ],
   },
   {
     id: "bases:register-kanban-view",
-    description: "registerBuiltinViews(): register `kanban` as an alias of the `board` view",
+    description:
+      "registerBuiltinViews(): register `kanban` as an alias of the `board` view",
     edits: [
       {
-        find: ["  viewRegistry.register(boardViewRegistration);", "}", ""].join("\n"),
+        find: ["  viewRegistry.register(boardViewRegistration);", "}", ""].join(
+          "\n",
+        ),
         replace: [
           "  viewRegistry.register(boardViewRegistration);",
           '  const boardRegistration = viewRegistry.get("board");',
@@ -336,9 +359,10 @@ const patches = [
         marker: "function formatBasesDate(value) {\n",
       },
       {
-        find: ['function formatValue(value) {', '  if (value === void 0 || value === null) return "";'].join(
-          "\n",
-        ),
+        find: [
+          "function formatValue(value) {",
+          '  if (value === void 0 || value === null) return "";',
+        ].join("\n"),
         replace: [
           "function formatValue(value) {",
           "  if (value instanceof Date) return formatBasesDate(value);",
@@ -347,7 +371,10 @@ const patches = [
         marker: "  if (value instanceof Date) return formatBasesDate(value);\n",
       },
       {
-        find: ['  if (typeof value === "object") {', "    if (isFileValue(value)) {"].join("\n"),
+        find: [
+          '  if (typeof value === "object") {',
+          "    if (isFileValue(value)) {",
+        ].join("\n"),
         replace: [
           "  if (value instanceof Date) {",
           '    return /* @__PURE__ */ u("span", { class: "bases-date", children: formatBasesDate(value) });',
@@ -362,11 +389,13 @@ const patches = [
   },
   {
     id: "bases:file-size-property",
-    description: "buildFileProperties(): expose the documented `file.size` property (stat source file)",
+    description:
+      "buildFileProperties(): expose the documented `file.size` property (stat source file)",
     edits: [
       {
         find: "import { createRequire } from 'module';\n",
-        replace: "import { createRequire } from 'module';\nimport fs from 'node:fs';\n",
+        replace:
+          "import { createRequire } from 'module';\nimport fs from 'node:fs';\n",
         marker: "import fs from 'node:fs';\n",
       },
       {
@@ -389,8 +418,17 @@ const patches = [
           '    else if (typeof fileData.filePath === "string") size = fs.statSync(fileData.filePath).size;\n',
       },
       {
-        find: ["    links,", "    embeds,", "    created: ctime?.toISOString(),"].join("\n"),
-        replace: ["    links,", "    embeds,", "    size,", "    created: ctime?.toISOString(),"].join("\n"),
+        find: [
+          "    links,",
+          "    embeds,",
+          "    created: ctime?.toISOString(),",
+        ].join("\n"),
+        replace: [
+          "    links,",
+          "    embeds,",
+          "    size,",
+          "    created: ctime?.toISOString(),",
+        ].join("\n"),
         marker: "    embeds,\n    size,\n    created: ctime?.toISOString(),",
       },
     ],
@@ -400,7 +438,7 @@ const patches = [
     description: "i18n: register zh-CN / zh-TW Bases locale strings",
     edits: [
       {
-        find: ['var locales = {', '  "en-US": en_US_default', "};"].join("\n"),
+        find: ["var locales = {", '  "en-US": en_US_default', "};"].join("\n"),
         replace: [
           "var zh_CN_default = {",
           "  components: {",
@@ -438,33 +476,18 @@ const patches = [
  * explorer lands the reader somewhere in the middle of the page. Scroll only
  * the explorer list instead.
  */
-const explorerSidebarJs = fs
-  .readFileSync(path.join(scriptDir, "explorer-sidebar-toggle.js"), "utf8")
-  .trimEnd()
-
 const explorerPatches = [
   {
     id: "explorer:no-window-scroll",
-    description: "Explorer: keep auto-scroll inside the explorer list (no page jump)",
+    description:
+      "Explorer: keep auto-scroll inside the explorer list (no page jump)",
     edits: [
       {
         find: 'else{let o=n.querySelector(".active");o&&o.scrollIntoView({behavior:"smooth"})}',
         replace:
           'else{const o=n.querySelector(".active");if(o){const r=o.getBoundingClientRect(),c=n.getBoundingClientRect();r.top<c.top?n.scrollTop-=c.top-r.top:r.bottom>c.bottom&&(n.scrollTop+=r.bottom-c.bottom)}}',
-        marker: "const r=o.getBoundingClientRect(),c=n.getBoundingClientRect();",
-      },
-    ],
-  },
-  {
-    id: "explorer:sidebar-toggle",
-    description: "Explorer: hideable left sidebar with pop-out drawer + floating toggle",
-    edits: [
-      {
-        find: `document.addEventListener("nav",L);document.addEventListener("render",L);document.addEventListener("prenav",()=>{let u=document.querySelector(".explorer-ul");u&&sessionStorage.setItem("explorerScrollTop",u.scrollTop.toString())});`,
-        replace:
-          `document.addEventListener("nav",L);document.addEventListener("render",L);document.addEventListener("prenav",()=>{let u=document.querySelector(".explorer-ul");u&&sessionStorage.setItem("explorerScrollTop",u.scrollTop.toString())});\n` +
-          explorerSidebarJs,
-        marker: "/*bs-sidebar-toggle-v17*/",
+        marker:
+          "const r=o.getBoundingClientRect(),c=n.getBoundingClientRect();",
       },
     ],
   },
@@ -483,7 +506,9 @@ function countOccurrences(haystack, needle) {
 
 /** Apply all edits of a single patch to `source`. */
 function applyPatch(source, patch) {
-  const appliedEdits = patch.edits.filter((edit) => countOccurrences(source, edit.marker) > 0)
+  const appliedEdits = patch.edits.filter(
+    (edit) => countOccurrences(source, edit.marker) > 0,
+  )
   for (const edit of appliedEdits) {
     const markerCount = countOccurrences(source, edit.marker)
     if (markerCount !== 1) {
@@ -525,6 +550,15 @@ function applyFilePatches(filePath, filePatches) {
   }
   const original = fs.readFileSync(filePath, "utf8")
   let source = original
+  if (explorerFiles.includes(filePath)) {
+    const legacy = fs
+      .readFileSync(
+        path.join(siteRoot, "plugins/site-interactions/sidebar.js"),
+        "utf8",
+      )
+      .trimEnd()
+    source = source.replace("\n" + legacy, "")
+  }
   const results = []
   for (const patch of filePatches) {
     const result = applyPatch(source, patch)
@@ -536,6 +570,29 @@ function applyFilePatches(filePath, filePatches) {
 
 function main() {
   const targets = [
+    {
+      label: "types:stable-frontmatter",
+      filePath: path.join(
+        siteRoot,
+        "node_modules/@quartz-community/types/dist/index.d.ts",
+      ),
+      filePatches: [
+        {
+          id: "types:stable-frontmatter",
+          description:
+            "Align plugin type augmentation with official stable core without editing Quartz",
+          edits: [
+            {
+              find: "        frontmatter: {\n            [key: string]: unknown;\n        } & {\n            title: string;\n        } & Partial<{\n            tags: string[];\n            aliases: string[];\n            modified: string;\n            created: string;\n            published: string;\n            description: string;\n            socialDescription: string;\n            publish: boolean | string;\n            draft: boolean | string;\n            lang: string;\n            enableToc: string;\n            cssclasses: string[];\n            socialImage: string;\n            comments: boolean | string;\n        }>;\n",
+              replace:
+                "        // Site compatibility: match official Quartz v5.0.0 frontmatter augmentation.\n        frontmatter: {\n            title: string;\n            tags: string[];\n            description?: string;\n            socialDescription?: string;\n            lang?: string;\n            [key: string]: unknown;\n        };\n",
+              marker:
+                "// Site compatibility: match official Quartz v5.0.0 frontmatter augmentation.",
+            },
+          ],
+        },
+      ],
+    },
     { label: "bases-page", filePath: targetFile, filePatches: patches },
     {
       label: "bases-page:filter",
@@ -574,10 +631,14 @@ function main() {
 
   if (checkOnly) {
     for (const { patch, status } of allResults) {
-      console.log(`${status === "patched" ? "✗ 待修补" : "✓ 已修补"}  ${patch.id}`)
+      console.log(
+        `${status === "patched" ? "✗ 待修补" : "✓ 已修补"}  ${patch.id}`,
+      )
     }
     if (needsPatching) {
-      console.error("✗ [patch-plugins] 存在尚未应用的补丁（--check 模式不会写入文件）")
+      console.error(
+        "✗ [patch-plugins] 存在尚未应用的补丁（--check 模式不会写入文件）",
+      )
       process.exit(1)
     }
     console.log("✓ [patch-plugins] 全部补丁均已应用")

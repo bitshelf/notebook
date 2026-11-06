@@ -46,7 +46,12 @@ configuration:
         highlight: rgba(143, 159, 169, 0.15)
         textHighlight: "#b3aa0288"
 plugins:
-  - source: "@quartz-community/created-modified-date"
+  - source: "./plugins/github-attachments"
+    enabled: true
+    order: 25
+  - source: "./plugins/site-interactions"
+    enabled: true
+  - source: "./node_modules/@quartz-community/created-modified-date"
     enabled: true
     options:
       defaultDateType: modified
@@ -55,7 +60,7 @@ plugins:
         - git
         - filesystem
     order: 10
-  - source: "@quartz-community/syntax-highlighting"
+  - source: "./node_modules/@quartz-community/syntax-highlighting"
     enabled: true
     options:
       theme:
@@ -63,90 +68,90 @@ plugins:
         dark: github-dark
       keepBackground: false
     order: 20
-  - source: "@quartz-community/obsidian-flavored-markdown"
+  - source: "./node_modules/@quartz-community/obsidian-flavored-markdown"
     enabled: true
     options:
       enableInHtmlEmbed: false
       enableCheckbox: true
     order: 30
-  - source: "@quartz-community/github-flavored-markdown"
+  - source: "./node_modules/@quartz-community/github-flavored-markdown"
     enabled: true
     order: 40
-  - source: "@quartz-community/table-of-contents"
+  - source: "./node_modules/@quartz-community/table-of-contents"
     enabled: true
     order: 50
     layout:
       position: right
       priority: 30
-  - source: "@quartz-community/crawl-links"
+  - source: "./node_modules/@quartz-community/crawl-links"
     enabled: true
     options:
       markdownLinkResolution: shortest
     order: 60
-  - source: "@quartz-community/description"
+  - source: "./node_modules/@quartz-community/description"
     enabled: true
     order: 70
-  - source: "@quartz-community/latex"
+  - source: "./node_modules/@quartz-community/latex"
     enabled: true
     options:
       renderEngine: katex
     order: 80
-  - source: "@quartz-community/citations"
+  - source: "./node_modules/@quartz-community/citations"
     enabled: false
     order: 85
-  - source: "@quartz-community/hard-line-breaks"
+  - source: "./node_modules/@quartz-community/hard-line-breaks"
     enabled: false
     order: 90
-  - source: "@quartz-community/ox-hugo"
+  - source: "./node_modules/@quartz-community/ox-hugo"
     enabled: false
     order: 91
-  - source: "@quartz-community/roam"
+  - source: "./node_modules/@quartz-community/roam"
     enabled: false
     order: 92
-  - source: "@quartz-community/quartz-fonts"
+  - source: "./node_modules/@quartz-community/quartz-fonts"
     enabled: true
-  - source: "@quartz-themes/core"
+  - source: "./node_modules/@quartz-themes/core"
     enabled: true
     options:
       theme: catppuccin
       mode: both
-  - source: "@quartz-community/remove-draft"
+  - source: "./node_modules/@quartz-community/remove-draft"
     enabled: true
-  - source: "@quartz-community/explicit-publish"
+  - source: "./node_modules/@quartz-community/explicit-publish"
     enabled: false
-  - source: "@quartz-community/alias-redirects"
+  - source: "./node_modules/@quartz-community/alias-redirects"
     enabled: true
-  - source: "@quartz-community/content-index"
+  - source: "./node_modules/@quartz-community/content-index"
     enabled: true
     options:
       enableSiteMap: true
       enableRSS: true
-  - source: "@quartz-community/favicon"
+  - source: "./node_modules/@quartz-community/favicon"
     enabled: true
-  - source: "@quartz-community/og-image"
+  - source: "./node_modules/@quartz-community/og-image"
     enabled: false
-  - source: "@quartz-community/cname"
+  - source: "./node_modules/@quartz-community/cname"
     enabled: true
-  - source: "@quartz-community/canvas-page"
+  - source: "./node_modules/@quartz-community/canvas-page"
     enabled: true
-  - source: "@quartz-community/content-page"
+  - source: "./node_modules/@quartz-community/content-page"
     enabled: true
-  - source: "@quartz-community/folder-page"
+  - source: "./node_modules/@quartz-community/folder-page"
     enabled: true
-  - source: "@quartz-community/tag-page"
+  - source: "./node_modules/@quartz-community/tag-page"
     enabled: true
-  - source: "@quartz-community/explorer"
+  - source: "./node_modules/@quartz-community/explorer"
     enabled: true
     layout:
       position: left
       priority: 50
-  - source: "@quartz-community/graph"
+  - source: "./node_modules/@quartz-community/graph"
     # 关系图谱：可通过右侧栏的隐藏/抽屉按钮收起或弹出
     enabled: true
     layout:
       position: right
       priority: 10
-  - source: "@quartz-community/search"
+  - source: "./node_modules/@quartz-community/search"
     enabled: true
     layout:
       position: left
@@ -154,50 +159,50 @@ plugins:
       group: toolbar
       groupOptions:
         grow: true
-  - source: "@quartz-community/backlinks"
+  - source: "./node_modules/@quartz-community/backlinks"
     enabled: true
     layout:
       position: right
       priority: 50
-  - source: "@quartz-community/article-title"
+  - source: "./node_modules/@quartz-community/article-title"
     enabled: true
     layout:
       position: beforeBody
       priority: 10
-  - source: "@quartz-community/content-meta"
+  - source: "./node_modules/@quartz-community/content-meta"
     enabled: true
     layout:
       position: beforeBody
       priority: 20
-  - source: "@quartz-community/tag-list"
+  - source: "./node_modules/@quartz-community/tag-list"
     enabled: false
     layout:
       position: beforeBody
       priority: 30
-  - source: "@quartz-community/page-title"
+  - source: "./node_modules/@quartz-community/page-title"
     enabled: true
     layout:
       position: left
       priority: 10
-  - source: "@quartz-community/darkmode"
+  - source: "./node_modules/@quartz-community/darkmode"
     enabled: true
     layout:
       position: left
       priority: 30
       group: toolbar
-  - source: "@quartz-community/reader-mode"
+  - source: "./node_modules/@quartz-community/reader-mode"
     enabled: true
     layout:
       position: left
       priority: 35
       group: toolbar
-  - source: "@quartz-community/breadcrumbs"
+  - source: "./node_modules/@quartz-community/breadcrumbs"
     enabled: true
     layout:
       position: beforeBody
       priority: 5
       condition: not-index
-  - source: "@quartz-community/comments"
+  - source: "./node_modules/@quartz-community/comments"
     enabled: false
     options:
       provider: giscus
@@ -205,7 +210,7 @@ plugins:
     layout:
       position: afterBody
       priority: 10
-  - source: "@quartz-community/footer"
+  - source: "./node_modules/@quartz-community/footer"
     enabled: true
     options:
       links:
@@ -213,9 +218,9 @@ plugins:
     layout:
       position: footer
       priority: 50
-  - source: "@quartz-community/recent-notes"
+  - source: "./node_modules/@quartz-community/recent-notes"
     enabled: false
-  - source: "@quartz-community/spacer"
+  - source: "./node_modules/@quartz-community/spacer"
     enabled: true
     options: {}
     order: 25
@@ -223,18 +228,18 @@ plugins:
       position: left
       priority: 25
       display: mobile-only
-  - source: "@quartz-community/bases-page"
+  - source: "./node_modules/@quartz-community/bases-page"
     enabled: true
     options: {}
     order: 50
-  - source: "@quartz-community/obsidian-plugin-excalidraw"
+  - source: "./node_modules/@quartz-community/obsidian-plugin-excalidraw"
     enabled: true
     options:
       enableInteraction: true
       darkMode: auto
       exportPadding: 20
     order: 55
-  - source: "@quartz-community/note-properties"
+  - source: "./node_modules/@quartz-community/note-properties"
     enabled: true
     options:
       includeAll: false
@@ -253,11 +258,11 @@ plugins:
       position: beforeBody
       priority: 15
       display: all
-  - source: "@quartz-community/unlisted-pages"
+  - source: "./node_modules/@quartz-community/unlisted-pages"
     enabled: true
     options: {}
     order: 45
-  - source: "@quartz-community/encrypted-pages"
+  - source: "./node_modules/@quartz-community/encrypted-pages"
     enabled: true
     options:
       iterations: 600000
@@ -265,7 +270,7 @@ plugins:
       unlistWhenEncrypted: false
       outputPath: static/encryptedContentIndex.json
     order: 900
-  - source: "@quartz-community/stacked-pages"
+  - source: "./node_modules/@quartz-community/stacked-pages"
     enabled: false
     layout:
       position: afterBody

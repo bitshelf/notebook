@@ -58,7 +58,7 @@ export function writePluginsJson(data) {
   writeDataToFile(CONFIG_YAML_PATH, rest)
 }
 
-function readDefaultPluginsJson() {
+export function readDefaultPluginsJson() {
   const defaultPath = resolveDefaultConfigPath()
   return readFileAsData(defaultPath)
 }
@@ -83,73 +83,32 @@ export function writeLockfile(lockfile) {
   fs.writeFileSync(LOCKFILE_PATH, JSON.stringify(lockfile, null, 2) + "\n")
 }
 
-/**
- * Normalizes a source value to a URL string.
- * Source can be a plain string (e.g. "github:owner/repo") or an object
- * with { name?, repo, subdir? } for installing from a subdirectory of a repo.
- */
-export function getSourceUrl(source) {
-  if (typeof source === "string") return source
-  if (typeof source === "object" && source !== null && typeof source.repo === "string") {
-    return source.repo
-  }
-  throw new Error(`Invalid plugin source: ${JSON.stringify(source)}`)
-}
-
-/**
- * Returns the subdir from an object source, or undefined for string sources.
- */
-function getSourceSubdir(source) {
-  if (typeof source === "object" && source !== null && typeof source.subdir === "string") {
-    return source.subdir
-  }
-  return undefined
-}
-
-/**
- * Returns a display-friendly string for a source value.
- */
-export function formatSource(source) {
-  if (typeof source === "string") return source
-  if (typeof source === "object" && source !== null) {
-    const parts = [source.repo]
-    if (source.subdir) parts.push(`(subdir: ${source.subdir})`)
-    return parts.join(" ")
-  }
-  return String(source)
-}
-
 export function isLocalSource(source) {
-  const url = getSourceUrl(source)
-  if (url.startsWith("./") || url.startsWith("../") || url.startsWith("/")) {
+  if (source.startsWith("./") || source.startsWith("../") || source.startsWith("/")) {
     return true
   }
   // Windows absolute paths (e.g. C:\ or D:/)
-  if (/^[A-Za-z]:[\\/]/.test(url)) {
+  if (/^[A-Za-z]:[\\/]/.test(source)) {
     return true
   }
   return false
 }
 export function extractPluginName(source) {
-  if (typeof source === "object" && source !== null && typeof source.name === "string") {
-    return source.name
+  if (isLocalSource(source)) {
+    return path.basename(source.replace(/[\/]+$/, ""))
   }
-  const url = getSourceUrl(source)
-  if (isLocalSource(url)) {
-    return path.basename(url.replace(/[\/]+$/, ""))
-  }
-  if (url.startsWith("github:")) {
-    const withoutPrefix = url.replace("github:", "")
+  if (source.startsWith("github:")) {
+    const withoutPrefix = source.replace("github:", "")
     const [repoPath] = withoutPrefix.split("#")
     const parts = repoPath.split("/")
     return parts[parts.length - 1]
   }
-  if (url.startsWith("git+") || url.startsWith("https://")) {
-    const cleaned = url.replace("git+", "")
-    const match = cleaned.match(/\/([^/]+?)(?:\.git)?(?:#|$)/)
-    return match?.[1] ?? url
+  if (source.startsWith("git+") || source.startsWith("https://")) {
+    const url = source.replace("git+", "")
+    const match = url.match(/\/([^/]+?)(?:\.git)?(?:#|$)/)
+    return match?.[1] ?? source
   }
-  return url
+  return source
 }
 
 export function readManifestFromPackageJson(pluginDir) {
@@ -164,38 +123,28 @@ export function readManifestFromPackageJson(pluginDir) {
 }
 
 export function parseGitSource(source) {
-  const url = getSourceUrl(source)
-  const subdir = getSourceSubdir(source)
-  if (isLocalSource(url)) {
-    const resolved = path.resolve(url)
-    const name = typeof source === "object" && source.name ? source.name : path.basename(resolved)
-    return { name, url: resolved, ref: undefined, local: true, subdir }
+  if (isLocalSource(source)) {
+    const resolved = path.resolve(source)
+    const name = path.basename(resolved)
+    return { name, url: resolved, ref: undefined, local: true }
   }
-  if (url.startsWith("github:")) {
-    const [repoPath, ref] = url.replace("github:", "").split("#")
+  if (source.startsWith("github:")) {
+    const [repoPath, ref] = source.replace("github:", "").split("#")
     const [owner, repo] = repoPath.split("/")
-    const name = typeof source === "object" && source.name ? source.name : repo
-    return { name, url: `https://github.com/${owner}/${repo}.git`, ref, subdir }
+    return { name: repo, url: `https://github.com/${owner}/${repo}.git`, ref }
   }
-  if (url.startsWith("git+")) {
-    const raw = url.replace("git+", "")
-    const [parsed, ref] = raw.split("#")
-    const name =
-      typeof source === "object" && source.name ? source.name : path.basename(parsed, ".git")
-    return { name, url: parsed, ref, subdir }
+  if (source.startsWith("git+")) {
+    const raw = source.replace("git+", "")
+    const [url, ref] = raw.split("#")
+    const name = path.basename(url, ".git")
+    return { name, url, ref }
   }
-  if (url.startsWith("https://")) {
-    const [parsed, ref] = url.split("#")
-    const name =
-      typeof source === "object" && source.name ? source.name : path.basename(parsed, ".git")
-    return { name, url: parsed, ref, subdir }
+  if (source.startsWith("https://")) {
+    const [url, ref] = source.split("#")
+    const name = path.basename(url, ".git")
+    return { name, url, ref }
   }
-  // Handle npm scoped packages
-  if (typeof url === "string" && url.startsWith("@") && url.includes("/") && !url.includes(":")) {
-    const name = typeof source === "object" && source.name ? source.name : url
-    return { name, url: "", npmPackage: true, subdir }
-  }
-  throw new Error(`Cannot parse plugin source: ${formatSource(source)}`)
+  throw new Error(`Cannot parse plugin source: ${source}`)
 }
 
 export function getGitCommit(pluginDir) {
@@ -206,10 +155,116 @@ export function getGitCommit(pluginDir) {
   }
 }
 
+export function getPluginDir(name) {
+  return path.join(PLUGINS_DIR, name)
+}
+
+export function pluginDirExists(name) {
+  return fs.existsSync(path.join(PLUGINS_DIR, name))
+}
+
+export function ensurePluginsDir() {
+  if (!fs.existsSync(PLUGINS_DIR)) {
+    fs.mkdirSync(PLUGINS_DIR, { recursive: true })
+  }
+}
+
+/**
+ * Merges quartz.config.yaml, quartz.lock.json, and on-disk manifest data
+ * into enriched plugin entries with: name, displayName, source, enabled,
+ * options, order, layout, category, installed, locked, manifest,
+ * currentCommit, modified.
+ */
+export function getEnrichedPlugins() {
+  const pluginsJson = readPluginsJson()
+  const lockfile = readLockfile()
+
+  if (!pluginsJson?.plugins) return []
+
+  return pluginsJson.plugins.map((entry, index) => {
+    const name = extractPluginName(entry.source)
+    const pluginDir = path.join(PLUGINS_DIR, name)
+    const installed = fs.existsSync(pluginDir)
+    const locked = lockfile?.plugins?.[name] ?? null
+    const manifest = installed ? readManifestFromPackageJson(pluginDir) : null
+    const currentCommit = installed ? getGitCommit(pluginDir) : null
+    const modified = locked && currentCommit ? currentCommit !== locked.commit : false
+
+    return {
+      index,
+      name,
+      displayName: manifest?.displayName ?? name,
+      source: entry.source,
+      enabled: entry.enabled ?? true,
+      options: entry.options ?? {},
+      order: entry.order ?? 50,
+      layout: entry.layout ?? null,
+      category: manifest?.category ?? "unknown",
+      installed,
+      locked,
+      manifest,
+      currentCommit,
+      modified,
+    }
+  })
+}
+
+export function getLayoutConfig() {
+  const pluginsJson = readPluginsJson()
+  return pluginsJson?.layout ?? null
+}
+
+export function getGlobalConfig() {
+  const pluginsJson = readPluginsJson()
+  return pluginsJson?.configuration ?? null
+}
+
+export function updatePluginEntry(index, updates) {
+  const json = readPluginsJson()
+  if (!json?.plugins?.[index]) return false
+  Object.assign(json.plugins[index], updates)
+  writePluginsJson(json)
+  return true
+}
+
 export function updateGlobalConfig(updates) {
   const json = readPluginsJson()
   if (!json) return false
   json.configuration = { ...json.configuration, ...updates }
+  writePluginsJson(json)
+  return true
+}
+
+export function updateLayoutConfig(layout) {
+  const json = readPluginsJson()
+  if (!json) return false
+  json.layout = layout
+  writePluginsJson(json)
+  return true
+}
+
+export function reorderPlugin(fromIndex, toIndex) {
+  const json = readPluginsJson()
+  if (!json?.plugins) return false
+  const [moved] = json.plugins.splice(fromIndex, 1)
+  json.plugins.splice(toIndex, 0, moved)
+  writePluginsJson(json)
+  return true
+}
+
+export function removePluginEntry(index) {
+  const json = readPluginsJson()
+  if (!json?.plugins?.[index]) return false
+  json.plugins.splice(index, 1)
+  writePluginsJson(json)
+  return true
+}
+
+export function addPluginEntry(entry) {
+  const json = readPluginsJson()
+  if (!json) return false
+  if (!json.plugins) json.plugins = []
+  json.plugins.push(entry)
   writePluginsJson(json)
   return true
 }
@@ -231,6 +286,7 @@ export function createConfigFromDefault() {
         locale: "en-US",
         baseUrl: "quartz.jzhao.xyz",
         ignorePatterns: ["private", "templates", ".obsidian"],
+        defaultDateType: "created",
         theme: {
           cdnCaching: true,
           typography: {
@@ -295,76 +351,6 @@ export function createConfigFromTemplate(templateName) {
   const { $schema, ...rest } = templateData
   writePluginsJson(rest)
   return rest
-}
-
-/**
- * Resolves a user-facing plugin name (which may be an overridden name from config)
- * to the corresponding lockfile key (the original name at install time).
- *
- * This bridges the naming identity split between config YAML (which supports
- * source.name overrides) and the lockfile/disk (which are keyed by the original name).
- *
- * @param {string} name - The name the user provided (may be overridden or original)
- * @param {object|null} lockfile - The parsed lockfile
- * @param {object|null} pluginsJson - The parsed config YAML
- * @returns {string} The lockfile key that corresponds to this plugin
- */
-export function resolveLockfileName(name, lockfile, pluginsJson) {
-  // Direct match — no resolution needed
-  if (lockfile?.plugins?.[name]) return name
-
-  // Check if any config entry with this overridden name maps to a different lockfile key
-  if (pluginsJson?.plugins) {
-    const configEntry = pluginsJson.plugins.find(
-      (e) => extractPluginName(e.source) === name || formatSource(e.source) === name,
-    )
-    if (configEntry) {
-      const url = getSourceUrl(configEntry.source)
-      for (const [key, lock] of Object.entries(lockfile?.plugins ?? {})) {
-        if (
-          lock.source === url ||
-          lock.source === formatSource(configEntry.source) ||
-          lock.resolved === url
-        ) {
-          return key
-        }
-      }
-    }
-  }
-
-  return name
-}
-
-/**
- * Builds a map from lockfile keys to their overridden display names from config.
- * Returns entries only where the overridden name differs from the lockfile key.
- *
- * @param {object|null} lockfile - The parsed lockfile
- * @param {object|null} pluginsJson - The parsed config YAML
- * @returns {Map<string, string>} Map of lockfileKey → overriddenName
- */
-export function getNameOverrides(lockfile, pluginsJson) {
-  const overrides = new Map()
-  if (!lockfile?.plugins || !pluginsJson?.plugins) return overrides
-
-  for (const entry of pluginsJson.plugins) {
-    const configName = extractPluginName(entry.source)
-    const url = getSourceUrl(entry.source)
-
-    for (const [lockKey, lock] of Object.entries(lockfile.plugins)) {
-      if (lockKey === configName) break // no override, names match
-      if (
-        lock.source === url ||
-        lock.source === formatSource(entry.source) ||
-        lock.resolved === url
-      ) {
-        overrides.set(lockKey, configName)
-        break
-      }
-    }
-  }
-
-  return overrides
 }
 
 export const PLUGINS_JSON_PATH = CONFIG_YAML_PATH

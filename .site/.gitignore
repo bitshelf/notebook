@@ -8,3 +8,11 @@ tsconfig.tsbuildinfo
 pnpm-lock.yaml
 # local scratch directories used while building / debugging
 .dsh-tmp/
+
+# Local plugin resolution records contain machine-specific absolute paths.
+/quartz.lock.json
+/plugins/*/package-lock.json
+# Diagnostic output
+coverage/
+prof/
+*.cpuprofile

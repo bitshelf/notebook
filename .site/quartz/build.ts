@@ -9,8 +9,7 @@ import { parseMarkdown } from "./processors/parse"
 import { filterContent } from "./processors/filter"
 import { emitContent } from "./processors/emit"
 import cfg from "../quartz"
-import { FilePath, joinSegments, slugifyFilePath } from "./util/path"
-import { detectSlugCollisions, formatCollisionWarning } from "./util/slugCollisions"
+import { FilePath, FullSlug, joinSegments, slugifyFilePath } from "./util/path"
 import chokidar from "chokidar"
 import { ProcessedContent } from "./plugins/vfile"
 import { Argv, BuildCtx } from "./util/ctx"
@@ -20,13 +19,38 @@ import { options } from "./util/sourcemap"
 import { Mutex } from "async-mutex"
 import { getStaticResourcesFromPlugins } from "./plugins"
 import { randomIdNonSecure } from "./util/random"
-import { ChangeEvent } from "./plugins/types"
+import { ChangeEvent, QuartzPageTypePluginInstance } from "./plugins/types"
 import { minimatch } from "minimatch"
 
-function reportSlugCollisions(content: ProcessedContent[]): void {
-  const collisions = detectSlugCollisions(content)
-  if (collisions.length === 0) return
-  console.warn(styleText("yellow", formatCollisionWarning(collisions)))
+function getPageTypeExtensions(ctx: BuildCtx): Set<string> {
+  const extensions = new Set<string>()
+  const pageTypes = (ctx.cfg.plugins.pageTypes ?? []) as unknown as QuartzPageTypePluginInstance[]
+  for (const pt of pageTypes) {
+    if (pt.fileExtensions) {
+      for (const ext of pt.fileExtensions) {
+        extensions.add(ext)
+      }
+    }
+  }
+  return extensions
+}
+
+// For files whose extensions are handled by PageType plugins (e.g. .canvas, .base),
+// add extension-stripped slug aliases so that wikilink resolution (CrawlLinks) maps
+// `![[file.canvas]]` to the virtual-page slug `file` instead of the raw `file.canvas`.
+function addVirtualPageSlugAliases(allSlugs: FullSlug[], extensions: Set<string>): FullSlug[] {
+  const extra: FullSlug[] = []
+  for (const slug of allSlugs) {
+    for (const ext of extensions) {
+      if (slug.endsWith(ext)) {
+        const stripped = slug.slice(0, -ext.length) as FullSlug
+        if (!allSlugs.includes(stripped) && !extra.includes(stripped)) {
+          extra.push(stripped)
+        }
+      }
+    }
+  }
+  return extra
 }
 
 type ContentMap = Map<
@@ -90,8 +114,15 @@ async function buildQuartz(argv: Argv, mut: Mutex, clientRefresh: () => void) {
   ctx.allFiles = allFiles
   ctx.allSlugs = allFiles.map((fp) => slugifyFilePath(fp as FilePath))
 
+  // Add extension-stripped slug aliases for PageType-registered extensions
+  // so that wikilinks like ![[file.canvas]] resolve to virtual page slugs
+  const ptExtensions = getPageTypeExtensions(ctx)
+  if (ptExtensions.size > 0) {
+    const aliases = addVirtualPageSlugAliases(ctx.allSlugs, ptExtensions)
+    ctx.allSlugs.push(...aliases)
+  }
+
   const parsedFiles = await parseMarkdown(ctx, filePaths)
-  reportSlugCollisions(parsedFiles)
   const filteredContent = filterContent(ctx, parsedFiles)
 
   await emitContent(ctx, filteredContent)
@@ -124,12 +155,7 @@ async function startWatching(
 
   for (const content of initialContent) {
     const [_tree, vfile] = content
-    const relPath = vfile.data.relativePath
-    if (!relPath) {
-      console.warn(`Skipping file with no relativePath: ${vfile.path}`)
-      continue
-    }
-    contentMap.set(relPath, {
+    contentMap.set(vfile.data.relativePath!, {
       type: "markdown",
       content,
     })
@@ -165,34 +191,24 @@ async function startWatching(
   })
 
   const changes: ChangeEvent[] = []
-  let rebuildTimeout: ReturnType<typeof setTimeout> | null = null
-  const scheduleRebuild = () => {
-    if (rebuildTimeout) clearTimeout(rebuildTimeout)
-    rebuildTimeout = setTimeout(() => {
-      rebuildTimeout = null
-      rebuild(changes, clientRefresh, buildData).catch((err) => {
-        console.error(styleText("red", "Rebuild failed:"), err.message ?? err)
-      })
-    }, 100)
-  }
   watcher
     .on("add", (fp) => {
       fp = toPosixPath(fp)
       if (buildData.ignored(fp)) return
       changes.push({ path: fp as FilePath, type: "add" })
-      scheduleRebuild()
+      void rebuild(changes, clientRefresh, buildData)
     })
     .on("change", (fp) => {
       fp = toPosixPath(fp)
       if (buildData.ignored(fp)) return
       changes.push({ path: fp as FilePath, type: "change" })
-      scheduleRebuild()
+      void rebuild(changes, clientRefresh, buildData)
     })
     .on("unlink", (fp) => {
       fp = toPosixPath(fp)
       if (buildData.ignored(fp)) return
       changes.push({ path: fp as FilePath, type: "delete" })
-      scheduleRebuild()
+      void rebuild(changes, clientRefresh, buildData)
     })
 
   return async () => {
@@ -209,155 +225,154 @@ async function rebuild(changes: ChangeEvent[], clientRefresh: () => void, buildD
   buildData.lastBuildMs = new Date().getTime()
   const numChangesInBuild = changes.length
   const release = await mut.acquire()
-  try {
-    // if there's another build after us, release and let them do it
-    if (ctx.buildId !== buildId) {
-      return
+
+  // if there's another build after us, release and let them do it
+  if (ctx.buildId !== buildId) {
+    release()
+    return
+  }
+
+  const perf = new PerfTimer()
+  perf.addEvent("rebuild")
+  console.log(styleText("yellow", "Detected change, rebuilding..."))
+
+  // update changesSinceLastBuild
+  for (const change of changes) {
+    changesSinceLastBuild[change.path] = change.type
+  }
+
+  const staticResources = getStaticResourcesFromPlugins(ctx)
+  const pathsToParse: FilePath[] = []
+  for (const [fp, type] of Object.entries(changesSinceLastBuild)) {
+    if (type === "delete" || path.extname(fp) !== ".md") continue
+    const fullPath = joinSegments(argv.directory, toPosixPath(fp)) as FilePath
+    pathsToParse.push(fullPath)
+  }
+
+  const parsed = await parseMarkdown(ctx, pathsToParse)
+  for (const content of parsed) {
+    contentMap.set(content[1].data.relativePath!, {
+      type: "markdown",
+      content,
+    })
+  }
+
+  // update state using changesSinceLastBuild
+  // we do this weird play of add => compute change events => remove
+  // so that partialEmitters can do appropriate cleanup based on the content of deleted files
+  for (const [file, change] of Object.entries(changesSinceLastBuild)) {
+    if (change === "delete") {
+      // universal delete case
+      contentMap.delete(file as FilePath)
     }
 
-    const perf = new PerfTimer()
-    perf.addEvent("rebuild")
-    console.log(styleText("yellow", "Detected change, rebuilding..."))
-
-    // update changesSinceLastBuild
-    for (const change of changes) {
-      changesSinceLastBuild[change.path] = change.type
-    }
-
-    const staticResources = getStaticResourcesFromPlugins(ctx)
-    const pathsToParse: FilePath[] = []
-    for (const [fp, type] of Object.entries(changesSinceLastBuild)) {
-      if (type === "delete" || path.extname(fp) !== ".md") continue
-      const fullPath = joinSegments(argv.directory, toPosixPath(fp)) as FilePath
-      pathsToParse.push(fullPath)
-    }
-
-    const parsed = await parseMarkdown(ctx, pathsToParse)
-    for (const content of parsed) {
-      const relPath = content[1].data.relativePath
-      if (!relPath) {
-        console.warn(`Skipping file with no relativePath: ${content[1].path}`)
-        continue
-      }
-      contentMap.set(relPath, {
-        type: "markdown",
-        content,
+    // manually track non-markdown files as processed files only
+    // contains markdown files
+    if (change === "add" && path.extname(file) !== ".md") {
+      contentMap.set(file as FilePath, {
+        type: "other",
       })
     }
+  }
 
-    // update state using changesSinceLastBuild
-    // we do this weird play of add => compute change events => remove
-    // so that partialEmitters can do appropriate cleanup based on the content of deleted files
-    for (const [file, change] of Object.entries(changesSinceLastBuild)) {
-      if (change === "delete") {
-        // universal delete case
-        contentMap.delete(file as FilePath)
-      }
-
-      // manually track non-markdown files as processed files only
-      // contains markdown files
-      if (change === "add" && path.extname(file) !== ".md") {
-        contentMap.set(file as FilePath, {
-          type: "other",
-        })
-      }
-    }
-
-    const changeEvents: ChangeEvent[] = Object.entries(changesSinceLastBuild).map(([fp, type]) => {
-      const path = fp as FilePath
-      const processedContent = contentMap.get(path)
-      if (processedContent?.type === "markdown") {
-        const [_tree, file] = processedContent.content
-        return {
-          type,
-          path,
-          file,
-        }
-      }
-
+  const changeEvents: ChangeEvent[] = Object.entries(changesSinceLastBuild).map(([fp, type]) => {
+    const path = fp as FilePath
+    const processedContent = contentMap.get(path)
+    if (processedContent?.type === "markdown") {
+      const [_tree, file] = processedContent.content
       return {
         type,
         path,
-      }
-    })
-
-    // update allFiles and then allSlugs with the consistent view of content map
-    ctx.allFiles = Array.from(contentMap.keys())
-    ctx.allSlugs = ctx.allFiles.map((fp) => slugifyFilePath(fp as FilePath))
-
-    const markdownContent = Array.from(contentMap.values())
-      .filter((file) => file.type === "markdown")
-      .map((file) => file.content)
-    reportSlugCollisions(markdownContent)
-    let processedFiles = filterContent(ctx, markdownContent)
-
-    let emittedFiles = 0
-
-    // Phase 1: Run PageTypeDispatcher first so it populates ctx.virtualPages
-    const dispatcher = cfg.plugins.emitters.find((e) => e.name === "PageTypeDispatcher")
-    if (dispatcher) {
-      ctx.virtualPages = []
-      const emitFn = dispatcher.partialEmit ?? dispatcher.emit
-      const emitted = await emitFn(ctx, processedFiles, staticResources, changeEvents)
-      if (emitted !== null) {
-        if (Symbol.asyncIterator in emitted) {
-          for await (const file of emitted) {
-            emittedFiles++
-            if (ctx.argv.verbose) {
-              console.log(`[emit:${dispatcher.name}] ${file}`)
-            }
-          }
-        } else {
-          emittedFiles += emitted.length
-          if (ctx.argv.verbose) {
-            for (const file of emitted) {
-              console.log(`[emit:${dispatcher.name}] ${file}`)
-            }
-          }
-        }
+        file,
       }
     }
 
-    // Phase 2: Run all other emitters with content extended by virtual pages
-    const contentWithVirtual =
-      ctx.virtualPages.length > 0 ? [...processedFiles, ...ctx.virtualPages] : processedFiles
-    for (const emitter of cfg.plugins.emitters) {
-      if (emitter.name === "PageTypeDispatcher") continue
-      // Try to use partialEmit if available, otherwise assume the output is static
-      const emitFn = emitter.partialEmit ?? emitter.emit
-      const emitted = await emitFn(ctx, contentWithVirtual, staticResources, changeEvents)
-      if (emitted === null) {
-        continue
-      }
+    return {
+      type,
+      path,
+    }
+  })
 
+  // update allFiles and then allSlugs with the consistent view of content map
+  ctx.allFiles = Array.from(contentMap.keys())
+  ctx.allSlugs = ctx.allFiles.map((fp) => slugifyFilePath(fp as FilePath))
+
+  // Add extension-stripped slug aliases for PageType-registered extensions
+  const ptExtensions = getPageTypeExtensions(ctx)
+  if (ptExtensions.size > 0) {
+    const aliases = addVirtualPageSlugAliases(ctx.allSlugs, ptExtensions)
+    ctx.allSlugs.push(...aliases)
+  }
+  let processedFiles = filterContent(
+    ctx,
+    Array.from(contentMap.values())
+      .filter((file) => file.type === "markdown")
+      .map((file) => file.content),
+  )
+
+  let emittedFiles = 0
+
+  // Phase 1: Run PageTypeDispatcher first so it populates ctx.virtualPages
+  const dispatcher = cfg.plugins.emitters.find((e) => e.name === "PageTypeDispatcher")
+  if (dispatcher) {
+    ctx.virtualPages = []
+    const emitFn = dispatcher.partialEmit ?? dispatcher.emit
+    const emitted = await emitFn(ctx, processedFiles, staticResources, changeEvents)
+    if (emitted !== null) {
       if (Symbol.asyncIterator in emitted) {
-        // Async generator case
         for await (const file of emitted) {
           emittedFiles++
           if (ctx.argv.verbose) {
-            console.log(`[emit:${emitter.name}] ${file}`)
+            console.log(`[emit:${dispatcher.name}] ${file}`)
           }
         }
       } else {
-        // Array case
         emittedFiles += emitted.length
         if (ctx.argv.verbose) {
           for (const file of emitted) {
-            console.log(`[emit:${emitter.name}] ${file}`)
+            console.log(`[emit:${dispatcher.name}] ${file}`)
           }
         }
       }
     }
-
-    console.log(
-      `Emitted ${emittedFiles} files to \`${argv.output}\` in ${perf.timeSince("rebuild")}`,
-    )
-    console.log(styleText("green", `Done rebuilding in ${perf.timeSince()}`))
-    changes.splice(0, numChangesInBuild)
-    clientRefresh()
-  } finally {
-    release()
   }
+
+  // Phase 2: Run all other emitters with content extended by virtual pages
+  const contentWithVirtual =
+    ctx.virtualPages.length > 0 ? [...processedFiles, ...ctx.virtualPages] : processedFiles
+  for (const emitter of cfg.plugins.emitters) {
+    if (emitter.name === "PageTypeDispatcher") continue
+    // Try to use partialEmit if available, otherwise assume the output is static
+    const emitFn = emitter.partialEmit ?? emitter.emit
+    const emitted = await emitFn(ctx, contentWithVirtual, staticResources, changeEvents)
+    if (emitted === null) {
+      continue
+    }
+
+    if (Symbol.asyncIterator in emitted) {
+      // Async generator case
+      for await (const file of emitted) {
+        emittedFiles++
+        if (ctx.argv.verbose) {
+          console.log(`[emit:${emitter.name}] ${file}`)
+        }
+      }
+    } else {
+      // Array case
+      emittedFiles += emitted.length
+      if (ctx.argv.verbose) {
+        for (const file of emitted) {
+          console.log(`[emit:${emitter.name}] ${file}`)
+        }
+      }
+    }
+  }
+
+  console.log(`Emitted ${emittedFiles} files to \`${argv.output}\` in ${perf.timeSince("rebuild")}`)
+  console.log(styleText("green", `Done rebuilding in ${perf.timeSince()}`))
+  changes.splice(0, numChangesInBuild)
+  clientRefresh()
+  release()
 }
 
 export default async (argv: Argv, mut: Mutex, clientRefresh: () => void) => {

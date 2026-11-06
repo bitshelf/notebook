@@ -6,11 +6,12 @@ import { getPluginSubpathEntry, toFileUrl } from "./gitLoader"
 export async function loadFramesFromPackage(
   pluginName: string,
   manifest: PluginManifest | null,
+  subdir?: string,
 ): Promise<void> {
   if (!manifest?.frames) return
 
   try {
-    const framesPath = getPluginSubpathEntry(pluginName, "./frames")
+    const framesPath = getPluginSubpathEntry(pluginName, "./frames", subdir)
 
     let framesModule: Record<string, unknown>
     if (framesPath) {

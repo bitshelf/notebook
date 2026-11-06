@@ -13,7 +13,7 @@ name: Deploy to Cloudflare Pages
 #   CLOUDFLARE_SITE_URL      - canonical URL, default: https://bitshelf-notebook.pages.dev
 #
 # Alternatively use Cloudflare's native Git integration (no workflow, no
-# secrets): Root directory .site, build command `bash scripts/build.sh`,
+# secrets): Root directory .site, build command `npm run build`,
 # output directory `public`, env NODE_VERSION=22 and SITE_URL=<canonical url>.
 # See .site/README.md for details.
 
@@ -65,7 +65,7 @@ jobs:
 
       - name: Build site for Cloudflare Pages
         if: steps.gate.outputs.enabled == 'true'
-        run: bash .site/scripts/build.sh
+        run: npm --prefix .site run build
 
       - name: Deploy to Cloudflare Pages
         if: steps.gate.outputs.enabled == 'true'

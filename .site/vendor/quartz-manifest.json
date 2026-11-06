@@ -1,50 +1,14 @@
 {
-  "$comment": "由 scripts/sync-quartz.mjs 生成，请勿手工编辑。记录 .site 中每个上游 Quartz 文件的期望哈希，scripts/check-quartz-vendor.mjs 用它对账。",
   "upstream": {
     "repo": "https://github.com/jackyzha0/quartz.git",
-    "branch": "v5",
-    "ref": "97a2d05f80c4c50534959b1d0d41cc4b3895625e"
+    "tag": "v5.0.0",
+    "ref": "ab346fa66a895e12d63a308e70ce330ba795822a"
   },
   "files": {
-    ".gitattributes": {
-      "category": "vendored",
-      "hash": "d60f352d0db1404c70afb4bb8b2ca3fd1c610572aa40720e8a0b7baa7885418c",
-      "upstreamHash": "d60f352d0db1404c70afb4bb8b2ca3fd1c610572aa40720e8a0b7baa7885418c"
-    },
-    ".node-version": {
-      "category": "vendored",
-      "hash": "256a8e08ee35cb8ad36ae16385257192c3dbe7d80cfdeff9eaa886531b2f83bc",
-      "upstreamHash": "256a8e08ee35cb8ad36ae16385257192c3dbe7d80cfdeff9eaa886531b2f83bc"
-    },
-    ".npmrc": {
-      "category": "vendored",
-      "hash": "de994f0b60a1afa80c0e821ff17a093bfe17acf8e2760f490433ab9a6891883b",
-      "upstreamHash": "de994f0b60a1afa80c0e821ff17a093bfe17acf8e2760f490433ab9a6891883b"
-    },
-    "globals.d.ts": {
-      "category": "vendored",
-      "hash": "8d77d6699277df8caef3e0105fded9c33e0f26ea4df91d37f8fe53f4b467a17f",
-      "upstreamHash": "8d77d6699277df8caef3e0105fded9c33e0f26ea4df91d37f8fe53f4b467a17f"
-    },
-    "index.d.ts": {
-      "category": "vendored",
-      "hash": "e6128075dd3be11726080efb22afbf6ddc8283face0639f17232de366639e0bf",
-      "upstreamHash": "e6128075dd3be11726080efb22afbf6ddc8283face0639f17232de366639e0bf"
-    },
-    "LICENSE.txt": {
-      "category": "vendored",
-      "hash": "3553b1bda6785a2fdb0ccb5f1c93ea0b7969ae1456d0bb734964ae73ef02a1dc",
-      "upstreamHash": "3553b1bda6785a2fdb0ccb5f1c93ea0b7969ae1456d0bb734964ae73ef02a1dc"
-    },
-    "quartz.ts": {
-      "category": "vendored",
-      "hash": "affd090040d855f1e757c67d33022b4305ed4e30a310e2bcb7d3f3401a1871d1",
-      "upstreamHash": "affd090040d855f1e757c67d33022b4305ed4e30a310e2bcb7d3f3401a1871d1"
-    },
     "quartz/bootstrap-cli.mjs": {
       "category": "vendored",
-      "hash": "2353843fc9b6647aa1f97dd429b7ac5cf0cc536384106ffcff7b2c73223ba3a5",
-      "upstreamHash": "2353843fc9b6647aa1f97dd429b7ac5cf0cc536384106ffcff7b2c73223ba3a5"
+      "hash": "e271da1448fc256a79ad29122903ddb6f04ba5b12d4fde24cf0566e2be88b987",
+      "upstreamHash": "e271da1448fc256a79ad29122903ddb6f04ba5b12d4fde24cf0566e2be88b987"
     },
     "quartz/bootstrap-worker.mjs": {
       "category": "vendored",
@@ -53,18 +17,18 @@
     },
     "quartz/build.ts": {
       "category": "vendored",
-      "hash": "32e1a85304f3c620315aaa592f757ccc23ad7a7065bcb6821644155ab974ecbc",
-      "upstreamHash": "32e1a85304f3c620315aaa592f757ccc23ad7a7065bcb6821644155ab974ecbc"
+      "hash": "1965b62e2b16794678126b43504b5b01364ce9eaf7b80ba6950b8ac82d9d6f86",
+      "upstreamHash": "1965b62e2b16794678126b43504b5b01364ce9eaf7b80ba6950b8ac82d9d6f86"
     },
     "quartz/cfg.ts": {
       "category": "vendored",
-      "hash": "e3540ad7614038c14beaf613d05bb65eea48673b82ac197a1d9e48d2def7b380",
-      "upstreamHash": "e3540ad7614038c14beaf613d05bb65eea48673b82ac197a1d9e48d2def7b380"
+      "hash": "76008d1972fe5c34115ab6e6d28e763178c3720b00023f72a0c6f3176243895d",
+      "upstreamHash": "76008d1972fe5c34115ab6e6d28e763178c3720b00023f72a0c6f3176243895d"
     },
     "quartz/cli/args.js": {
       "category": "vendored",
-      "hash": "7a418c590a5f92f22c4a3a8d0ed3ba16816f57bc846ffca5d28ba72c36540c81",
-      "upstreamHash": "7a418c590a5f92f22c4a3a8d0ed3ba16816f57bc846ffca5d28ba72c36540c81"
+      "hash": "1044abac22b3e1e60ec2992fb2198626b8463c790211de72dea4adace70bbeda",
+      "upstreamHash": "1044abac22b3e1e60ec2992fb2198626b8463c790211de72dea4adace70bbeda"
     },
     "quartz/cli/constants.js": {
       "category": "vendored",
@@ -73,48 +37,53 @@
     },
     "quartz/cli/handlers.js": {
       "category": "vendored",
-      "hash": "8a32042530e6ec32375a25057b6eb4bfb5f779ec70cb6b70ff7bfad8b6aa8c1e",
-      "upstreamHash": "8a32042530e6ec32375a25057b6eb4bfb5f779ec70cb6b70ff7bfad8b6aa8c1e"
+      "hash": "41df22c98cd58e77d41f49d0751993aa57cb2ae516680c656e756eef29b7811b",
+      "upstreamHash": "41df22c98cd58e77d41f49d0751993aa57cb2ae516680c656e756eef29b7811b"
     },
     "quartz/cli/helpers.js": {
       "category": "vendored",
-      "hash": "e265b368ad034e7beafa5c40bc7bf764ff8fe3c32932b5125e7e1a39549ce15f",
-      "upstreamHash": "e265b368ad034e7beafa5c40bc7bf764ff8fe3c32932b5125e7e1a39549ce15f"
+      "hash": "6b4281e7679f7bd62ddba9f1f01c0dc2b7905b1fa63247a8cfebe63b2c32d533",
+      "upstreamHash": "6b4281e7679f7bd62ddba9f1f01c0dc2b7905b1fa63247a8cfebe63b2c32d533"
     },
-    "quartz/cli/helpers.test.js": {
+    "quartz/cli/migrate-handler.js": {
       "category": "vendored",
-      "hash": "7ea5caf1f33a2255dc4b5bf7fb2b8303289a32a6cc2b991675a8e609ec34be22",
-      "upstreamHash": "7ea5caf1f33a2255dc4b5bf7fb2b8303289a32a6cc2b991675a8e609ec34be22"
+      "hash": "3cd0035988a2a0f4fa5f925b6a5cbedda53c37606ffaae6603f03ee208cd5b19",
+      "upstreamHash": "3cd0035988a2a0f4fa5f925b6a5cbedda53c37606ffaae6603f03ee208cd5b19"
     },
     "quartz/cli/plugin-data.js": {
       "category": "vendored",
-      "hash": "f43fed761829643751e0dd94a74f6bbe044ab3142979e8531ca058e200e6a151",
-      "upstreamHash": "f43fed761829643751e0dd94a74f6bbe044ab3142979e8531ca058e200e6a151"
+      "hash": "cc223079c944f26b57b23bffe36932ba8d857deeb13575a889a2fe9e669ba462",
+      "upstreamHash": "cc223079c944f26b57b23bffe36932ba8d857deeb13575a889a2fe9e669ba462"
     },
     "quartz/cli/plugin-git-handlers.js": {
       "category": "vendored",
-      "hash": "5a453ed6254b46768e457e9448b34dfcd57a8cf24592788bbaf81769f984c422",
-      "upstreamHash": "5a453ed6254b46768e457e9448b34dfcd57a8cf24592788bbaf81769f984c422"
+      "hash": "9aa6d11037014f060e6ebab925b885c50bd5ca276084f2caca2ea4e8a352be62",
+      "upstreamHash": "9aa6d11037014f060e6ebab925b885c50bd5ca276084f2caca2ea4e8a352be62"
+    },
+    "quartz/cli/plugin-handlers.js": {
+      "category": "vendored",
+      "hash": "4ac1adc998d0846e76cc9502baac67d66384df2debfb3e46d68394d8651e7ded",
+      "upstreamHash": "4ac1adc998d0846e76cc9502baac67d66384df2debfb3e46d68394d8651e7ded"
     },
     "quartz/cli/templates/blog.yaml": {
       "category": "vendored",
-      "hash": "ad23167e6a832ecc6cd3bb33f153502ec888f2932e62964fd7db3781bba080f4",
-      "upstreamHash": "ad23167e6a832ecc6cd3bb33f153502ec888f2932e62964fd7db3781bba080f4"
+      "hash": "edac65f4a65fb51cec8ae706b4df04d94515209375b1046ac7ce2465b3989a55",
+      "upstreamHash": "edac65f4a65fb51cec8ae706b4df04d94515209375b1046ac7ce2465b3989a55"
     },
     "quartz/cli/templates/default.yaml": {
       "category": "vendored",
-      "hash": "59b40fd2636b50b7fed23aeccb37dfca31304d30d7df5a178bd803bc119750f7",
-      "upstreamHash": "59b40fd2636b50b7fed23aeccb37dfca31304d30d7df5a178bd803bc119750f7"
+      "hash": "9316899d41b496c64c8e532c8db3c4885f7bf66d118b9738fa25275b091585bf",
+      "upstreamHash": "9316899d41b496c64c8e532c8db3c4885f7bf66d118b9738fa25275b091585bf"
     },
     "quartz/cli/templates/obsidian.yaml": {
       "category": "vendored",
-      "hash": "31ce0d9a1e8a92715131bdc46d20f2b900f53db50ca94412b177133c4ae7a0ce",
-      "upstreamHash": "31ce0d9a1e8a92715131bdc46d20f2b900f53db50ca94412b177133c4ae7a0ce"
+      "hash": "7ddf1ec91cd06651df8594ac93942081dc0416803357420caffd2bce5011101f",
+      "upstreamHash": "7ddf1ec91cd06651df8594ac93942081dc0416803357420caffd2bce5011101f"
     },
     "quartz/cli/templates/ttrpg.yaml": {
       "category": "vendored",
-      "hash": "ae047326dd01fbf1b49cd2ea5c4021e1004d0c6f55fd21aea9176f9dc87d6dd2",
-      "upstreamHash": "ae047326dd01fbf1b49cd2ea5c4021e1004d0c6f55fd21aea9176f9dc87d6dd2"
+      "hash": "6371901d65820ddd2a1437a17004afe4544d7fcc18c708e05c9e92fac3981023",
+      "upstreamHash": "6371901d65820ddd2a1437a17004afe4544d7fcc18c708e05c9e92fac3981023"
     },
     "quartz/components/Body.tsx": {
       "category": "vendored",
@@ -128,8 +97,8 @@
     },
     "quartz/components/Date.tsx": {
       "category": "vendored",
-      "hash": "d48545cb6951bfda0478e008e921f7d6477c0bf0c1ade7f51cb50f95d4733f45",
-      "upstreamHash": "d48545cb6951bfda0478e008e921f7d6477c0bf0c1ade7f51cb50f95d4733f45"
+      "hash": "ccc21bca176d9c0324635154ce21d690bee5498b7ffe347104dbd315824276dc",
+      "upstreamHash": "ccc21bca176d9c0324635154ce21d690bee5498b7ffe347104dbd315824276dc"
     },
     "quartz/components/DesktopOnly.tsx": {
       "category": "vendored",
@@ -148,18 +117,13 @@
     },
     "quartz/components/frames/DefaultFrame.tsx": {
       "category": "vendored",
-      "hash": "aaf1330bf629661bea6d6ba9d861827c50001cac5927ca56d30e2ef8ce490fff",
-      "upstreamHash": "aaf1330bf629661bea6d6ba9d861827c50001cac5927ca56d30e2ef8ce490fff"
-    },
-    "quartz/components/frames/frames.test.ts": {
-      "category": "vendored",
-      "hash": "74f9d4dda067943d9d8c0e047afb573ff8f97043a4ab09c8097c69eae456d838",
-      "upstreamHash": "74f9d4dda067943d9d8c0e047afb573ff8f97043a4ab09c8097c69eae456d838"
+      "hash": "bc01c60e65d0ae924d9c11383175208e540605d8bca7f61caee854320a2e462e",
+      "upstreamHash": "bc01c60e65d0ae924d9c11383175208e540605d8bca7f61caee854320a2e462e"
     },
     "quartz/components/frames/FullWidthFrame.tsx": {
       "category": "vendored",
-      "hash": "662f918df2b55e13dac3372f5d8f8aa51c952571db8b9441d4e400d9a744bc7e",
-      "upstreamHash": "662f918df2b55e13dac3372f5d8f8aa51c952571db8b9441d4e400d9a744bc7e"
+      "hash": "cb2498a2076ccdb6cc4654f14f793c947364eb085147baa61aefe001efd28dc8",
+      "upstreamHash": "cb2498a2076ccdb6cc4654f14f793c947364eb085147baa61aefe001efd28dc8"
     },
     "quartz/components/frames/index.ts": {
       "category": "vendored",
@@ -168,8 +132,8 @@
     },
     "quartz/components/frames/MinimalFrame.tsx": {
       "category": "vendored",
-      "hash": "fd2622fe7e545a37faf261bdbee8d0b076add0cfc2408b0de6b5c1a85eafd81f",
-      "upstreamHash": "fd2622fe7e545a37faf261bdbee8d0b076add0cfc2408b0de6b5c1a85eafd81f"
+      "hash": "d6e1ecbf65b1dd7c2db60e24443abb48541a3fa4bdaeea3560b2191b6300bfa5",
+      "upstreamHash": "d6e1ecbf65b1dd7c2db60e24443abb48541a3fa4bdaeea3560b2191b6300bfa5"
     },
     "quartz/components/frames/registry.ts": {
       "category": "vendored",
@@ -178,13 +142,13 @@
     },
     "quartz/components/frames/types.ts": {
       "category": "vendored",
-      "hash": "64d6cf70ac9b64dc39d76f026d6a23079e2962c1d3a3fcdb3b2efe0f514a3184",
-      "upstreamHash": "64d6cf70ac9b64dc39d76f026d6a23079e2962c1d3a3fcdb3b2efe0f514a3184"
+      "hash": "2701b585bef1a6f79cae9e172f512989f8f80821d39d954b14977b220436ef04",
+      "upstreamHash": "2701b585bef1a6f79cae9e172f512989f8f80821d39d954b14977b220436ef04"
     },
     "quartz/components/Head.tsx": {
       "category": "vendored",
-      "hash": "aee9eac30bcb690765e9333e451928a05a3c3b22c7b62cee961f3d64959f4e36",
-      "upstreamHash": "aee9eac30bcb690765e9333e451928a05a3c3b22c7b62cee961f3d64959f4e36"
+      "hash": "16cd2af79ebb35badf2c7dbccf49b43db3170923868b38e0670f13db8be05af9",
+      "upstreamHash": "16cd2af79ebb35badf2c7dbccf49b43db3170923868b38e0670f13db8be05af9"
     },
     "quartz/components/Header.tsx": {
       "category": "vendored",
@@ -203,43 +167,28 @@
     },
     "quartz/components/PageList.tsx": {
       "category": "vendored",
-      "hash": "89a72065697f21d0bb19083a6b0e78e7602947bfa8dd55e35a1d0cb37af8505c",
-      "upstreamHash": "89a72065697f21d0bb19083a6b0e78e7602947bfa8dd55e35a1d0cb37af8505c"
+      "hash": "473c6ef467063d22157ae4466835cec7eae700b3c49b9e5603db53a748a9f962",
+      "upstreamHash": "473c6ef467063d22157ae4466835cec7eae700b3c49b9e5603db53a748a9f962"
     },
     "quartz/components/pages/404.tsx": {
       "category": "vendored",
-      "hash": "aef6c7fe385c1050e1ddffd404a2e700a63efe0c0fbbf946f82f88678c01d543",
-      "upstreamHash": "aef6c7fe385c1050e1ddffd404a2e700a63efe0c0fbbf946f82f88678c01d543"
-    },
-    "quartz/components/registry.test.ts": {
-      "category": "vendored",
-      "hash": "9c4710e8497bf659e8dcbc91d330b1c16c95d2706b9724ffc758eafa9e14c002",
-      "upstreamHash": "9c4710e8497bf659e8dcbc91d330b1c16c95d2706b9724ffc758eafa9e14c002"
+      "hash": "c400e367aada3f4bedfe90880ac978c6c4c2496b7fba0f97b79dd25fb97af401",
+      "upstreamHash": "c400e367aada3f4bedfe90880ac978c6c4c2496b7fba0f97b79dd25fb97af401"
     },
     "quartz/components/registry.ts": {
       "category": "vendored",
-      "hash": "3044f878c5350e1306c6260370e1723a19d6c44383ab89f5ece992d627cb09e5",
-      "upstreamHash": "3044f878c5350e1306c6260370e1723a19d6c44383ab89f5ece992d627cb09e5"
-    },
-    "quartz/components/renderPage.test.ts": {
-      "category": "vendored",
-      "hash": "75c13701590e7f9a45aa0ecad06e81aa43911d694fbf7591b78f83c1fd2e5ba8",
-      "upstreamHash": "75c13701590e7f9a45aa0ecad06e81aa43911d694fbf7591b78f83c1fd2e5ba8"
+      "hash": "b5975893b875838aee64c30c1eef53f329bd7b4b52f8820d5c4a3bfc901eef50",
+      "upstreamHash": "b5975893b875838aee64c30c1eef53f329bd7b4b52f8820d5c4a3bfc901eef50"
     },
     "quartz/components/renderPage.tsx": {
       "category": "vendored",
-      "hash": "39a85370ac89041b1d6b40d76b752d2732d6641e84bc249641d92741cbc7af03",
-      "upstreamHash": "39a85370ac89041b1d6b40d76b752d2732d6641e84bc249641d92741cbc7af03"
+      "hash": "63d6dd8b66b84decf2cecab1725c1b992b08dfff3df7584038791184680d5ee3",
+      "upstreamHash": "63d6dd8b66b84decf2cecab1725c1b992b08dfff3df7584038791184680d5ee3"
     },
     "quartz/components/scripts/popover.inline.ts": {
       "category": "vendored",
-      "hash": "423f861d4b2ed0f941f855ea80fed61732f86f9ca8bb9ce16d4213ce561352d0",
-      "upstreamHash": "423f861d4b2ed0f941f855ea80fed61732f86f9ca8bb9ce16d4213ce561352d0"
-    },
-    "quartz/components/scripts/popover.test.ts": {
-      "category": "vendored",
-      "hash": "1d9ae73aa0ab9cda1d42354993aa74ffd0c987060d992c03fa6c14910bff2c44",
-      "upstreamHash": "1d9ae73aa0ab9cda1d42354993aa74ffd0c987060d992c03fa6c14910bff2c44"
+      "hash": "8ac63f9c2b155ac9f54296f41f432f209e2a8a69a35e5b462aed5b1327d2d7d5",
+      "upstreamHash": "8ac63f9c2b155ac9f54296f41f432f209e2a8a69a35e5b462aed5b1327d2d7d5"
     },
     "quartz/components/scripts/search.test.ts": {
       "category": "vendored",
@@ -248,8 +197,8 @@
     },
     "quartz/components/scripts/spa.inline.ts": {
       "category": "vendored",
-      "hash": "6f06efd928af7a8d957922fecf61aac1f5b1be528398c2b46139ced11c5e9520",
-      "upstreamHash": "6f06efd928af7a8d957922fecf61aac1f5b1be528398c2b46139ced11c5e9520"
+      "hash": "4ad2443d5c1b8bd7cb52d7ff1615c4d96499676ee4e7bf86822ac8cd532a0747",
+      "upstreamHash": "4ad2443d5c1b8bd7cb52d7ff1615c4d96499676ee4e7bf86822ac8cd532a0747"
     },
     "quartz/components/scripts/util.ts": {
       "category": "vendored",
@@ -443,8 +392,8 @@
     },
     "quartz/plugins/emitters/componentResources.ts": {
       "category": "vendored",
-      "hash": "73c8766a6727c97cf332533dc14e61b9384bedfced26c54a1b96136979e6691c",
-      "upstreamHash": "73c8766a6727c97cf332533dc14e61b9384bedfced26c54a1b96136979e6691c"
+      "hash": "b32fadb2e50c34c078cc982b9e44dde91871fa19e3274d1580a57c98112c3dbe",
+      "upstreamHash": "b32fadb2e50c34c078cc982b9e44dde91871fa19e3274d1580a57c98112c3dbe"
     },
     "quartz/plugins/emitters/helpers.ts": {
       "category": "vendored",
@@ -468,48 +417,43 @@
     },
     "quartz/plugins/index.ts": {
       "category": "vendored",
-      "hash": "6357fa372c1737c5f8acaaae78aeb77f6ef985072ed55b786790a449874fc7e4",
-      "upstreamHash": "6357fa372c1737c5f8acaaae78aeb77f6ef985072ed55b786790a449874fc7e4"
+      "hash": "e91599144030e34dce2b6b75829a67d79be7a72e7d002d680bedf09a2e48c6b2",
+      "upstreamHash": "e91599144030e34dce2b6b75829a67d79be7a72e7d002d680bedf09a2e48c6b2"
     },
     "quartz/plugins/loader/componentLoader.ts": {
       "category": "vendored",
-      "hash": "fa60d13285f28ffec7f9b296703ab16c225c6618fd98b7a85d3ef19c82d15f96",
-      "upstreamHash": "fa60d13285f28ffec7f9b296703ab16c225c6618fd98b7a85d3ef19c82d15f96"
+      "hash": "080ec5f60e8d531e024073fc7c19c4815224880a9a5ffabe629b43acdd501174",
+      "upstreamHash": "080ec5f60e8d531e024073fc7c19c4815224880a9a5ffabe629b43acdd501174"
     },
     "quartz/plugins/loader/conditions.ts": {
       "category": "vendored",
       "hash": "ca746263346784649b35e80fa108eef104b98c2413acb483880689e9fdf2ac88",
       "upstreamHash": "ca746263346784649b35e80fa108eef104b98c2413acb483880689e9fdf2ac88"
     },
-    "quartz/plugins/loader/config-loader.test.ts": {
-      "category": "vendored",
-      "hash": "d08c79260b31ca4d8c312856d8dd20da208a6a241344b97b2bf003e3c891e77e",
-      "upstreamHash": "d08c79260b31ca4d8c312856d8dd20da208a6a241344b97b2bf003e3c891e77e"
-    },
     "quartz/plugins/loader/config-loader.ts": {
       "category": "vendored",
-      "hash": "b917595b08fd1d6fd26ac3ed818c13948bccab040f6f074918994575f3d2fb96",
-      "upstreamHash": "b917595b08fd1d6fd26ac3ed818c13948bccab040f6f074918994575f3d2fb96"
+      "hash": "a37a014bdff454b5539d141bd30dcf972dbdd8482023d968dfd124f0b43f0332",
+      "upstreamHash": "a37a014bdff454b5539d141bd30dcf972dbdd8482023d968dfd124f0b43f0332"
     },
     "quartz/plugins/loader/frameLoader.ts": {
       "category": "vendored",
-      "hash": "47ef9a58d72e4ee201173a9b6a0986b35b7cdf7ea0d46dde3c47cce4c739941b",
-      "upstreamHash": "47ef9a58d72e4ee201173a9b6a0986b35b7cdf7ea0d46dde3c47cce4c739941b"
+      "hash": "1da634b912501615466264e8580df833f525428fb3b8951a249e6ced31aa8756",
+      "upstreamHash": "1da634b912501615466264e8580df833f525428fb3b8951a249e6ced31aa8756"
     },
     "quartz/plugins/loader/gitLoader.ts": {
       "category": "vendored",
-      "hash": "f47393db0909378c0551dd0c73053f414ef38bfa2d294d77ec253b2a904d24ce",
-      "upstreamHash": "f47393db0909378c0551dd0c73053f414ef38bfa2d294d77ec253b2a904d24ce"
+      "hash": "84ebf44972b8f635e50762d6e746a3466df81ba16bb5f289fd6048254236abdb",
+      "upstreamHash": "84ebf44972b8f635e50762d6e746a3466df81ba16bb5f289fd6048254236abdb"
     },
     "quartz/plugins/loader/index.ts": {
       "category": "vendored",
-      "hash": "cc4c2186166f7753e65848319bff4295dfa40642bbbd14cb501c0c1e53dabfd1",
-      "upstreamHash": "cc4c2186166f7753e65848319bff4295dfa40642bbbd14cb501c0c1e53dabfd1"
+      "hash": "d3e1c105a0dca066c67d473b9fef5b0fc0fda5193f2f0a752301b926ce80584c",
+      "upstreamHash": "d3e1c105a0dca066c67d473b9fef5b0fc0fda5193f2f0a752301b926ce80584c"
     },
     "quartz/plugins/loader/install-plugins.ts": {
       "category": "vendored",
-      "hash": "dacca00b546ed021807d905a01c5ab1927d3f2501505b16f47edfe29a3ac5a88",
-      "upstreamHash": "dacca00b546ed021807d905a01c5ab1927d3f2501505b16f47edfe29a3ac5a88"
+      "hash": "064421d49e20195652b906074b9b4711116eb77edb8680c9993bd3c3d2b80a5a",
+      "upstreamHash": "064421d49e20195652b906074b9b4711116eb77edb8680c9993bd3c3d2b80a5a"
     },
     "quartz/plugins/loader/loader.ts": {
       "category": "vendored",
@@ -518,23 +462,18 @@
     },
     "quartz/plugins/loader/types.ts": {
       "category": "vendored",
-      "hash": "422dfc2ce0f654f92bbbe6721c667627bfbe890552a9dcbf6ff00ddce5cd5d50",
-      "upstreamHash": "422dfc2ce0f654f92bbbe6721c667627bfbe890552a9dcbf6ff00ddce5cd5d50"
+      "hash": "933e8ab4c424b94a31036202dbab60e9383c3bee149af0b071403444371136a8",
+      "upstreamHash": "933e8ab4c424b94a31036202dbab60e9383c3bee149af0b071403444371136a8"
     },
     "quartz/plugins/pageTypes/404.ts": {
       "category": "vendored",
       "hash": "1daac2e8391002163d6e32a609e744cbfc32e3d87b06551aedf3eb9473b36ecc",
       "upstreamHash": "1daac2e8391002163d6e32a609e744cbfc32e3d87b06551aedf3eb9473b36ecc"
     },
-    "quartz/plugins/pageTypes/dispatcher.test.ts": {
-      "category": "vendored",
-      "hash": "8b3cbca17bcd7a8c3901c7ac7c0f47d5b9458b32d89d2500df68bd00602b4d28",
-      "upstreamHash": "8b3cbca17bcd7a8c3901c7ac7c0f47d5b9458b32d89d2500df68bd00602b4d28"
-    },
     "quartz/plugins/pageTypes/dispatcher.ts": {
-      "category": "patched",
-      "hash": "f86e395d8a34cba2f22899aff36ac3f8313e26afbd47e5b401205cc8399d3965",
-      "upstreamHash": "877bf85364465734e4c7c711b3b92cde0f134a87616d3d23584eabbf4fac46a1"
+      "category": "vendored",
+      "hash": "a66eec0a2b18a38875ef01b30e7b92596eb3630bbf15089dd2d57c1ba17ff1c8",
+      "upstreamHash": "a66eec0a2b18a38875ef01b30e7b92596eb3630bbf15089dd2d57c1ba17ff1c8"
     },
     "quartz/plugins/pageTypes/index.ts": {
       "category": "vendored",
@@ -548,8 +487,8 @@
     },
     "quartz/plugins/quartz-plugins.schema.json": {
       "category": "vendored",
-      "hash": "28a2a2bb5a70eb05688ac8b0dacabfbf27fe3b99fd3bbd52e932c375365c3831",
-      "upstreamHash": "28a2a2bb5a70eb05688ac8b0dacabfbf27fe3b99fd3bbd52e932c375365c3831"
+      "hash": "50fd0d8e3b5b4819d79979f48707fa900618587fb0683c2fb7f31c46c277326e",
+      "upstreamHash": "50fd0d8e3b5b4819d79979f48707fa900618587fb0683c2fb7f31c46c277326e"
     },
     "quartz/plugins/transformers/index.ts": {
       "category": "vendored",
@@ -562,14 +501,14 @@
       "upstreamHash": "7a44d88eb227db15ced10d5bfea200f74bc14f52d8eb84760b6373fe8b62443c"
     },
     "quartz/plugins/vfile.ts": {
-      "category": "patched",
-      "hash": "654817481766e6932fd9d6c3d5d9692e251c611cf8e628f36879b86d2a51db17",
+      "category": "vendored",
+      "hash": "37d1a1d31c5049f0da9a2258a9e32b92be7898fc8ffbd7c4d005f64fec978844",
       "upstreamHash": "37d1a1d31c5049f0da9a2258a9e32b92be7898fc8ffbd7c4d005f64fec978844"
     },
     "quartz/processors/emit.ts": {
       "category": "vendored",
-      "hash": "992116187e0dd26687c96f0ffeead2d1c9d89edd01589fb00a2a5b52955072ae",
-      "upstreamHash": "992116187e0dd26687c96f0ffeead2d1c9d89edd01589fb00a2a5b52955072ae"
+      "hash": "fae2eb45cd4d0d775eec395dbe70e160626aa24c913bfbae921428ca4fc98bec",
+      "upstreamHash": "fae2eb45cd4d0d775eec395dbe70e160626aa24c913bfbae921428ca4fc98bec"
     },
     "quartz/processors/filter.ts": {
       "category": "vendored",
@@ -578,8 +517,8 @@
     },
     "quartz/processors/parse.ts": {
       "category": "vendored",
-      "hash": "76cf9bdcec68dac87e7b73abcbccb5f9232cc0a2a7a4d696d28a62aa61c30254",
-      "upstreamHash": "76cf9bdcec68dac87e7b73abcbccb5f9232cc0a2a7a4d696d28a62aa61c30254"
+      "hash": "429bb4c5bc1a768a11820c1ca9723428ac932295f4e6765e999f5f4ec34637d4",
+      "upstreamHash": "429bb4c5bc1a768a11820c1ca9723428ac932295f4e6765e999f5f4ec34637d4"
     },
     "quartz/static/giscus/dark.css": {
       "category": "vendored",
@@ -593,18 +532,18 @@
     },
     "quartz/static/icon.png": {
       "category": "override",
-      "hash": "2af8fe71e078202ea2430ebd8902e54856c862fb89b896a69927d97e42fdb63f",
+      "hash": "532d053e33c2c6bdefdd8145996cedc4be2fc32cfdac740c8488749457d131cf",
       "upstreamHash": "532d053e33c2c6bdefdd8145996cedc4be2fc32cfdac740c8488749457d131cf"
     },
     "quartz/static/og-image.png": {
       "category": "vendored",
-      "hash": "6247780f1b51d0eb99eef6d86a5450e935c0b8053205b4ac83cedb05f0569bd8",
-      "upstreamHash": "6247780f1b51d0eb99eef6d86a5450e935c0b8053205b4ac83cedb05f0569bd8"
+      "hash": "2d523d9347e1fd166445cfbed0ce944bf823800b538cb18d70d29dbc21ade781",
+      "upstreamHash": "2d523d9347e1fd166445cfbed0ce944bf823800b538cb18d70d29dbc21ade781"
     },
     "quartz/styles/base.scss": {
       "category": "vendored",
-      "hash": "0dbbe20680bb5fc4a009d92cbcb9b017b947d1760feabf0e5721cc2926c9adfa",
-      "upstreamHash": "0dbbe20680bb5fc4a009d92cbcb9b017b947d1760feabf0e5721cc2926c9adfa"
+      "hash": "7b3bc128871e5626facad52f8041c8666f10e30be828b2f1217c9029b0493540",
+      "upstreamHash": "7b3bc128871e5626facad52f8041c8666f10e30be828b2f1217c9029b0493540"
     },
     "quartz/styles/callouts.scss": {
       "category": "vendored",
@@ -613,8 +552,8 @@
     },
     "quartz/styles/custom.scss": {
       "category": "override",
-      "hash": "234c35818416e3115cfd50b760d06e2b4995ce9ae824504e9cd272fe7d56badc",
-      "upstreamHash": "431cea96eef4d7b9191f1246506e117bc37248d28e10ff3fa0e678ba80f2b5ef"
+      "hash": "6169a26b0e14f6f51c8c1a8c393e8c8a833503467a922d258157b0f749cc6c86",
+      "upstreamHash": "6169a26b0e14f6f51c8c1a8c393e8c8a833503467a922d258157b0f749cc6c86"
     },
     "quartz/styles/syntax.scss": {
       "category": "vendored",
@@ -633,8 +572,8 @@
     },
     "quartz/util/ctx.ts": {
       "category": "vendored",
-      "hash": "865e851a246c4886254c26b0faf698beb0561156b9fd5dd9e25b9670ebaad997",
-      "upstreamHash": "865e851a246c4886254c26b0faf698beb0561156b9fd5dd9e25b9670ebaad997"
+      "hash": "b4d7d7bb00be3ebf3375653e787e7dd699c5d9ca28cbceab82691be646f10427",
+      "upstreamHash": "b4d7d7bb00be3ebf3375653e787e7dd699c5d9ca28cbceab82691be646f10427"
     },
     "quartz/util/emoji.ts": {
       "category": "vendored",
@@ -653,13 +592,13 @@
     },
     "quartz/util/fileTrie.test.ts": {
       "category": "vendored",
-      "hash": "427c7f00ff18e4ec6ff5930177233e433ab25cdc9df2b8258af120a60e238f09",
-      "upstreamHash": "427c7f00ff18e4ec6ff5930177233e433ab25cdc9df2b8258af120a60e238f09"
+      "hash": "24c017f2f2282646a3398a9171a98426b487ec7aa34ffa684471fd8e289d7f98",
+      "upstreamHash": "24c017f2f2282646a3398a9171a98426b487ec7aa34ffa684471fd8e289d7f98"
     },
     "quartz/util/fileTrie.ts": {
       "category": "vendored",
-      "hash": "a8f49bdfb47563288cd8fd3ce7571be369888db87c3ee75bbf55d9ebc24e302a",
-      "upstreamHash": "a8f49bdfb47563288cd8fd3ce7571be369888db87c3ee75bbf55d9ebc24e302a"
+      "hash": "b9b136d2f41eff90bdb067180592011d6771623723ce5f8f61f7d7c4a6c9f21b",
+      "upstreamHash": "b9b136d2f41eff90bdb067180592011d6771623723ce5f8f61f7d7c4a6c9f21b"
     },
     "quartz/util/glob.ts": {
       "category": "vendored",
@@ -683,13 +622,13 @@
     },
     "quartz/util/path.test.ts": {
       "category": "vendored",
-      "hash": "2a32be4f5cf89d4dec16ebe4f47d45118a065a90ef5afec8ae5089e5543700e1",
-      "upstreamHash": "2a32be4f5cf89d4dec16ebe4f47d45118a065a90ef5afec8ae5089e5543700e1"
+      "hash": "1d345df8f3aba65b16e9fe868fc961c37219727b4e0fe44ad3076b25e232a3d3",
+      "upstreamHash": "1d345df8f3aba65b16e9fe868fc961c37219727b4e0fe44ad3076b25e232a3d3"
     },
     "quartz/util/path.ts": {
       "category": "vendored",
-      "hash": "78a7ca13ef13697ee8c9ba7995660f6a30e0cf346371242a834dbcd1c638ece1",
-      "upstreamHash": "78a7ca13ef13697ee8c9ba7995660f6a30e0cf346371242a834dbcd1c638ece1"
+      "hash": "cac070a4984063dc3af56a9b09bb560f59f4395d0c26d1dafb25c1e3060b3f74",
+      "upstreamHash": "cac070a4984063dc3af56a9b09bb560f59f4395d0c26d1dafb25c1e3060b3f74"
     },
     "quartz/util/perf.ts": {
       "category": "vendored",
@@ -703,18 +642,8 @@
     },
     "quartz/util/resources.tsx": {
       "category": "vendored",
-      "hash": "83b0cf2b7e6d7b140b26d0fc2a8db45edd129f072486d3d295de83328d66e013",
-      "upstreamHash": "83b0cf2b7e6d7b140b26d0fc2a8db45edd129f072486d3d295de83328d66e013"
-    },
-    "quartz/util/slugCollisions.test.ts": {
-      "category": "vendored",
-      "hash": "25fe25b325a25b88209bc672e272c3128802856a25366f1e4edd9acf139b881a",
-      "upstreamHash": "25fe25b325a25b88209bc672e272c3128802856a25366f1e4edd9acf139b881a"
-    },
-    "quartz/util/slugCollisions.ts": {
-      "category": "vendored",
-      "hash": "57995047c2469e63a8741f6fba24e0c46e110fd744431661c68364c759167d5e",
-      "upstreamHash": "57995047c2469e63a8741f6fba24e0c46e110fd744431661c68364c759167d5e"
+      "hash": "04e010a0716c612b89142df35b812ab18189aa5b69684ecf13d4ca5839258882",
+      "upstreamHash": "04e010a0716c612b89142df35b812ab18189aa5b69684ecf13d4ca5839258882"
     },
     "quartz/util/sourcemap.ts": {
       "category": "vendored",
@@ -723,8 +652,8 @@
     },
     "quartz/util/theme.ts": {
       "category": "vendored",
-      "hash": "ef7e2d510c800ceab57aa645b09c721c8c2de8f25eca7d7418f1e4bd172e1cc5",
-      "upstreamHash": "ef7e2d510c800ceab57aa645b09c721c8c2de8f25eca7d7418f1e4bd172e1cc5"
+      "hash": "2850e5acf2d168d0c8f5b79b23d26a0d0621b2f99e7ebb2e23efd5acbc439e47",
+      "upstreamHash": "2850e5acf2d168d0c8f5b79b23d26a0d0621b2f99e7ebb2e23efd5acbc439e47"
     },
     "quartz/util/trace.ts": {
       "category": "vendored",
@@ -735,6 +664,36 @@
       "category": "vendored",
       "hash": "a525b6ac6f9ee3d5935037f16abb4df9962616c1ad5a3b13010aab4c13f9ec3f",
       "upstreamHash": "a525b6ac6f9ee3d5935037f16abb4df9962616c1ad5a3b13010aab4c13f9ec3f"
+    },
+    ".gitattributes": {
+      "category": "vendored",
+      "hash": "d60f352d0db1404c70afb4bb8b2ca3fd1c610572aa40720e8a0b7baa7885418c",
+      "upstreamHash": "d60f352d0db1404c70afb4bb8b2ca3fd1c610572aa40720e8a0b7baa7885418c"
+    },
+    ".node-version": {
+      "category": "vendored",
+      "hash": "256a8e08ee35cb8ad36ae16385257192c3dbe7d80cfdeff9eaa886531b2f83bc",
+      "upstreamHash": "256a8e08ee35cb8ad36ae16385257192c3dbe7d80cfdeff9eaa886531b2f83bc"
+    },
+    ".npmrc": {
+      "category": "vendored",
+      "hash": "7151cf397def0c2cb0ab65643701d27d335a72c90f775675b5f826bc7005818a",
+      "upstreamHash": "7151cf397def0c2cb0ab65643701d27d335a72c90f775675b5f826bc7005818a"
+    },
+    "LICENSE.txt": {
+      "category": "vendored",
+      "hash": "3553b1bda6785a2fdb0ccb5f1c93ea0b7969ae1456d0bb734964ae73ef02a1dc",
+      "upstreamHash": "3553b1bda6785a2fdb0ccb5f1c93ea0b7969ae1456d0bb734964ae73ef02a1dc"
+    },
+    "globals.d.ts": {
+      "category": "vendored",
+      "hash": "8d77d6699277df8caef3e0105fded9c33e0f26ea4df91d37f8fe53f4b467a17f",
+      "upstreamHash": "8d77d6699277df8caef3e0105fded9c33e0f26ea4df91d37f8fe53f4b467a17f"
+    },
+    "index.d.ts": {
+      "category": "vendored",
+      "hash": "e6128075dd3be11726080efb22afbf6ddc8283face0639f17232de366639e0bf",
+      "upstreamHash": "e6128075dd3be11726080efb22afbf6ddc8283face0639f17232de366639e0bf"
     },
     "tsconfig.json": {
       "category": "vendored",
