@@ -3259,12 +3259,62 @@ body:has(#quartz-root[data-frame="canvas"]) #bs-quickbar {
     left: 8px;
   }
   #bs-quickbar {
-    top: 10px;
-    right: 12px;
+    top: max(8px, env(safe-area-inset-top));
+    right: max(12px, env(safe-area-inset-right));
+    gap: 2px;
+    padding: 2px;
+    border: 1px solid var(--bs-border);
+    border-radius: 12px;
+    background: var(--light);
+    box-shadow: 0 2px 8px rgb(0 0 0 / 8%);
   }
-  #bs-quickbar button {
-    min-height: 44px;
+  #bs-quickbar :is(button.darkmode, .bs-quickbar-search) {
+    appearance: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
     min-width: 44px;
+    min-height: 44px;
+    padding: 0;
+    margin: 0;
+    border: 0;
+    border-radius: 9px;
+    background: transparent;
+    color: var(--dark);
+    box-shadow: none;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+  }
+  #bs-quickbar button.darkmode svg {
+    left: calc(50% - 10px);
+    color: inherit;
+    fill: currentColor;
+  }
+  #bs-quickbar button.darkmode::before {
+    inset: 0;
+    margin: auto;
+    width: 20px;
+    height: 20px;
+    background-color: currentColor;
+    mask-size: contain;
+    mask-position: center;
+    mask-repeat: no-repeat;
+  }
+  #bs-quickbar .bs-quickbar-search svg {
+    width: 20px;
+    height: 20px;
+  }
+  #bs-quickbar .bs-quickbar-search span {
+    display: none;
+  }
+  #bs-quickbar button:active {
+    background: var(--lightgray);
+  }
+  #bs-quickbar button:focus-visible {
+    outline: 2px solid var(--secondary);
+    outline-offset: -2px;
   }
   .search-button {
     min-height: 44px;

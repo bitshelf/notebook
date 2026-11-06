@@ -218,6 +218,8 @@
       if (!bar) {
         bar = document.createElement("div")
         bar.id = "bs-quickbar"
+        bar.setAttribute("role", "toolbar")
+        bar.setAttribute("aria-label", "阅读工具")
         document.body.appendChild(bar)
       }
       var toggle = document.querySelector("button.darkmode")
@@ -225,6 +227,8 @@
         bar.appendChild(toggle)
       }
       if (toggle && toggle.parentNode === bar) {
+        toggle.setAttribute("aria-label", "切换明暗主题")
+        toggle.title = "切换明暗主题"
         bindTap(toggle, function () {
           toggle.click()
         })
