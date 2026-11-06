@@ -80,6 +80,32 @@ export function copyContent(source, destination, relative = "") {
   }
 }
 
+// Publication reads HEAD, never the working tree or staging area.
+export function copyCommittedContent(repository, destination) {
+  const snapshot = fs.mkdtempSync(path.join(os.tmpdir(), "bitshelf-source-"));
+  try {
+    const archive = path.join(snapshot, "snapshot.tar");
+    execFileSync(
+      "git",
+      ["archive", "--format=tar", `--output=${archive}`, "HEAD"],
+      {
+        cwd: repository,
+        stdio: "pipe",
+      },
+    );
+    execFileSync("tar", ["-xf", archive, "-C", snapshot], { stdio: "pipe" });
+    copyContent(snapshot, destination);
+  } finally {
+    const resolved = fs.realpathSync(snapshot);
+    if (
+      path.dirname(resolved) !== fs.realpathSync(os.tmpdir()) ||
+      !path.basename(resolved).startsWith("bitshelf-source-")
+    )
+      throw new Error("Unexpected source snapshot directory");
+    fs.rmSync(resolved, { recursive: true, force: true });
+  }
+}
+
 function run(script, args = []) {
   execFileSync(process.execPath, [path.join(siteRoot, script), ...args], {
     cwd: siteRoot,
@@ -117,7 +143,7 @@ export async function build() {
   run("scripts/patch-plugins.mjs");
   const content = fs.mkdtempSync(path.join(os.tmpdir(), "bitshelf-content-"));
   try {
-    copyContent(repoRoot, content);
+    copyCommittedContent(repoRoot, content);
     fs.copyFileSync(
       path.join(siteRoot, "homepage.md"),
       path.join(content, "index.md"),

@@ -2624,21 +2624,23 @@ body[data-slug="index"] .markdown-preview-view h2::before {
 
 // 折叠后网格调整：被隐藏的侧栏不再占用列
 @media all and (min-width: 1200px) {
-  body.bs-sidebar-collapsed #quartz-body {
+  body.bs-sidebar-collapsed .page[data-frame="default"] > #quartz-body {
     grid-template-columns: auto 320px;
     grid-template-areas:
       "grid-header grid-sidebar-right"
       "grid-center grid-sidebar-right"
       "grid-footer grid-sidebar-right";
   }
-  body.bs-sidebar-right-collapsed #quartz-body {
+  body.bs-sidebar-right-collapsed .page[data-frame="default"] > #quartz-body {
     grid-template-columns: 320px auto;
     grid-template-areas:
       "grid-sidebar-left grid-header"
       "grid-sidebar-left grid-center"
       "grid-sidebar-left grid-footer";
   }
-  body.bs-sidebar-collapsed.bs-sidebar-right-collapsed #quartz-body {
+  body.bs-sidebar-collapsed.bs-sidebar-right-collapsed
+    .page[data-frame="default"]
+    > #quartz-body {
     grid-template-columns: auto;
     grid-template-areas:
       "grid-header"
@@ -2647,7 +2649,7 @@ body[data-slug="index"] .markdown-preview-view h2::before {
   }
 }
 @media all and (min-width: 800px) and (max-width: 1199px) {
-  body.bs-sidebar-collapsed #quartz-body {
+  body.bs-sidebar-collapsed .page[data-frame="default"] > #quartz-body {
     grid-template-columns: auto;
     grid-template-areas:
       "grid-header"
@@ -3180,17 +3182,17 @@ body:has(#quartz-root[data-frame="canvas"]) #bs-quickbar {
 }
 @media (min-width: 1200px) {
   body:not(.bs-sidebar-collapsed):not(.bs-sidebar-right-collapsed)
-    .page
+    .page[data-frame="default"]
     > #quartz-body {
     grid-template-columns: 260px minmax(0, 1fr) 240px;
   }
   body.bs-sidebar-right-collapsed:not(.bs-sidebar-collapsed)
-    .page
+    .page[data-frame="default"]
     > #quartz-body {
     grid-template-columns: 260px minmax(0, 1fr);
   }
   body.bs-sidebar-collapsed:not(.bs-sidebar-right-collapsed)
-    .page
+    .page[data-frame="default"]
     > #quartz-body {
     grid-template-columns: minmax(0, 1fr) 240px;
   }
@@ -3202,7 +3204,7 @@ body:has(#quartz-root[data-frame="canvas"]) #bs-quickbar {
   }
 }
 @media (min-width: 800px) and (max-width: 1199px) {
-  body:not(.bs-sidebar-collapsed) .page > #quartz-body {
+  body:not(.bs-sidebar-collapsed) .page[data-frame="default"] > #quartz-body {
     grid-template-columns: 240px minmax(0, 1fr);
   }
 }
@@ -3214,7 +3216,7 @@ body:has(#quartz-root[data-frame="canvas"]) #bs-quickbar {
     width: 100%;
     min-width: 0;
   }
-  .page > #quartz-body > .center {
+  .page[data-frame="default"] > #quartz-body > .center {
     padding: 0 14px 24px;
   }
   .page > #quartz-body .sidebar.left {

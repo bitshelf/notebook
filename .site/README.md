@@ -16,7 +16,7 @@ BitShelf Notebook 的 Quartz 5 站点配置。笔记本体在仓库根目录，�
 ## 构建规则
 
 - 不改动、不删除仓库里的任何笔记或附件
-- 构建时只把 Markdown、图片、`.canvas` / `.base` / `.excalidraw` 复制到临时目录
+- 发布构建只读取 Git `HEAD` 已提交快照中的 Markdown、图片、`.canvas` / `.base` / `.excalidraw`；未跟踪文件、暂存区以及工作区未提交的笔记修改均不发布
 - zip / exe / apk / pdf 等附件保留在仓库，但不会发布到网页
 - 从 git 历史恢复每个文件的最后修改时间，保证 Bases「最近更新」等视图有意义
 

@@ -3,10 +3,55 @@ import assert from "node:assert/strict";
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
-import { spawnSync } from "node:child_process";
+import { spawnSync, execFileSync } from "node:child_process";
 import { fileURLToPath } from "node:url";
 import { build as bundle } from "esbuild";
-import { resolveOutput, copyContent, build } from "./build.mjs";
+import {
+  resolveOutput,
+  copyContent,
+  copyCommittedContent,
+  build,
+} from "./build.mjs";
+
+test("publication excludes untracked and staged notes and reads committed note contents", () => {
+  const fixture = fs.mkdtempSync(path.join(os.tmpdir(), "bitshelf-test-"));
+  try {
+    const repo = path.join(fixture, "repo"),
+      output = path.join(fixture, "output");
+    fs.mkdirSync(repo);
+    const git = (...args) =>
+      execFileSync("git", args, { cwd: repo, stdio: "pipe" });
+    git("init");
+    fs.writeFileSync(path.join(repo, "published.md"), "committed content");
+    git("add", "published.md");
+    git(
+      "-c",
+      "user.name=Site Test",
+      "-c",
+      "user.email=site@example.invalid",
+      "commit",
+      "-m",
+      "fixture",
+    );
+    fs.writeFileSync(
+      path.join(repo, "published.md"),
+      "private unpublished changes",
+    );
+    fs.writeFileSync(path.join(repo, "staged.md"), "private staged note");
+    git("add", "staged.md");
+    fs.writeFileSync(path.join(repo, "untracked.md"), "private draft");
+    copyCommittedContent(repo, output);
+    assert.deepEqual(fs.readdirSync(output), ["published.md"]);
+    assert.equal(
+      fs.readFileSync(path.join(output, "published.md"), "utf8"),
+      "committed content",
+    );
+  } finally {
+    const resolved = fs.realpathSync(fixture);
+    assert.equal(path.dirname(resolved), fs.realpathSync(os.tmpdir()));
+    fs.rmSync(resolved, { recursive: true, force: true });
+  }
+});
 
 test("output deletion is restricted to owned directories", () => {
   for (const value of ["..", ".", "/", "quartz", "public/..", ".dsh-tmp"])
